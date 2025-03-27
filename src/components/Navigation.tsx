@@ -42,7 +42,7 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
     const element = document.getElementById(id);
     if (element) {
       window.scrollTo({
-        top: element.offsetTop,
+        top: element.offsetTop - 70, // Added offset to prevent section from being hidden under navbar
         behavior: 'smooth'
       });
     }
@@ -51,7 +51,7 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
   return (
     <nav className={cn(
       "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-      isScrolled ? "bg-void-black/90 backdrop-blur-md" : "bg-transparent"
+      isScrolled ? "bg-void-black/90 backdrop-blur-md shadow-md" : "bg-transparent"
     )}>
       <div className="container mx-auto px-6 py-4">
         <ul className="flex items-center justify-center space-x-6 overflow-x-auto scrollbar-none">
@@ -60,8 +60,8 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
               <button
                 onClick={() => scrollToSection(section.id)}
                 className={cn(
-                  "nav-link text-sm uppercase tracking-wider",
-                  activeSection === section.id ? "text-gilded-parchment" : "text-static-white"
+                  "nav-link text-sm uppercase tracking-wider font-medium",
+                  activeSection === section.id ? "text-gilded-parchment" : "text-static-white hover:text-static-white/70"
                 )}
               >
                 {section.label}

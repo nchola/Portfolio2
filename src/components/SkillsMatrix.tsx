@@ -8,7 +8,6 @@ interface Skill {
   type: 'technical';
   description: string;
   level: number; // 1-5, used for node size and progress bar
-  icon?: string; // Placeholder for icon
 }
 
 const skills: Skill[] = [
@@ -30,7 +29,7 @@ const SkillsMatrix: React.FC = () => {
   const [activeSkill, setActiveSkill] = useState<Skill | null>(null);
 
   return (
-    <section id="skills" className="section bg-void-black dark:bg-static-white">
+    <section id="skills" className="section bg-void-black dark:bg-static-white pt-24">
       <div className="container">
         <div className="mb-12">
           <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
@@ -50,7 +49,7 @@ const SkillsMatrix: React.FC = () => {
           {skills.map((skill) => (
             <div
               key={skill.id}
-              className="bg-quantum-gray/20 dark:bg-static-white/10 rounded-md p-6 transition-all duration-300 hover:shadow-md hover:transform hover:scale-105"
+              className="bg-quantum-gray/10 dark:bg-static-white/10 rounded-md p-6 transition-all duration-300 hover:shadow-md hover:transform hover:scale-105"
               onMouseEnter={() => setActiveSkill(skill)}
               onMouseLeave={() => setActiveSkill(null)}
             >
