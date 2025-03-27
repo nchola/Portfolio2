@@ -6,10 +6,14 @@ import ProjectGrid from '@/components/ProjectGrid';
 import SkillsMatrix from '@/components/SkillsMatrix';
 import DarkModeToggle from '@/components/DarkModeToggle';
 import About from '@/components/About';
+import Certificates from '@/components/Certificates';
+import Experience from '@/components/Experience';
 
 const sections = [
   { id: 'hero', label: 'Home' },
   { id: 'about', label: 'About' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'certificates', label: 'Certificates' },
   { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },
 ];
@@ -26,6 +30,8 @@ const Index: React.FC = () => {
           typedItems={["A Software Developer", "A Computer Science Graduate", "A Technologies Enthusiast"]}
         />
         <About />
+        <Experience />
+        <Certificates />
         <ProjectGrid />
         <SkillsMatrix />
       </main>

@@ -107,8 +107,17 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           
           <div className="mt-12">
             <a 
+              href="https://www.canva.com/design/DAGKGZpZdDY/iTF0vcbWF4rajEYJ4pQEFw/view" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 bg-gilded-parchment text-void-black rounded-md hover:bg-gilded-parchment/80 transition-colors duration-300 mr-4"
+            >
+              <span className="mr-2">→</span>
+              View My CV
+            </a>
+            <a 
               href="#about" 
-              className="inline-block animate-bounce"
+              className="inline-block animate-bounce mt-8"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-static-white dark:text-void-black">
                 <polyline points="6 9 12 15 18 9"></polyline>

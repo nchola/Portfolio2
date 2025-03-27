@@ -51,24 +51,33 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
   return (
     <nav className={cn(
       "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-      isScrolled ? "bg-void-black/90 backdrop-blur-md" : "bg-transparent"
+      isScrolled ? "bg-void-black/90 dark:bg-static-white/90 backdrop-blur-md" : "bg-transparent"
     )}>
       <div className="container mx-auto px-6 py-4">
-        <ul className="flex items-center justify-center space-x-6 overflow-x-auto scrollbar-none">
-          {sections.map((section) => (
-            <li key={section.id}>
-              <button
-                onClick={() => scrollToSection(section.id)}
-                className={cn(
-                  "nav-link text-sm uppercase tracking-wider",
-                  activeSection === section.id ? "text-gilded-parchment" : "text-static-white"
-                )}
-              >
-                {section.label}
-              </button>
-            </li>
-          ))}
-        </ul>
+        <div className="flex justify-center items-center">
+          <div className="relative">
+            <div className="inline-flex bg-quantum-gray/20 dark:bg-quantum-gray/10 backdrop-blur-sm p-1 rounded-full border border-gilded-parchment/30">
+              {sections.map((section, index) => (
+                <React.Fragment key={section.id}>
+                  <button
+                    onClick={() => scrollToSection(section.id)}
+                    className={cn(
+                      "px-4 py-2 rounded-full text-sm transition-all duration-300",
+                      activeSection === section.id 
+                        ? "bg-gilded-parchment text-void-black font-medium" 
+                        : "text-static-white dark:text-void-black hover:bg-gilded-parchment/20"
+                    )}
+                  >
+                    {section.label}
+                  </button>
+                  {index < sections.length - 1 && (
+                    <div className="h-full w-px bg-gilded-parchment/20 mx-1"></div>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
   );
