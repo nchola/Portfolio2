@@ -1,6 +1,7 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
+import { Progress } from '@/components/ui/progress';
 
 interface Skill {
   id: string;
@@ -8,62 +9,115 @@ interface Skill {
   type: 'technical' | 'conceptual';
   description: string;
   level: number; // 1-5
-  position: { x: number; y: number }; // percentage values for positioning
+  orbitRadius: number; // Radius of orbit path
+  orbitSpeed: number; // Speed of rotation
+  size: number; // Size of the planet
 }
 
 const skills: Skill[] = [
   // Technical skills
-  { id: 'skill-1', name: 'JavaScript', type: 'technical', description: 'Advanced', level: 5, position: { x: 30, y: 40 } },
-  { id: 'skill-2', name: 'React', type: 'technical', description: 'Advanced', level: 5, position: { x: 65, y: 25 } },
-  { id: 'skill-3', name: 'CSS/SCSS', type: 'technical', description: 'Advanced', level: 5, position: { x: 45, y: 65 } },
-  { id: 'skill-4', name: 'TypeScript', type: 'technical', description: 'Intermediate', level: 4, position: { x: 22, y: 70 } },
-  { id: 'skill-5', name: 'Node.js', type: 'technical', description: 'Intermediate', level: 3, position: { x: 75, y: 55 } },
-  { id: 'skill-6', name: 'Three.js', type: 'technical', description: 'Intermediate', level: 3, position: { x: 85, y: 75 } },
-  { id: 'skill-7', name: 'GraphQL', type: 'technical', description: 'Beginner', level: 2, position: { x: 15, y: 30 } },
-  
-  // Conceptual skills
-  { id: 'skill-8', name: 'UX Design', type: 'conceptual', description: 'Advanced', level: 5, position: { x: 55, y: 35 } },
-  { id: 'skill-9', name: 'Typography', type: 'conceptual', description: 'Advanced', level: 5, position: { x: 40, y: 20 } },
-  { id: 'skill-10', name: 'Visual Design', type: 'conceptual', description: 'Advanced', level: 4, position: { x: 70, y: 40 } },
-  { id: 'skill-11', name: 'Information Architecture', type: 'conceptual', description: 'Intermediate', level: 3, position: { x: 25, y: 50 } },
-  { id: 'skill-12', name: 'Motion Design', type: 'conceptual', description: 'Intermediate', level: 3, position: { x: 60, y: 80 } },
+  { id: 'flutter', name: 'Flutter', type: 'technical', description: '80%', level: 4, orbitRadius: 120, orbitSpeed: 0.0015, size: 25 },
+  { id: 'dart', name: 'Dart', type: 'technical', description: '75%', level: 4, orbitRadius: 160, orbitSpeed: 0.002, size: 20 },
+  { id: 'mongodb', name: 'MongoDB', type: 'technical', description: '70%', level: 3, orbitRadius: 200, orbitSpeed: 0.0018, size: 22 },
+  { id: 'mysql', name: 'MySQL', type: 'technical', description: '75%', level: 4, orbitRadius: 240, orbitSpeed: 0.0016, size: 24 },
+  { id: 'expressjs', name: 'ExpressJS', type: 'technical', description: '80%', level: 4, orbitRadius: 280, orbitSpeed: 0.0014, size: 25 },
+  { id: 'html', name: 'HTML', type: 'technical', description: '75%', level: 4, orbitRadius: 320, orbitSpeed: 0.0012, size: 22 },
+  { id: 'css', name: 'CSS', type: 'technical', description: '65%', level: 3, orbitRadius: 360, orbitSpeed: 0.001, size: 20 },
+  { id: 'javascript', name: 'JavaScript', type: 'conceptual', description: '70%', level: 3, orbitRadius: 400, orbitSpeed: 0.0008, size: 26 },
+  { id: 'laravel', name: 'Laravel', type: 'conceptual', description: '70%', level: 3, orbitRadius: 440, orbitSpeed: 0.0006, size: 21 },
+  { id: 'nodejs', name: 'NodeJS', type: 'conceptual', description: '55%', level: 3, orbitRadius: 480, orbitSpeed: 0.0004, size: 23 },
+  { id: 'php', name: 'PHP', type: 'conceptual', description: '60%', level: 3, orbitRadius: 520, orbitSpeed: 0.0002, size: 19 },
+  { id: 'python', name: 'Python', type: 'conceptual', description: '70%', level: 3, orbitRadius: 560, orbitSpeed: 0.00018, size: 24 },
 ];
 
 const SkillsMatrix: React.FC = () => {
   const [activeSkill, setActiveSkill] = useState<Skill | null>(null);
+  const [orbits, setOrbits] = useState<{[key: string]: { x: number, y: number }}>({}); 
 
-  const getNodeSize = (level: number) => {
-    const baseSize = 40;
-    return baseSize + (level * 6);
+  // Calculate planet positions
+  useEffect(() => {
+    let animationFrameId: number;
+    const centerX = window.innerWidth > 768 ? 300 : 150; // Adjust center based on viewport
+    const centerY = window.innerWidth > 768 ? 300 : 150;
+    
+    const updatePositions = (timestamp: number) => {
+      const newPositions: {[key: string]: { x: number, y: number }} = {};
+      
+      skills.forEach(skill => {
+        const angle = timestamp * skill.orbitSpeed;
+        const x = centerX + Math.cos(angle) * skill.orbitRadius;
+        const y = centerY + Math.sin(angle) * skill.orbitRadius;
+        newPositions[skill.id] = { x, y };
+      });
+      
+      setOrbits(newPositions);
+      animationFrameId = requestAnimationFrame(updatePositions);
+    };
+    
+    animationFrameId = requestAnimationFrame(updatePositions);
+    
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  // Function to determine color based on skill type
+  const getSkillColor = (type: 'technical' | 'conceptual') => {
+    return type === 'technical' ? 'bg-quantum-gray text-static-white' : 'bg-gilded-parchment text-void-black';
   };
 
   return (
-    <section id="skills" className="section bg-void-black dark:bg-static-white">
-      <div className="container">
-        <div className="mb-12">
+    <section id="skills" className="section py-32 bg-void-black dark:bg-static-white relative overflow-hidden">
+      <div className="container relative z-10">
+        <div className="mb-16">
           <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
             Capabilities
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-static-white dark:text-void-black">
+          <h2 className="text-4xl md:text-5xl font-bold text-static-white dark:text-void-black mb-6">
             Skills
           </h2>
+          <p className="text-lg text-static-white/80 dark:text-void-black/80 max-w-2xl">
+            I have been learning programming since 2022. The main area of my expertise is Multi-Platform Development.
+            <br />
+            Here are the technologies I have learned.
+          </p>
         </div>
         
-        <div className="relative h-[500px] md:h-[600px] mx-auto max-w-3xl border border-gilded-parchment/30 rounded-full">
+        {/* Solar System Container */}
+        <div className="relative h-[600px] md:h-[600px] mx-auto max-w-3xl">
+          {/* Sun/Center */}
+          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]">
+            <span className="text-void-black font-bold text-xs">Skills</span>
+          </div>
+          
+          {/* Orbit Paths - Render circles for orbits */}
+          {skills.map((skill) => (
+            <div 
+              key={`orbit-${skill.id}`}
+              className="absolute left-1/2 top-1/2 border border-gilded-parchment/20 rounded-full" 
+              style={{
+                width: `${skill.orbitRadius * 2}px`,
+                height: `${skill.orbitRadius * 2}px`,
+                transform: 'translate(-50%, -50%)',
+              }}
+            />
+          ))}
+          
+          {/* Planets/Skills */}
           {skills.map((skill) => (
             <div
               key={skill.id}
               className={cn(
-                "skills-node",
-                skill.type,
-                activeSkill?.id === skill.id ? "ring-2 ring-gilded-parchment scale-110" : ""
+                "absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer z-10",
+                getSkillColor(skill.type),
+                activeSkill?.id === skill.id ? "ring-2 ring-gilded-parchment scale-110 z-30" : ""
               )}
               style={{
-                width: `${getNodeSize(skill.level)}px`,
-                height: `${getNodeSize(skill.level)}px`,
-                left: `${skill.position.x}%`,
-                top: `${skill.position.y}%`,
-                zIndex: activeSkill?.id === skill.id ? 10 : 1,
+                width: `${skill.size * 2}px`,
+                height: `${skill.size * 2}px`,
+                left: orbits[skill.id]?.x || 0,
+                top: orbits[skill.id]?.y || 0,
+                transition: activeSkill?.id === skill.id ? 'all 0.3s ease' : 'none',
               }}
               onMouseEnter={() => setActiveSkill(skill)}
               onMouseLeave={() => setActiveSkill(null)}
@@ -71,13 +125,33 @@ const SkillsMatrix: React.FC = () => {
               <span className="text-xs font-medium">{skill.name}</span>
               
               {activeSkill?.id === skill.id && (
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-void-black dark:bg-static-white text-static-white dark:text-void-black px-3 py-1 rounded text-xs whitespace-nowrap z-20">
-                  {skill.description}
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3 bg-void-black dark:bg-static-white text-static-white dark:text-void-black px-3 py-2 rounded-md text-xs whitespace-nowrap z-40 flex flex-col items-center">
+                  <span className="font-bold mb-1">{skill.name}</span>
+                  <Progress value={parseInt(skill.description)} className="w-20 h-2" />
+                  <span className="mt-1">{skill.description}</span>
                 </div>
               )}
             </div>
           ))}
         </div>
+      </div>
+      
+      {/* Background stars effect */}
+      <div className="absolute inset-0 overflow-hidden">
+        {Array.from({ length: 50 }).map((_, i) => (
+          <div 
+            key={`star-${i}`}
+            className="absolute bg-static-white rounded-full animate-pulse"
+            style={{
+              width: `${Math.random() * 2 + 1}px`,
+              height: `${Math.random() * 2 + 1}px`,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              opacity: Math.random() * 0.7 + 0.3,
+              animationDuration: `${Math.random() * 3 + 2}s`,
+            }}
+          />
+        ))}
       </div>
     </section>
   );
