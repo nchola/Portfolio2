@@ -1,6 +1,9 @@
+
 import React from 'react';
+
 const About: React.FC = () => {
-  return <section id="about" className="section bg-quantum-gray/10 dark:bg-quantum-gray/5 bg-gray-900">
+  return (
+    <section id="about" className="section bg-quantum-gray/10 dark:bg-quantum-gray/5">
       <div className="container">
         <div className="mb-12">
           <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
@@ -55,7 +58,12 @@ const About: React.FC = () => {
             </div>
             
             <div className="mt-8">
-              <a href="https://www.canva.com/design/DAGKGZpZdDY/iTF0vcbWF4rajEYJ4pQEFw/view" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-6 py-3 bg-gilded-parchment text-void-black rounded-md hover:bg-gilded-parchment/80 transition-colors duration-300">
+              <a 
+                href="https://www.canva.com/design/DAGKGZpZdDY/iTF0vcbWF4rajEYJ4pQEFw/view" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-6 py-3 bg-gilded-parchment text-void-black rounded-md hover:bg-gilded-parchment/80 transition-colors duration-300"
+              >
                 <span className="mr-2">→</span>
                 View My CV
               </a>
@@ -63,6 +71,8 @@ const About: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default About;
