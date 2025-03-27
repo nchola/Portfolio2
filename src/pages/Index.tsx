@@ -1,13 +1,33 @@
-// Update this page (the content is just a fallback if you fail to update the page)
 
-const Index = () => {
+import React from 'react';
+import Navigation from '@/components/Navigation';
+import Hero from '@/components/Hero';
+import ProjectGrid from '@/components/ProjectGrid';
+import SkillsMatrix from '@/components/SkillsMatrix';
+import DarkModeToggle from '@/components/DarkModeToggle';
+
+const sections = [
+  { id: 'hero', label: 'Home' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'skills', label: 'Skills' },
+];
+
+const Index: React.FC = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      <Navigation sections={sections} />
+      
+      <main className="min-h-screen">
+        <Hero 
+          title="Minimal Portfolio" 
+          subtitle="A clean, minimalist approach to showcasing creative work with a focus on typography, whitespace, and subtle interactions."
+        />
+        <ProjectGrid />
+        <SkillsMatrix />
+      </main>
+      
+      <DarkModeToggle />
+    </>
   );
 };
 
