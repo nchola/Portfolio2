@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Progress } from '@/components/ui/progress';
+import { Star } from 'lucide-react';
 
 interface Skill {
   id: string;
@@ -29,6 +30,21 @@ const skills: Skill[] = [
   { id: 'php', name: 'PHP', type: 'conceptual', description: '60%', level: 3, orbitRadius: 520, orbitSpeed: 0.0002, size: 19 },
   { id: 'python', name: 'Python', type: 'conceptual', description: '70%', level: 3, orbitRadius: 560, orbitSpeed: 0.00018, size: 24 },
 ];
+
+// Generate blinking stars data
+const generateStars = (count: number) => {
+  return Array.from({ length: count }).map((_, i) => ({
+    id: `star-${i}`,
+    size: Math.random() * 2 + 1,
+    top: Math.random() * 100,
+    left: Math.random() * 100,
+    opacity: Math.random() * 0.7 + 0.3,
+    animationDuration: Math.random() * 5 + 3,
+    delay: Math.random() * 5,
+  }));
+};
+
+const stars = generateStars(70);
 
 const SkillsMatrix: React.FC = () => {
   const [activeSkill, setActiveSkill] = useState<Skill | null>(null);
@@ -136,21 +152,25 @@ const SkillsMatrix: React.FC = () => {
         </div>
       </div>
       
-      {/* Background stars effect */}
+      {/* Blinking stars background */}
       <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 50 }).map((_, i) => (
+        {stars.map((star) => (
           <div 
-            key={`star-${i}`}
-            className="absolute bg-static-white rounded-full animate-pulse"
+            key={star.id} 
+            className="absolute"
             style={{
-              width: `${Math.random() * 2 + 1}px`,
-              height: `${Math.random() * 2 + 1}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              opacity: Math.random() * 0.7 + 0.3,
-              animationDuration: `${Math.random() * 3 + 2}s`,
+              top: `${star.top}%`,
+              left: `${star.left}%`,
+              opacity: 0, // Start with opacity 0
+              animation: `starBlink ${star.animationDuration}s ease-in-out infinite ${star.delay}s`,
             }}
-          />
+          >
+            <Star 
+              size={star.size} 
+              className="text-static-white dark:text-void-black" 
+              fill="currentColor"
+            />
+          </div>
         ))}
       </div>
     </section>

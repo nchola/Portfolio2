@@ -32,7 +32,10 @@ const DarkModeToggle: React.FC = () => {
   return (
     <button
       onClick={toggleDarkMode}
-      className="fixed bottom-6 right-6 z-50 bg-void-black dark:bg-static-white rounded-full p-3 shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gilded-parchment"
+      className={cn(
+        "fixed bottom-6 right-6 z-50 rounded-full p-3 shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gilded-parchment",
+        darkMode ? "bg-static-white text-void-black" : "bg-void-black text-static-white"
+      )}
       aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
       title={darkMode ? "Switch to light mode" : "Switch to dark mode"}
     >
@@ -48,7 +51,7 @@ const DarkModeToggle: React.FC = () => {
           xmlns="http://www.w3.org/2000/svg"
           className={cn(
             "w-6 h-6 transition-all duration-300 absolute top-0 left-0",
-            darkMode ? "opacity-100 text-void-black rotate-0" : "opacity-0 rotate-90 text-static-white"
+            darkMode ? "opacity-100 rotate-0" : "opacity-0 rotate-90"
           )}
           fill="none"
           viewBox="0 0 24 24"
