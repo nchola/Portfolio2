@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Atom, BookOpen, BrainCircuit, Crown, Infinity } from 'lucide-react';
+import { Atom, BrainCircuit, Code, CircuitBoard, Infinity, Zap, Hexagon } from 'lucide-react';
 
 interface HeroProps {
   title: string;
@@ -99,9 +99,9 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           />
         </div>
         
-        {/* Abstract Logo: Dark Academia (Book) */}
+        {/* Abstract Logo: Cyberpunk Circuit */}
         <div className="absolute top-2/3 right-1/4 transform translate-x-1/2 -translate-y-1/2 opacity-30 z-10">
-          <BookOpen 
+          <CircuitBoard 
             size={60} 
             className="text-gilded-parchment/70" 
             strokeWidth={1}
@@ -117,12 +117,30 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           />
         </div>
         
-        {/* Abstract Logo: Old Dark Academia Scholar Magician (Crown) */}
+        {/* Abstract Logo: Cyberpunk Code Symbol */}
         <div className="absolute top-1/2 right-1/3 transform translate-x-1/2 -translate-y-1/2 opacity-30 z-10">
-          <Crown 
+          <Code 
             size={55} 
             className="text-gilded-parchment/80" 
             strokeWidth={1} 
+          />
+        </div>
+        
+        {/* Abstract Logo: Cyberpunk Hexagon */}
+        <div className="absolute bottom-1/4 right-1/4 transform translate-x-1/2 translate-y-1/2 opacity-35 z-10">
+          <Hexagon 
+            size={75} 
+            className="text-static-white/70" 
+            strokeWidth={1} 
+          />
+        </div>
+        
+        {/* Abstract Logo: Electric Symbol */}
+        <div className="absolute top-2/5 left-1/3 transform -translate-x-1/2 -translate-y-1/2 opacity-40 z-10">
+          <Zap 
+            size={65} 
+            className="text-gilded-parchment animate-pulse" 
+            strokeWidth={1}
           />
         </div>
         
@@ -147,21 +165,21 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
         
         {/* Infinity Symbol Animation */}
         <div 
-          className="absolute left-1/2 top-3/4 transform -translate-x-1/2 -translate-y-1/2 opacity-20 text-gilded-parchment text-8xl animate-float"
+          className="absolute left-1/2 top-3/4 transform -translate-x-1/2 -translate-y-1/2 opacity-20 text-gilded-parchment dark:text-gilded-parchment/70 text-8xl animate-float"
           style={{ fontSize: '200px' }}
         >
           ∞
         </div>
       </div>
       
-      {/* Content - No More Container Div */}
+      {/* Content - No Container Div */}
       <div className="container mx-auto px-6 z-10 relative">
-        <h1 className="text-5xl md:text-7xl font-bold text-static-white mb-6 tracking-tighter text-shadow-lg text-center">
+        <h1 className="text-5xl md:text-7xl font-bold text-static-white dark:text-static-white mb-6 tracking-tighter text-shadow-lg text-center">
           {title}
         </h1>
         
-        <div className="text-xl md:text-2xl text-static-white mb-12 min-h-16 text-center backdrop-blur-sm p-4">
-          <p>{subtitle} <span className="text-gilded-parchment">{typedText}</span><span className="animate-pulse text-static-white">|</span></p>
+        <div className="text-xl md:text-2xl text-static-white dark:text-static-white mb-12 min-h-16 text-center backdrop-blur-sm p-4">
+          <p>{subtitle} <span className="text-gilded-parchment dark:text-gilded-parchment">{typedText}</span><span className="animate-pulse text-static-white dark:text-static-white">|</span></p>
         </div>
         
         <div className="flex justify-center space-x-6">
@@ -171,7 +189,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
             rel="noopener noreferrer"
             className="social-link"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-static-white hover:text-gilded-parchment transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-static-white dark:text-static-white hover:text-gilded-parchment transition-colors">
               <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
               <rect x="2" y="9" width="4" height="12"></rect>
               <circle cx="4" cy="4" r="2"></circle>
@@ -183,7 +201,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
             rel="noopener noreferrer"
             className="social-link"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-static-white hover:text-gilded-parchment transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-static-white dark:text-static-white hover:text-gilded-parchment transition-colors">
               <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
             </svg>
           </a>
@@ -193,7 +211,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
             rel="noopener noreferrer"
             className="social-link"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-static-white hover:text-gilded-parchment transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-static-white dark:text-static-white hover:text-gilded-parchment transition-colors">
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
               <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
               <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
@@ -205,7 +223,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
             rel="noopener noreferrer"
             className="social-link"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-static-white hover:text-gilded-parchment transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-static-white dark:text-static-white hover:text-gilded-parchment transition-colors">
               <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"></path>
               <path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1zm0 0a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"></path>
             </svg>
@@ -217,14 +235,14 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
             href="https://www.canva.com/design/DAGKGZpZdDY/iTF0vcbWF4rajEYJ4pQEFw/view" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="inline-flex items-center px-6 py-3 bg-gilded-parchment text-void-black rounded-md hover:bg-gilded-parchment/80 transition-colors duration-300 mr-4"
+            className="inline-flex items-center px-6 py-3 bg-gilded-parchment text-void-black dark:bg-gilded-parchment dark:text-void-black rounded-md hover:bg-gilded-parchment/80 transition-colors duration-300 mr-4"
           >
             <span className="mr-2">→</span>
             View My CV
           </a>
           <a 
             href="#about" 
-            className="inline-block animate-bounce mt-8 text-static-white hover:text-gilded-parchment transition-colors"
+            className="inline-block animate-bounce mt-8 text-static-white dark:text-static-white hover:text-gilded-parchment transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="6 9 12 15 18 9"></polyline>
