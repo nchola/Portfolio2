@@ -26,7 +26,7 @@ const Index: React.FC = () => {
       <main className="min-h-screen">
         <Hero 
           title="Muhammad Nanda" 
-          subtitle="I'm a Multi Platform Developer"
+          subtitle="I'm"
           typedItems={["A Software Developer", "A Computer Science Graduate", "A Technologies Enthusiast"]}
         />
         <About />
