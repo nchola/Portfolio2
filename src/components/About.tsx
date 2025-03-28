@@ -3,13 +3,13 @@ import React from 'react';
 
 const About: React.FC = () => {
   return (
-    <section id="about" className="section bg-quantum-gray/10 dark:bg-quantum-gray/5">
+    <section id="about" className="section bg-static-white/5 dark:bg-quantum-gray/5">
       <div className="container">
         <div className="mb-12">
-          <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
+          <span className="inline-block text-xs uppercase tracking-wider text-quantum-gray dark:text-static-white/70 mb-2">
             Introduction
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-static-white dark:text-void-black">
+          <h2 className="text-4xl md:text-5xl font-bold text-quantum-gray dark:text-static-white">
             About Me
           </h2>
         </div>
@@ -24,13 +24,13 @@ const About: React.FC = () => {
           </div>
           
           <div className="lg:col-span-8">
-            <h3 className="text-2xl font-cormorant font-bold mb-4 text-static-white dark:text-void-black">
+            <h3 className="text-2xl font-cormorant font-bold mb-4 text-quantum-gray dark:text-static-white">
               Muhammad Nanda
             </h3>
-            <p className="text-static-white/80 dark:text-void-black/80 italic mb-6">
+            <p className="text-quantum-gray/90 dark:text-static-white/80 italic mb-6">
               Software Developer with 2 years experience working on several projects.
             </p>
-            <p className="text-static-white/80 dark:text-void-black/80 mb-6">
+            <p className="text-quantum-gray/90 dark:text-static-white/80 mb-6">
               I have an interest in a career as a Programmer. I'm a fast learner and self-taught.
               I have learned a lot of new technologies in the past few years by myself on the Internet.
             </p>
@@ -38,17 +38,17 @@ const About: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <ul className="space-y-2">
-                  <li className="flex items-center text-static-white/80 dark:text-void-black/80">
+                  <li className="flex items-center text-quantum-gray/90 dark:text-static-white/80">
                     <span className="inline-block w-6 h-6 mr-2 text-gilded-parchment">→</span>
                     <strong className="mr-2">Email:</strong>
                     <span>nchola@mhs.mdp.ac.id</span>
                   </li>
-                  <li className="flex items-center text-static-white/80 dark:text-void-black/80">
+                  <li className="flex items-center text-quantum-gray/90 dark:text-static-white/80">
                     <span className="inline-block w-6 h-6 mr-2 text-gilded-parchment">→</span>
                     <strong className="mr-2">City:</strong>
                     <span>Palembang, Indonesia</span>
                   </li>
-                  <li className="flex items-center text-static-white/80 dark:text-void-black/80">
+                  <li className="flex items-center text-quantum-gray/90 dark:text-static-white/80">
                     <span className="inline-block w-6 h-6 mr-2 text-gilded-parchment">→</span>
                     <strong className="mr-2">Freelance:</strong>
                     <span>Available</span>

@@ -51,12 +51,14 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
   return (
     <nav className={cn(
       "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-      isScrolled ? "bg-void-black/90 dark:bg-static-white/90 backdrop-blur-md" : "bg-transparent"
+      isScrolled 
+        ? "bg-static-white/90 dark:bg-void-black/90 backdrop-blur-md border-b border-quantum-gray/10 dark:border-static-white/10" 
+        : "bg-transparent"
     )}>
       <div className="container mx-auto px-6 py-4">
         <div className="flex justify-center items-center">
           <div className="relative">
-            <div className="inline-flex bg-quantum-gray/20 dark:bg-quantum-gray/10 backdrop-blur-sm p-1 rounded-full border border-gilded-parchment/30">
+            <div className="inline-flex bg-quantum-gray/10 dark:bg-quantum-gray/20 backdrop-blur-sm p-1 rounded-full border border-gilded-parchment/30">
               {sections.map((section, index) => (
                 <React.Fragment key={section.id}>
                   <button
@@ -65,7 +67,7 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
                       "px-4 py-2 rounded-full text-sm transition-all duration-300",
                       activeSection === section.id 
                         ? "bg-gilded-parchment text-void-black font-medium" 
-                        : "text-static-white dark:text-void-black hover:bg-gilded-parchment/20"
+                        : "text-quantum-gray dark:text-static-white hover:bg-gilded-parchment/20"
                     )}
                   >
                     {section.label}
