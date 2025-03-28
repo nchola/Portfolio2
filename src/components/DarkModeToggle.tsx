@@ -34,15 +34,14 @@ const DarkModeToggle: React.FC = () => {
       onClick={toggleDarkMode}
       className={cn(
         "fixed bottom-6 right-6 z-50 rounded-full p-3 shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gilded-parchment",
-        darkMode ? "bg-static-white text-void-black" : "bg-void-black text-static-white"
+        darkMode 
+          ? "bg-static-white text-void-black" 
+          : "bg-void-black text-static-white"
       )}
       aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
       title={darkMode ? "Switch to light mode" : "Switch to dark mode"}
     >
-      <span className={cn(
-        "sr-only",
-        "WCAG-compliant screen reader text"
-      )}>
+      <span className="sr-only">
         {darkMode ? "Switch to light mode" : "Switch to dark mode"}
       </span>
       <div className="relative w-6 h-6">
