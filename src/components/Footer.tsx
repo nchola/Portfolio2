@@ -90,16 +90,7 @@ const Footer: React.FC = () => {
       ></div>
 
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Logo/Initial Section */}
-          <div className="flex items-center justify-center md:justify-start">
-            <div className="relative w-24 h-24 flex items-center justify-center overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-gilded-parchment/30 to-quantum-gray/20 dark:from-gilded-parchment/20 dark:to-static-white/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative z-10 text-4xl font-cormorant font-bold text-quantum-gray dark:text-static-white transform group-hover:rotate-12 group-hover:scale-110 transition-transform duration-500">
-                NC
-              </div>
-            </div>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">          
 
           {/* Contact Grid Section */}
           <div className="lg:col-span-3">
@@ -129,8 +120,8 @@ const Footer: React.FC = () => {
                   <ContactItem 
                     icon={Github}
                     label="GitHub"
-                    value="nandaxx"
-                    link="https://github.com/nandaxx"
+                    value="nchola"
+                    link="https://github.com/nchola"
                   />
                   
                   <ContactItem 
