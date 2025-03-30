@@ -169,6 +169,43 @@
     @apply absolute rounded-full bg-static-white;
     animation: starBlink 5s ease-in-out infinite, starFloat 15s ease-in-out infinite;
   }
+
+  /* Footer-specific styles */
+  .footer-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8;
+  }
+  
+  .animated-logo {
+    @apply relative w-24 h-24 flex items-center justify-center text-4xl font-cormorant;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .animated-logo:hover {
+    transform: rotateY(15deg) scale(1.1);
+  }
+  
+  .contact-item {
+    @apply relative overflow-hidden rounded-lg transition-all duration-300;
+  }
+  
+  .contact-item::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-gilded-parchment/30 to-quantum-gray/30 opacity-0 transition-opacity duration-500;
+  }
+  
+  .contact-item:hover::before {
+    @apply opacity-100;
+  }
+  
+  .geo-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full bg-quantum-gray/10 dark:bg-static-white/10 text-xs;
+  }
+  
+  .geo-dot {
+    @apply w-2 h-2 rounded-full bg-gilded-parchment mr-1;
+    animation: pulse 2s infinite;
+  }
 }
 
 .section {
@@ -255,4 +292,27 @@
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+/* New animations for the footer */
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 0.6;
+    transform: scale(0.8);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
 }
