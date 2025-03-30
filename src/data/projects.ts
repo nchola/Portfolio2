@@ -16,11 +16,11 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 'project-1',
-    title: 'Minimalist Typography System',
-    description: 'A comprehensive design system focusing on typographic hierarchy and whitespace',
-    category: 'Design System',
-    technologies: ['CSS', 'Sass', 'JavaScript'],
-    thumbnailSrc: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1064&auto=format&fit=crop',
+    title: 'Polyglotpath',
+    description: 'A mobile-based forum application that allows users to learn languages through discussions and collaboration.',
+    category: 'Mobile Application',
+    technologies: ['Flutter', 'Firebase', 'Google Cloud Console'],
+    thumbnailSrc: 'https://www.youtube.com/watch?v=K3Vq_peTSTI',
     gitMetadata: {
       commits: 47,
       lastUpdated: '2023-12-15',

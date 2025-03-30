@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Atom, BrainCircuit, Code, CircuitBoard, Infinity, Zap, Hexagon } from 'lucide-react';
 
@@ -80,8 +81,8 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           <div className="absolute left-1/2 top-1/2 w-20 h-20 md:w-40 md:h-40 rounded-full bg-void-black/60 border border-gilded-parchment/10 animate-[spin_15s_linear_infinite] -translate-x-1/2 -translate-y-1/2"></div>
         </div>
         
-        {/* Abstract Logos with improved visibility and spacing for mobile */}
-        <div className="absolute top-1/4 left-1/4 transform -translate-x-1/2 -translate-y-1/2 opacity-40 z-10 hidden md:block">
+        {/* Abstract Logo: Infinity Loop */}
+        <div className="absolute top-1/4 left-1/4 transform -translate-x-1/2 -translate-y-1/2 opacity-40 z-10">
           <Infinity 
             size={80} 
             className="text-gilded-parchment animate-[spin_20s_linear_infinite]" 
@@ -89,8 +90,8 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           />
         </div>
         
-        {/* Only show some elements on desktop */}
-        <div className="absolute top-3/4 left-1/5 transform -translate-x-1/2 -translate-y-1/2 opacity-30 z-10 hidden md:block">
+        {/* Abstract Logo: Void Collapse (Atom) */}
+        <div className="absolute top-3/4 left-1/5 transform -translate-x-1/2 -translate-y-1/2 opacity-30 z-10">
           <Atom 
             size={70} 
             className="text-static-white animate-pulse" 
@@ -98,7 +99,8 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           />
         </div>
         
-        <div className="absolute top-2/3 right-1/4 transform translate-x-1/2 -translate-y-1/2 opacity-30 z-10 hidden md:block">
+        {/* Abstract Logo: Cyberpunk Circuit */}
+        <div className="absolute top-2/3 right-1/4 transform translate-x-1/2 -translate-y-1/2 opacity-30 z-10">
           <CircuitBoard 
             size={60} 
             className="text-gilded-parchment/70" 
@@ -106,7 +108,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           />
         </div>
         
-        {/* Keep fewer elements visible on mobile */}
+        {/* Abstract Logo: To The Infinity (Brain) */}
         <div className="absolute top-1/3 right-1/5 transform translate-x-1/2 -translate-y-1/2 opacity-40 z-10">
           <BrainCircuit 
             size={65} 
@@ -115,7 +117,8 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           />
         </div>
         
-        <div className="absolute top-1/2 right-1/3 transform translate-x-1/2 -translate-y-1/2 opacity-30 z-10 hidden md:block">
+        {/* Abstract Logo: Cyberpunk Code Symbol */}
+        <div className="absolute top-1/2 right-1/3 transform translate-x-1/2 -translate-y-1/2 opacity-30 z-10">
           <Code 
             size={55} 
             className="text-gilded-parchment/80" 
@@ -123,7 +126,8 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           />
         </div>
         
-        <div className="absolute bottom-1/4 right-1/4 transform translate-x-1/2 translate-y-1/2 opacity-35 z-10 hidden md:block">
+        {/* Abstract Logo: Cyberpunk Hexagon */}
+        <div className="absolute bottom-1/4 right-1/4 transform translate-x-1/2 translate-y-1/2 opacity-35 z-10">
           <Hexagon 
             size={75} 
             className="text-static-white/70" 
@@ -131,6 +135,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           />
         </div>
         
+        {/* Abstract Logo: Electric Symbol */}
         <div className="absolute top-2/5 left-1/3 transform -translate-x-1/2 -translate-y-1/2 opacity-40 z-10">
           <Zap 
             size={65} 
@@ -139,9 +144,9 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           />
         </div>
         
-        {/* Animated Stars (reduced count for mobile) */}
+        {/* Animated Stars */}
         <div className="absolute inset-0">
-          {Array.from({ length: 30 }).map((_, i) => (
+          {Array.from({ length: 50 }).map((_, i) => (
             <div 
               key={`cosmic-star-${i}`}
               className="absolute rounded-full bg-static-white animate-pulse"
@@ -158,30 +163,23 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           ))}
         </div>
         
-        {/* Infinity Symbol Animation (smaller on mobile) */}
+        {/* Infinity Symbol Animation */}
         <div 
-          className="absolute left-1/2 top-3/4 transform -translate-x-1/2 -translate-y-1/2 opacity-20 text-gilded-parchment dark:text-gilded-parchment/70 text-6xl md:text-8xl animate-float"
-          style={{ fontSize: '120px', '@media (min-width: 768px)': { fontSize: '200px' } }}
+          className="absolute left-1/2 top-3/4 transform -translate-x-1/2 -translate-y-1/2 opacity-20 text-gilded-parchment dark:text-gilded-parchment/70 text-8xl animate-float"
+          style={{ fontSize: '200px' }}
         >
           ∞
         </div>
       </div>
       
-      {/* Content - Improved Mobile Layout */}
-      <div className="container mx-auto px-4 md:px-6 z-10 relative">
-        <h1 className="text-4xl md:text-7xl font-bold text-static-white dark:text-static-white mb-4 md:mb-6 tracking-tighter text-shadow-lg text-center">
+      {/* Content - No Container Div */}
+      <div className="container mx-auto px-6 z-10 relative">
+        <h1 className="text-5xl md:text-7xl font-bold text-static-white dark:text-static-white mb-6 tracking-tighter text-shadow-lg text-center">
           {title}
         </h1>
         
-        {/* Improved mobile layout for typed text area */}
-        <div className="text-lg md:text-2xl text-static-white dark:text-static-white mb-8 md:mb-12 min-h-12 md:min-h-16 text-center backdrop-blur-sm p-3 md:p-4">
-          <div className="flex flex-col md:flex-row items-center justify-center">
-            <span className="mb-1 md:mb-0 md:mr-2">{subtitle}</span> 
-            <div className="flex items-center">
-              <span className="text-gilded-parchment dark:text-gilded-parchment">{typedText}</span>
-              <span className="animate-pulse text-static-white dark:text-static-white">|</span>
-            </div>
-          </div>
+        <div className="text-xl md:text-2xl text-static-white dark:text-static-white mb-12 min-h-16 text-center backdrop-blur-sm p-4">
+          <p>{subtitle} <span className="text-gilded-parchment dark:text-gilded-parchment">{typedText}</span><span className="animate-pulse text-static-white dark:text-static-white">|</span></p>
         </div>
         
         <div className="flex justify-center space-x-6">
@@ -231,6 +229,8 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
             </svg>
           </a>
         </div>
+        
+        
       </div>
     </section>
   );

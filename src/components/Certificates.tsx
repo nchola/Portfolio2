@@ -13,22 +13,30 @@ interface Certificate {
 const certificates: Certificate[] = [
   {
     id: 'cert1',
-    title: 'Flutter Mobile Development',
-    issuer: 'Dicoding Academy',
-    date: 'January 2022',
-    description: 'Completed comprehensive training in Flutter mobile app development',
-    link: '#'
+    title: 'Building Web Applications in PHP',
+    issuer: 'University of Michigan',
+    date: 'April 2024',
+    description: 'Mastered PHP fundamentals including syntax, arrays, error handling, and MySQL integration using XAMPP/MAMP development environments.',
+    link: 'https://coursera.org/verify/NXD6B8CYRVND'
   },
   {
     id: 'cert2',
-    title: 'Full Stack Web Development',
-    issuer: 'Udemy',
-    date: 'March 2022',
-    description: 'Mastered MERN stack development with practical projects',
-    link: '#'
+    title: 'Back End Development and APIs',
+    issuer: 'FreeCodeCamp',
+    date: 'March 2025',
+    description: 'Certified in Node.js, Express, MongoDB, and REST API development with JWT/OAuth security and five real-world projects.',
+    link: 'https://freecodecamp.org/certification/MuhammadNanda/back-end-development-and-apis'
   },
   {
     id: 'cert3',
+    title: 'Database Management with MySQL',
+    issuer: 'Coursera',
+    date: 'August 2022',
+    description: 'Advanced database design, optimization and management',
+    link: '#'
+  },
+  {
+    id: 'cert4',
     title: 'Database Management with MySQL',
     issuer: 'Coursera',
     date: 'August 2022',

@@ -135,7 +135,7 @@ const Footer: React.FC = () => {
                     icon={Phone}
                     label="Phone"
                     value="(+62)85382581084"
-                    link="tel:+6285382581084"
+                    link="https://wa.link/5dp8wb"
                   />
                   
                   <ContactItem 
