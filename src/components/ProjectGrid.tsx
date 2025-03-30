@@ -1,11 +1,10 @@
-
 import React from 'react';
 import { projects } from '@/data/projects';
 import ProjectCard from './ProjectCard';
 
 const ProjectGrid: React.FC = () => {
   return (
-    <section id="projects" className="section bg-static-white dark:bg-void-black">
+    <section id="projects" className="section portfolio-section bg-static-white dark:bg-void-black">
       <div className="container">
         <div className="mb-12">
           <span className="inline-block text-xs uppercase tracking-wider text-quantum-gray dark:text-static-white/70 mb-2">

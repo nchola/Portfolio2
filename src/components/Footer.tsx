@@ -4,38 +4,6 @@ import { Instagram, Linkedin, AtSign, Phone, MapPin, Github } from 'lucide-react
 import { cn } from '@/lib/utils';
 import { Card } from './ui/card';
 
-interface ContactItemProps {
-  icon: React.ElementType;
-  label: string;
-  value: string;
-  link: string;
-  color?: string;
-}
-
-const ContactItem: React.FC<ContactItemProps> = ({ icon: Icon, label, value, link, color }) => {
-  return (
-    <a 
-      href={link}
-      target="_blank" 
-      rel="noopener noreferrer"
-      className="group block p-3 hover:scale-105 transition-all duration-500 ease-in-out"
-    >
-      <div className="flex items-center gap-3 p-3 bg-quantum-gray/10 dark:bg-void-black/30 rounded-lg border border-transparent hover:border-gilded-parchment/30 transition-all duration-500">
-        <div className="flex-shrink-0">
-          <Icon className="w-5 h-5 text-quantum-gray/70 dark:text-static-white/70 group-hover:text-gilded-parchment transition-colors duration-500 ease-in-out" style={color ? { color } : {}} />
-        </div>
-        <div className="flex flex-col">
-          <span className="text-xs text-quantum-gray/60 dark:text-static-white/60">{label}</span>
-          <span className="text-sm font-medium text-quantum-gray dark:text-static-white/80 group-hover:text-gilded-parchment transition-colors duration-500 relative">
-            {value}
-            <span className="absolute left-0 bottom-0 w-0 h-px bg-gilded-parchment group-hover:w-full transition-all duration-500 ease-in-out"></span>
-          </span>
-        </div>
-      </div>
-    </a>
-  );
-};
-
 const Footer: React.FC = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
@@ -55,7 +23,7 @@ const Footer: React.FC = () => {
   return (
     <footer 
       id="footer" 
-      className="relative py-16 bg-static-white dark:bg-void-black border-t border-quantum-gray/10 dark:border-static-white/10 overflow-hidden"
+      className="relative py-10 bg-static-white dark:bg-void-black border-t border-quantum-gray/10 dark:border-static-white/10 overflow-hidden"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
@@ -93,11 +61,8 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo/Initial Section */}
           <div className="flex items-center justify-center md:justify-start">
-            <div className="relative w-24 h-24 flex items-center justify-center overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-gilded-parchment/30 to-quantum-gray/20 dark:from-gilded-parchment/20 dark:to-static-white/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative z-10 text-4xl font-cormorant font-bold text-quantum-gray dark:text-static-white transform group-hover:rotate-12 group-hover:scale-110 transition-transform duration-500">
-                NC
-              </div>
+            <div className="text-4xl font-cormorant font-bold text-quantum-gray dark:text-static-white transform group-hover:rotate-12 group-hover:scale-110 transition-transform duration-500">
+              NC
             </div>
           </div>
 
@@ -109,51 +74,25 @@ const Footer: React.FC = () => {
                   Let's connect!
                 </h2>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                  <ContactItem 
-                    icon={Instagram}
-                    label="Instagram"
-                    value="@nndncholaa"
-                    link="https://www.instagram.com/nndncholaa/"
-                    color="#E1306C"
-                  />
-                  
-                  <ContactItem 
-                    icon={Linkedin}
-                    label="LinkedIn"
-                    value="mhmmdnanda"
-                    link="https://www.linkedin.com/in/mhmmdnanda/"
-                    color="#0A66C2"
-                  />
-                  
-                  <ContactItem 
-                    icon={Github}
-                    label="GitHub"
-                    value="nandaxx"
-                    link="https://github.com/nandaxx"
-                  />
-                  
-                  <ContactItem 
-                    icon={AtSign}
-                    label="Email"
-                    value="nchola@mhs.mdp.ac.id"
-                    link="mailto:nchola@mhs.mdp.ac.id"
-                  />
-                  
-                  <ContactItem 
-                    icon={Phone}
-                    label="Phone"
-                    value="(+62)85382581084"
-                    link="tel:+6285382581084"
-                  />
-                  
-                  <ContactItem 
-                    icon={MapPin}
-                    label="Location"
-                    value="Palembang, Indonesia"
-                    link="https://maps.google.com/?q=Palembang,Indonesia"
-                    color="#EA4335"
-                  />
+                <div className="flex flex-col space-y-2">
+                  <a href="https://www.instagram.com/nndncholaa/" className="text-quantum-gray hover:text-gilded-parchment dark:text-static-white/80 dark:hover:text-gilded-parchment transition-colors duration-300">
+                    Instagram: @nndncholaa
+                  </a>
+                  <a href="https://www.linkedin.com/in/mhmmdnanda/" className="text-quantum-gray hover:text-gilded-parchment dark:text-static-white/80 dark:hover:text-gilded-parchment transition-colors duration-300">
+                    LinkedIn: mhmmdnanda
+                  </a>
+                  <a href="https://github.com/nandaxx" className="text-quantum-gray hover:text-gilded-parchment dark:text-static-white/80 dark:hover:text-gilded-parchment transition-colors duration-300">
+                    GitHub: nandaxx
+                  </a>
+                  <a href="mailto:nchola@mhs.mdp.ac.id" className="text-quantum-gray hover:text-gilded-parchment dark:text-static-white/80 dark:hover:text-gilded-parchment transition-colors duration-300">
+                    Email: nchola@mhs.mdp.ac.id
+                  </a>
+                  <a href="tel:+6285382581084" className="text-quantum-gray hover:text-gilded-parchment dark:text-static-white/80 dark:hover:text-gilded-parchment transition-colors duration-300">
+                    Phone: (+62)85382581084
+                  </a>
+                  <div className="text-quantum-gray dark:text-static-white/80">
+                    Location: Palembang, Indonesia
+                  </div>
                 </div>
               </div>
 

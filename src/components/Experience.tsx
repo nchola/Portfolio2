@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface WorkExperience {
@@ -39,7 +38,7 @@ const experiences: WorkExperience[] = [
 
 const Experience: React.FC = () => {
   return (
-    <section id="experience" className="section bg-void-black dark:bg-static-white">
+    <section id="experience" className="section portfolio-section bg-void-black dark:bg-static-white">
       <div className="container">
         <div className="mb-12">
           <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">

@@ -1,9 +1,8 @@
-
 import React from 'react';
 
 const About: React.FC = () => {
   return (
-    <section id="about" className="section bg-static-white/5 dark:bg-quantum-gray/5">
+    <section id="about" className="section portfolio-section bg-static-white/5 dark:bg-quantum-gray/5">
       <div className="container">
         <div className="mb-12">
           <span className="inline-block text-xs uppercase tracking-wider text-quantum-gray dark:text-static-white/70 mb-2">
