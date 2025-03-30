@@ -8,6 +8,7 @@ import DarkModeToggle from '@/components/DarkModeToggle';
 import About from '@/components/About';
 import Certificates from '@/components/Certificates';
 import Experience from '@/components/Experience';
+import Footer from '@/components/Footer';
 
 const sections = [
   { id: 'hero', label: 'Home' },
@@ -16,6 +17,7 @@ const sections = [
   { id: 'certificates', label: 'Certificates' },
   { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },
+  { id: 'footer', label: 'Contact' },
 ];
 
 const Index: React.FC = () => {
@@ -34,6 +36,7 @@ const Index: React.FC = () => {
         <Certificates />
         <ProjectGrid />
         <SkillsMatrix />
+        <Footer />
       </main>
       
       <DarkModeToggle />

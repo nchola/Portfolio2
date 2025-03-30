@@ -33,10 +33,13 @@ const DarkModeToggle: React.FC = () => {
     <button
       onClick={toggleDarkMode}
       className={cn(
-        "fixed bottom-6 right-6 z-50 rounded-full p-3 shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gilded-parchment",
+        "fixed bottom-6 right-6 z-50 rounded-full p-4 shadow-lg transition-all duration-300 focus:outline-none",
+        "hover:transform hover:scale-110",
+        "border border-gilded-parchment/30",
+        "focus:ring-2 focus:ring-gilded-parchment",
         darkMode 
-          ? "bg-static-white text-void-black" 
-          : "bg-void-black text-static-white"
+          ? "bg-void-black/80 text-static-white backdrop-blur-md" 
+          : "bg-static-white/80 text-void-black backdrop-blur-md"
       )}
       aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
       title={darkMode ? "Switch to light mode" : "Switch to dark mode"}
@@ -45,7 +48,7 @@ const DarkModeToggle: React.FC = () => {
         {darkMode ? "Switch to light mode" : "Switch to dark mode"}
       </span>
       <div className="relative w-6 h-6">
-        {/* Sun icon for light mode */}
+        {/* Sun icon for dark mode (shown when in dark mode to switch to light) */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className={cn(
@@ -63,7 +66,7 @@ const DarkModeToggle: React.FC = () => {
             d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
           />
         </svg>
-        {/* Moon icon for dark mode */}
+        {/* Moon icon for light mode (shown when in light mode to switch to dark) */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className={cn(
