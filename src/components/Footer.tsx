@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Instagram, Linkedin, AtSign, Phone, MapPin, Github } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -12,21 +11,22 @@ interface ContactItemProps {
   color?: string;
 }
 
+// Redesigned contact item for better space utilization on mobile
 const ContactItem: React.FC<ContactItemProps> = ({ icon: Icon, label, value, link, color }) => {
   return (
     <a 
       href={link}
       target="_blank" 
       rel="noopener noreferrer"
-      className="group block p-3 hover:scale-105 transition-all duration-500 ease-in-out"
+      className="group block transition-all duration-500 ease-in-out"
     >
-      <div className="flex items-center gap-3 p-3 bg-quantum-gray/10 dark:bg-void-black/30 rounded-lg border border-transparent hover:border-gilded-parchment/30 transition-all duration-500">
+      <div className="flex items-center gap-2 p-2 md:p-3 bg-quantum-gray/10 dark:bg-void-black/30 rounded-lg border border-transparent hover:border-gilded-parchment/30 transition-all duration-500">
         <div className="flex-shrink-0">
-          <Icon className="w-5 h-5 text-quantum-gray/70 dark:text-static-white/70 group-hover:text-gilded-parchment transition-colors duration-500 ease-in-out" style={color ? { color } : {}} />
+          <Icon className="w-4 h-4 md:w-5 md:h-5 text-quantum-gray/70 dark:text-static-white/70 group-hover:text-gilded-parchment transition-colors duration-500 ease-in-out" style={color ? { color } : {}} />
         </div>
         <div className="flex flex-col">
           <span className="text-xs text-quantum-gray/60 dark:text-static-white/60">{label}</span>
-          <span className="text-sm font-medium text-quantum-gray dark:text-static-white/80 group-hover:text-gilded-parchment transition-colors duration-500 relative">
+          <span className="text-xs md:text-sm font-medium text-quantum-gray dark:text-static-white/80 group-hover:text-gilded-parchment transition-colors duration-500 relative truncate">
             {value}
             <span className="absolute left-0 bottom-0 w-0 h-px bg-gilded-parchment group-hover:w-full transition-all duration-500 ease-in-out"></span>
           </span>
@@ -55,13 +55,13 @@ const Footer: React.FC = () => {
   return (
     <footer 
       id="footer" 
-      className="relative py-16 bg-static-white dark:bg-void-black border-t border-quantum-gray/10 dark:border-static-white/10 overflow-hidden"
+      className="relative py-8 md:py-16 bg-static-white dark:bg-void-black border-t border-quantum-gray/10 dark:border-static-white/10 overflow-hidden"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
       {/* Parallax Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(10)].map((_, i) => (
           <div 
             key={i}
             className="cosmic-star"
@@ -77,10 +77,10 @@ const Footer: React.FC = () => {
         ))}
       </div>
 
-      {/* Custom Cursor */}
+      {/* Custom Cursor - Only visible on desktop */}
       <div 
         className={cn(
-          "fixed w-6 h-6 rounded-full pointer-events-none z-50 mix-blend-difference transition-transform duration-300 ease-out",
+          "fixed w-6 h-6 rounded-full pointer-events-none z-50 mix-blend-difference transition-transform duration-300 ease-out hidden md:block",
           isHovering ? "bg-static-white/40 scale-150" : "bg-static-white/20 scale-100"
         )}
         style={{ 
@@ -89,18 +89,18 @@ const Footer: React.FC = () => {
         }}
       ></div>
 
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">          
-
-          {/* Contact Grid Section */}
-          <div className="lg:col-span-3">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 gap-6">          
+          {/* Contact Grid Section - Improved for mobile */}
+          <div>
             <Card className="bg-static-white/50 dark:bg-void-black/50 border border-quantum-gray/10 dark:border-static-white/10 backdrop-blur-sm overflow-hidden">
-              <div className="p-4">
-                <h2 className="text-2xl font-cormorant font-bold text-quantum-gray dark:text-static-white mb-4 text-center md:text-left">
+              <div className="p-3 md:p-4">
+                <h2 className="text-xl md:text-2xl font-cormorant font-bold text-quantum-gray dark:text-static-white mb-3 md:mb-4 text-center">
                   Let's connect!
                 </h2>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {/* Improved grid for mobile - 2 columns on mobile, 3 on larger screens */}
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
                   <ContactItem 
                     icon={Instagram}
                     label="Instagram"
@@ -141,23 +141,23 @@ const Footer: React.FC = () => {
                   <ContactItem 
                     icon={MapPin}
                     label="Location"
-                    value="Palembang, Indonesia"
+                    value="Palembang, ID"
                     link="https://maps.google.com/?q=Palembang,Indonesia"
                     color="#EA4335"
                   />
                 </div>
               </div>
 
-              {/* Footer Bottom */}
-              <div className="py-4 px-6 border-t border-quantum-gray/10 dark:border-static-white/10 flex flex-col md:flex-row items-center justify-between bg-quantum-gray/5 dark:bg-static-white/5">
-                <p className="text-quantum-gray/60 dark:text-static-white/60 text-sm">
-                  &copy; {new Date().getFullYear()} Muhammad Nanda. All rights reserved.
+              {/* Footer Bottom - Simplified for mobile */}
+              <div className="py-3 md:py-4 px-4 md:px-6 border-t border-quantum-gray/10 dark:border-static-white/10 flex flex-col md:flex-row items-center justify-between bg-quantum-gray/5 dark:bg-static-white/5">
+                <p className="text-quantum-gray/60 dark:text-static-white/60 text-xs md:text-sm">
+                  &copy; {new Date().getFullYear()} Muhammad Nanda
                 </p>
                 
-                {/* Geolocation Badge */}
-                <div className="mt-2 md:mt-0 flex items-center text-xs text-quantum-gray/50 dark:text-static-white/50">
+                {/* Geolocation Badge - Simpler on mobile */}
+                <div className="mt-1 md:mt-0 flex items-center text-xs text-quantum-gray/50 dark:text-static-white/50">
                   <span className="inline-block w-2 h-2 rounded-full bg-gilded-parchment mr-1 animate-pulse"></span>
-                  Browsing from <span className="font-medium ml-1">Palembang, ID</span>
+                  <span className="font-medium">Palembang, ID</span>
                 </div>
               </div>
             </Card>
