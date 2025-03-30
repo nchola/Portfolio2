@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import ProjectGrid from '@/components/ProjectGrid';
@@ -9,7 +9,6 @@ import About from '@/components/About';
 import Certificates from '@/components/Certificates';
 import Experience from '@/components/Experience';
 import Footer from '@/components/Footer';
-import { initScrollAnimations } from '@/utils/animationUtils';
 
 const sections = [
   { id: 'hero', label: 'Home' },
@@ -22,10 +21,6 @@ const sections = [
 ];
 
 const Index: React.FC = () => {
-  useEffect(() => {
-    initScrollAnimations();
-  }, []);
-
   return (
     <>
       <Navigation sections={sections} />

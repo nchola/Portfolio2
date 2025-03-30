@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 interface Certificate {
@@ -38,7 +39,7 @@ const certificates: Certificate[] = [
 
 const Certificates: React.FC = () => {
   return (
-    <section id="certificates" className="section portfolio-section bg-static-white dark:bg-void-black">
+    <section id="certificates" className="section bg-static-white dark:bg-void-black">
       <div className="container">
         <div className="mb-12">
           <span className="inline-block text-xs uppercase tracking-wider text-quantum-gray/70 dark:text-static-white/70 mb-2">
