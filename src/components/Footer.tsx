@@ -55,43 +55,10 @@ const Footer: React.FC = () => {
   return (
     <footer 
       id="footer" 
-      className="relative py-8 md:py-16 bg-static-white dark:bg-void-black border-t border-quantum-gray/10 dark:border-static-white/10 overflow-hidden"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      className="relative py-8 md:py-16 overflow-hidden"
     >
-      {/* Parallax Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(10)].map((_, i) => (
-          <div 
-            key={i}
-            className="cosmic-star"
-            style={{
-              width: `${Math.random() * 3 + 1}px`,
-              height: `${Math.random() * 3 + 1}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${Math.random() * 10 + 5}s`
-            }}
-          ></div>
-        ))}
-      </div>
-
-      {/* Custom Cursor - Only visible on desktop */}
-      <div 
-        className={cn(
-          "fixed w-6 h-6 rounded-full pointer-events-none z-50 mix-blend-difference transition-transform duration-300 ease-out hidden md:block",
-          isHovering ? "bg-static-white/40 scale-150" : "bg-static-white/20 scale-100"
-        )}
-        style={{ 
-          transform: `translate(${cursorPosition.x - 12}px, ${cursorPosition.y - 12}px)`,
-          backdropFilter: "blur(2px)"
-        }}
-      ></div>
-
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 gap-6">          
-          {/* Contact Grid Section - Improved for mobile */}
           <div>
             <Card className="bg-static-white/50 dark:bg-void-black/50 border border-quantum-gray/10 dark:border-static-white/10 backdrop-blur-sm overflow-hidden">
               <div className="p-3 md:p-4">
@@ -99,7 +66,7 @@ const Footer: React.FC = () => {
                   Let's connect!
                 </h2>
                 
-                {/* Improved grid for mobile - 2 columns on mobile, 3 on larger screens */}
+                {/* Keep existing grid of contact items the same */}
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
                   <ContactItem 
                     icon={Instagram}
@@ -148,13 +115,12 @@ const Footer: React.FC = () => {
                 </div>
               </div>
 
-              {/* Footer Bottom - Simplified for mobile */}
+              {/* Keep existing footer bottom section the same */}
               <div className="py-3 md:py-4 px-4 md:px-6 border-t border-quantum-gray/10 dark:border-static-white/10 flex flex-col md:flex-row items-center justify-between bg-quantum-gray/5 dark:bg-static-white/5">
                 <p className="text-quantum-gray/60 dark:text-static-white/60 text-xs md:text-sm">
                   &copy; {new Date().getFullYear()} Muhammad Nanda
                 </p>
                 
-                {/* Geolocation Badge - Simpler on mobile */}
                 <div className="mt-1 md:mt-0 flex items-center text-xs text-quantum-gray/50 dark:text-static-white/50">
                   <span className="inline-block w-2 h-2 rounded-full bg-gilded-parchment mr-1 animate-pulse"></span>
                   <span className="font-medium">Palembang, ID</span>
@@ -165,7 +131,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
       
-      {/* Mobile Floating Action Button */}
+      {/* Keep existing mobile floating action button */}
       <a
         href="mailto:nchola@mhs.mdp.ac.id"
         className="md:hidden fixed bottom-6 right-6 w-12 h-12 rounded-full bg-gilded-parchment flex items-center justify-center shadow-lg z-20"
