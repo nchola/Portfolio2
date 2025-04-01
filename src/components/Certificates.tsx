@@ -29,19 +29,163 @@ const certificates: Certificate[] = [
   },
   {
     id: 'cert3',
-    title: 'Database Management with MySQL',
-    issuer: 'Coursera',
-    date: 'August 2022',
-    description: 'Advanced database design, optimization and management',
-    link: '#'
+    title: 'Introduction to Back-End Development',
+    issuer: 'Meta',
+    date: 'April 2024',
+    description: 'Distinguished between front-end, back-end, and full-stack development.',
+    link: 'https://coursera.org/verify/9Y6UNTUQXPBY'
   },
   {
     id: 'cert4',
-    title: 'Database Management with MySQL',
-    issuer: 'Coursera',
-    date: 'August 2022',
-    description: 'Advanced database design, optimization and management',
-    link: '#'
+    title: 'Problem Solving (Intermediate)',
+    issuer: 'HackerRank',
+    date: 'August 2024',
+    description: 'It covers topics of Data Structures (such as HashMaps, Stacks and Queues) and Algorithms (such as Optimal Solutions).',
+    link: 'https://www.hackerrank.com/certificates/ae6941f35c0b'
+  },
+  {
+    id: 'cert5',
+    title: 'Frontend Developer (React)',
+    issuer: 'HackerRank',
+    date: 'July 2024',
+    description: 'It covers topics like React, CSS, and JavaScript.',
+    link: 'https://www.hackerrank.com/certificates/82fecaefa3c4'
+  },
+  {
+    id: 'cert6',
+    title: 'Rest API (Intermediate)',
+    issuer: 'HackerRank',
+    date: 'July 2024',
+    description: 'It covers topics like getting data from an API and process using parameters or paging.',
+    link: 'https://www.hackerrank.com/certificates/ea574087a548'
+  },
+  {
+    id: 'cert7',
+    title: 'SQL (Advanced)',
+    issuer: 'HackerRank',
+    date: 'July 2024',
+    description: 'It covers topics like query optimization, data modeling, Indexing, window functions, and pivots in SQL.',
+    link: 'https://www.hackerrank.com/certificates/d5e1611ab888'
+  },
+  {
+    id: 'cert8',
+    title: 'Software Engineer',
+    issuer: 'HackerRank',
+    date: 'July 2024',
+    description: 'It covers topics like Problem solving, SQL, and REST API.',
+    link: 'https://www.hackerrank.com/certificates/296d3826c94f'
+  },
+  {
+    id: 'cert9',
+    title: 'SQL (Intermediate)',
+    issuer: 'HackerRank',
+    date: 'July 2024',
+    description: 'It includes complex joins, unions, and sub-queries.',
+    link: 'https://www.hackerrank.com/certificates/5b9112e28389'
+  },
+  {
+    id: 'cert10',
+    title: 'Software Engineer Intern',
+    issuer: 'HackerRank',
+    date: 'July 2024',
+    description: 'It covers topics like Problem solving and SQL.',
+    link: 'https://www.hackerrank.com/certificates/9928225c8a33'
+  },
+  {
+    id: 'cert',
+    title: '',
+    issuer: '',
+    date: '2024',
+    description: '',
+    link: ''
+  },
+  {
+    id: 'cert',
+    title: '',
+    issuer: '',
+    date: '2024',
+    description: '',
+    link: ''
+  },
+  {
+    id: 'cert',
+    title: '',
+    issuer: '',
+    date: '2024',
+    description: '',
+    link: ''
+  },
+  {
+    id: 'cert',
+    title: '',
+    issuer: '',
+    date: '2024',
+    description: '',
+    link: ''
+  },
+  {
+    id: 'cert',
+    title: '',
+    issuer: '',
+    date: '2024',
+    description: '',
+    link: ''
+  },
+  {
+    id: 'cert',
+    title: '',
+    issuer: '',
+    date: '2024',
+    description: '',
+    link: ''
+  },
+  {
+    id: 'cert',
+    title: '',
+    issuer: '',
+    date: '2024',
+    description: '',
+    link: ''
+  },
+  {
+    id: 'cert',
+    title: '',
+    issuer: '',
+    date: '2024',
+    description: '',
+    link: ''
+  },
+  {
+    id: 'cert',
+    title: '',
+    issuer: '',
+    date: '2024',
+    description: '',
+    link: ''
+  },
+  {
+    id: 'cert',
+    title: '',
+    issuer: '',
+    date: '2024',
+    description: '',
+    link: ''
+  },
+  {
+    id: 'cert',
+    title: '',
+    issuer: '',
+    date: '2024',
+    description: '',
+    link: ''
+  },
+  {
+    id: 'cert',
+    title: '',
+    issuer: '',
+    date: '2024',
+    description: '',
+    link: ''
   }
 ];
 
