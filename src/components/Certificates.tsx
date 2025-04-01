@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 
 interface Certificate {
   id: string;
@@ -62,7 +63,7 @@ const Certificates: React.FC = () => {
           {certificates.map((certificate) => (
             <div 
               key={certificate.id}
-              className="bg-quantum-gray/5 dark:bg-static-white/5 backdrop-blur-sm border border-gilded-parchment/20 p-6 rounded-md transition-all duration-300 hover:border-gilded-parchment/40 hover:shadow-lg"
+              className="bg-quantum-gray/5 dark:bg-static-white/5 backdrop-blur-sm border border-gilded-parchment/20 p-6 rounded-md transition-all duration-300 hover:border-gilded-parchment/40 hover:shadow-lg flex flex-col h-full"
             >
               <div className="flex items-start mb-4">
                 <div className="w-10 h-10 bg-gilded-parchment/20 rounded-full flex items-center justify-center text-gilded-parchment mr-4">
@@ -77,9 +78,11 @@ const Certificates: React.FC = () => {
                 </div>
               </div>
               
-              <p className="text-sm text-void-black/80 dark:text-static-white/80 mb-4">{certificate.description}</p>
+              <div className="flex-grow flex items-center justify-center">
+                <p className="text-sm text-center text-void-black/80 dark:text-static-white/80">{certificate.description}</p>
+              </div>
               
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center mt-4 pt-4 border-t border-gilded-parchment/10">
                 <span className="text-xs text-void-black/60 dark:text-static-white/60">{certificate.date}</span>
                 {certificate.link && (
                   <a 
