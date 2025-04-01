@@ -6,6 +6,8 @@ export interface Project {
   category: string;
   technologies: string[];
   thumbnailSrc: string;
+  mediaType: 'youtube' | 'image' | 'website'; // Define the type of media to display
+  viewUrl?: string; // URL for "View Project" link (different from thumbnailSrc for YouTube/website)
   gitMetadata: {
     commits: number;
     lastUpdated: string;
@@ -20,7 +22,9 @@ export const projects: Project[] = [
     description: 'A mobile-based forum application that allows users to learn languages through discussions and collaboration.',
     category: 'Mobile Application',
     technologies: ['Flutter', 'Firebase', 'Google Cloud Console'],
-    thumbnailSrc: 'https://www.youtube.com/watch?v=K3Vq_peTSTI',
+    thumbnailSrc: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1632&auto=format&fit=crop',
+    mediaType: 'youtube',
+    viewUrl: 'https://www.youtube.com/watch?v=K3Vq_peTSTI',
     gitMetadata: {
       commits: 47,
       lastUpdated: '2023-12-15',
@@ -34,6 +38,7 @@ export const projects: Project[] = [
     category: 'Web Application',
     technologies: ['Three.js', 'WebGL', 'React'],
     thumbnailSrc: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1170&auto=format&fit=crop',
+    mediaType: 'image',
     gitMetadata: {
       commits: 92,
       lastUpdated: '2023-11-03',
@@ -47,6 +52,8 @@ export const projects: Project[] = [
     category: 'Photography',
     technologies: ['HTML', 'CSS Grid', 'Vanilla JS'],
     thumbnailSrc: 'https://images.unsplash.com/photo-1517821099606-cef63a9bcda6?q=80&w=1176&auto=format&fit=crop',
+    mediaType: 'website',
+    viewUrl: 'https://example.com/photography-portfolio',
     gitMetadata: {
       commits: 24,
       lastUpdated: '2023-10-21',
@@ -60,6 +67,8 @@ export const projects: Project[] = [
     category: 'Web Design',
     technologies: ['React', 'Styled Components', 'GraphQL'],
     thumbnailSrc: 'https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?q=80&w=1170&auto=format&fit=crop',
+    mediaType: 'website',
+    viewUrl: 'https://example.com/brutalist-blog',
     gitMetadata: {
       commits: 63,
       lastUpdated: '2023-09-14',
@@ -73,6 +82,7 @@ export const projects: Project[] = [
     category: 'E-commerce',
     technologies: ['Next.js', 'Tailwind CSS', 'Stripe API'],
     thumbnailSrc: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1115&auto=format&fit=crop',
+    mediaType: 'image',
     gitMetadata: {
       commits: 118,
       lastUpdated: '2023-08-30',
@@ -86,6 +96,8 @@ export const projects: Project[] = [
     category: 'Data Visualization',
     technologies: ['D3.js', 'SVG', 'TypeScript'],
     thumbnailSrc: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=1170&auto=format&fit=crop',
+    mediaType: 'website',
+    viewUrl: 'https://example.com/data-viz',
     gitMetadata: {
       commits: 51,
       lastUpdated: '2023-07-22',
