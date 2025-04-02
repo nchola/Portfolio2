@@ -128,6 +128,8 @@ const SkillsMatrix: React.FC = () => {
           style={{ 
             height: `${containerDimensions.height}px`, 
             width: `${containerDimensions.width}px`,
+            paddingBottom: `${containerDimensions.height * 0.4}px`,
+            
           }}
         >
           {/* Orbit Paths - Perfectly centered */}
@@ -141,6 +143,7 @@ const SkillsMatrix: React.FC = () => {
                 left: '50%',
                 top: '50%',
                 transform: 'translate(-50%, -50%)',
+                marginBottom: `${containerDimensions.height * 0.3}px`
               }}
             />
           ))}

@@ -1,10 +1,17 @@
-
 import React, { useState, useEffect } from 'react';
 import { Instagram, Linkedin, AtSign, Phone, MapPin, Github } from 'lucide-react';
-import { Card } from './ui/card';
+import { Card } from '@/components/ui/card';
+
+interface ContactItem {
+  icon: React.ComponentType<any>;
+  label: string;
+  value: string;
+  link: string;
+  color?: string;
+}
 
 // Contact item data array for cleaner code
-const contactItems = [
+const contactItems: ContactItem[] = [
   {
     icon: Instagram,
     label: "Instagram",
@@ -47,20 +54,23 @@ const contactItems = [
 ];
 
 // Contact item component with improved responsive design
-const ContactItem = ({ icon: Icon, label, value, link, color }) => {
+const ContactItem: React.FC<ContactItem> = ({ icon: Icon, label, value, link, color }) => {
   return (
     <a 
       href={link}
       target="_blank" 
       rel="noopener noreferrer"
-      className="group flex items-center gap-2 p-2 md:p-3 bg-quantum-gray/10 dark:bg-void-black/30 rounded-lg border border-transparent hover:border-gilded-parchment/30 transition-all duration-500"
+      className="group flex items-center gap-2 p-2 md:p-3 bg-gray-800/10 dark:bg-gray-200/30 rounded-lg border border-transparent hover:border-amber-300/30 transition-all duration-500"
     >
       <div className="flex-shrink-0">
-        <Icon className="w-4 h-4 md:w-5 md:h-5 text-quantum-gray/70 dark:text-static-white/70 group-hover:text-gilded-parchment transition-colors duration-500" style={color ? { color } : {}} />
+        <Icon 
+          className="w-4 h-4 md:w-5 md:h-5 text-gray-500/70 dark:text-gray-100/70 group-hover:text-amber-300 transition-colors duration-500" 
+          style={color ? { color } : {}}
+        />
       </div>
       <div className="flex flex-col min-w-0">
-        <span className="text-xs text-quantum-gray/60 dark:text-static-white/60">{label}</span>
-        <span className="text-xs md:text-sm font-medium text-quantum-gray dark:text-static-white/80 group-hover:text-gilded-parchment transition-colors duration-500 truncate">
+        <span className="text-xs text-gray-500/60 dark:text-white/60">{label}</span>
+        <span className="text-xs md:text-sm font-medium text-gray-700 dark:text-white/80 group-hover:text-amber-300 transition-colors duration-500 truncate">
           {value}
         </span>
       </div>
@@ -68,7 +78,7 @@ const ContactItem = ({ icon: Icon, label, value, link, color }) => {
   );
 };
 
-const Footer = () => {
+const Footer: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
   
   // Update isMobile state based on window width
@@ -82,9 +92,9 @@ const Footer = () => {
   return (
     <footer id="footer" className="pt-6 pb-8 relative z-20">
       <div className="container mx-auto px-4 md:px-6">
-        <Card className="bg-static-white/50 dark:bg-void-black/50 border border-quantum-gray/10 dark:border-static-white/10 backdrop-blur-sm">
+        <Card className="bg-white/50 dark:bg-gray-900/50 border border-gray-200/10 dark:border-gray-700/10 backdrop-blur-sm">
           <div className="p-4 md:p-6">
-            <h2 className="text-xl md:text-2xl font-cormorant font-bold text-quantum-gray dark:text-static-white mb-4 text-center">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-4 text-center">
               Let's connect!
             </h2>
             
@@ -104,14 +114,14 @@ const Footer = () => {
           </div>
 
           {/* Footer bottom */}
-          <div className="py-3 md:py-4 px-4 md:px-6 border-t border-quantum-gray/10 dark:border-static-white/10 flex flex-col md:flex-row items-center justify-between bg-quantum-gray/5 dark:bg-static-white/5">
-            <p className="text-quantum-gray/60 dark:text-static-white/60 text-xs md:text-sm">
+          <div className="py-3 md:py-4 px-4 md:px-6 border-t border-gray-200/10 dark:border-gray-700/10 flex flex-col md:flex-row items-center justify-between bg-gray-100/5 dark:bg-white/5">
+            <p className="text-gray-500/60 dark:text-white/60 text-xs md:text-sm">
               &copy; {new Date().getFullYear()} Muhammad Nanda
             </p>
             
             {/* Location badge */}
-            <div className="mt-1 md:mt-0 flex items-center text-xs text-quantum-gray/50 dark:text-static-white/50">
-              <span className="inline-block w-2 h-2 rounded-full bg-gilded-parchment mr-1 animate-pulse"></span>
+            <div className="mt-1 md:mt-0 flex items-center text-xs text-gray-500/50 dark:text-white/50">
+              <span className="inline-block w-2 h-2 rounded-full bg-amber-300 mr-1 animate-pulse"></span>
               <span>Palembang, ID</span>
             </div>
           </div>
@@ -122,10 +132,10 @@ const Footer = () => {
       {isMobile && (
         <a
           href="mailto:nchola@mhs.mdp.ac.id"
-          className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-gilded-parchment flex items-center justify-center shadow-lg z-20"
+          className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-amber-300 flex items-center justify-center shadow-lg z-20"
         >
-          <AtSign className="text-void-black w-5 h-5" />
-          <span className="absolute inset-0 rounded-full bg-gilded-parchment animate-ping opacity-30"></span>
+          <AtSign className="text-gray-900 w-5 h-5" />
+          <span className="absolute inset-0 rounded-full bg-amber-300 animate-ping opacity-30"></span>
         </a>
       )}
     </footer>
