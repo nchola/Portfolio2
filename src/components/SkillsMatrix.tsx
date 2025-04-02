@@ -103,7 +103,7 @@ const SkillsMatrix: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="section py-20 md:py-32 bg-void-black dark:bg-static-white relative overflow-visible">
+    <section id="skills" className="section py-20 md:py-32 bg-void-black dark:bg-static-white relative overflow-visible" style={{ paddingBottom: '270px' }}>
       <div className="container relative z-10">
         <div className="mb-10 md:mb-16">
           <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
