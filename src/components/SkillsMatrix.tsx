@@ -106,9 +106,9 @@ const SkillsMatrix: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="section py-20 md:py-32 bg-void-black dark:bg-static-white relative overflow-visible mb-48 md:mb-32">
+    <section id="skills" className="section py-12 md:py-24 bg-void-black dark:bg-static-white relative overflow-visible">
       <div className="container relative z-10">
-        <div className="mb-10 md:mb-16">
+        <div className="mb-8 md:mb-12">
           <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
             Capabilities
           </span>
@@ -124,45 +124,52 @@ const SkillsMatrix: React.FC = () => {
         
         {/* Solar System Container - Properly centered with sufficient bottom margin */}
         <div 
-          className="relative mx-auto mb-28 md:mb-20 overflow-visible"
+          className="relative mx-auto mb-12 md:mb-16 overflow-visible flex items-center justify-center"
           style={{ 
             height: `${containerDimensions.height}px`, 
             width: `${containerDimensions.width}px`,
-            margin: '0 auto'
           }}
         >
-          {/* Sun/Center - Exact center using transform */}
-          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]">
-            <span className="text-void-black font-bold text-xs">Skills</span>
-          </div>
-          
-          {/* Orbit Paths - Perfectly centered with transform */}
+          {/* Orbit Paths - Perfectly centered */}
           {skills.map((skill) => (
             <div 
               key={`orbit-${skill.id}`}
-              className="absolute left-1/2 top-1/2 border border-gilded-parchment/20 rounded-full" 
+              className="absolute border border-gilded-parchment/20 rounded-full" 
               style={{
                 width: `${skill.orbitRadius * 2}px`,
                 height: `${skill.orbitRadius * 2}px`,
+                left: '50%',
+                top: '50%',
                 transform: 'translate(-50%, -50%)',
               }}
             />
           ))}
           
-          {/* Planets/Skills - Exact positioning relative to center */}
+          {/* Sun/Center - Exact center */}
+          <div className="absolute w-16 h-16 bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]"
+               style={{
+                 left: '50%',
+                 top: '50%',
+                 transform: 'translate(-50%, -50%)'
+               }}>
+            <span className="text-void-black font-bold text-xs">Skills</span>
+          </div>
+          
+          {/* Planets/Skills */}
           {skills.map((skill) => (
             <div
               key={skill.id}
               className={cn(
-                "absolute transform -translate-x-1/2 -translate-y-1/2 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer z-10",
+                "absolute rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer z-10",
                 getSkillColor(skill.type),
                 activeSkill?.id === skill.id ? "ring-2 ring-gilded-parchment scale-110 z-30" : ""
               )}
               style={{
                 width: `${skill.size * 2}px`,
                 height: `${skill.size * 2}px`,
-                left: orbits[skill.id]?.x || containerDimensions.width / 2,
-                top: orbits[skill.id]?.y || containerDimensions.height / 2,
+                left: orbits[skill.id]?.x || '50%',
+                top: orbits[skill.id]?.y || '50%',
+                transform: 'translate(-50%, -50%)',
                 transition: activeSkill?.id === skill.id ? 'all 0.3s ease' : 'none',
               }}
               onMouseEnter={() => setActiveSkill(skill)}
@@ -191,7 +198,7 @@ const SkillsMatrix: React.FC = () => {
             style={{
               top: `${star.top}%`,
               left: `${star.left}%`,
-              opacity: 0, // Start with opacity 0
+              opacity: 0,
               animation: `starBlink ${star.animationDuration}s ease-in-out infinite ${star.delay}s`,
             }}
           >

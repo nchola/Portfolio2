@@ -58,11 +58,10 @@ const ContactItem = ({ icon: Icon, label, value, link, color }) => {
       <div className="flex-shrink-0">
         <Icon className="w-4 h-4 md:w-5 md:h-5 text-quantum-gray/70 dark:text-static-white/70 group-hover:text-gilded-parchment transition-colors duration-500" style={color ? { color } : {}} />
       </div>
-      <div className="flex flex-col min-w-0"> {/* min-w-0 fixes text truncation */}
+      <div className="flex flex-col min-w-0">
         <span className="text-xs text-quantum-gray/60 dark:text-static-white/60">{label}</span>
         <span className="text-xs md:text-sm font-medium text-quantum-gray dark:text-static-white/80 group-hover:text-gilded-parchment transition-colors duration-500 truncate">
           {value}
-          <span className="absolute left-0 bottom-0 w-0 h-px bg-gilded-parchment group-hover:w-full transition-all duration-500 ease-in-out"></span>
         </span>
       </div>
     </a>
@@ -81,7 +80,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer id="footer" className="pt-12 pb-8 relative z-20">
+    <footer id="footer" className="pt-6 pb-8 relative z-20">
       <div className="container mx-auto px-4 md:px-6">
         <Card className="bg-static-white/50 dark:bg-void-black/50 border border-quantum-gray/10 dark:border-static-white/10 backdrop-blur-sm">
           <div className="p-4 md:p-6">
@@ -89,7 +88,7 @@ const Footer = () => {
               Let's connect!
             </h2>
             
-            {/* 2 rows of 3 items on all screen sizes */}
+            {/* Always 2 rows of 3 items on all screen sizes */}
             <div className="grid grid-cols-3 gap-2 md:gap-3">
               {contactItems.map((item, index) => (
                 <ContactItem 

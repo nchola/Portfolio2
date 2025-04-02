@@ -1,5 +1,6 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import ProjectGrid from '@/components/ProjectGrid';
@@ -21,6 +22,25 @@ const sections = [
 ];
 
 const Index: React.FC = () => {
+  const location = useLocation();
+
+  // Handle navigation to section from URL hash
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.substring(1);
+      const element = document.getElementById(id);
+      
+      if (element) {
+        setTimeout(() => {
+          window.scrollTo({
+            top: element.offsetTop - 80, // Adjust for header height
+            behavior: 'smooth'
+          });
+        }, 100);
+      }
+    }
+  }, [location]);
+
   return (
     <>
       <Navigation sections={sections} />
@@ -35,7 +55,7 @@ const Index: React.FC = () => {
         <Experience />
         <Certificates />
         <ProjectGrid />
-        <div className="relative overflow-visible"> {/* Container to properly position Skills and Footer */}
+        <div className="relative">
           <SkillsMatrix />
           <Footer />
         </div>
