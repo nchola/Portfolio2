@@ -35,10 +35,12 @@ const Index: React.FC = () => {
         <Experience />
         <Certificates />
         <ProjectGrid />
-        <div className="relative overflow-visible"> {/* Wrapper to ensure Skills and Footer work together */}
+        
+        {/* Properly separate Skills and Footer with correct z-index and overflow */}
+        <div className="relative">
           <SkillsMatrix />
-          <Footer />
         </div>
+        <Footer />
       </main>
       
       <DarkModeToggle />

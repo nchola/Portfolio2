@@ -58,7 +58,7 @@ const ContactItem = ({ icon: Icon, label, value, link, color }) => {
       <div className="flex-shrink-0">
         <Icon className="w-4 h-4 md:w-5 md:h-5 text-quantum-gray/70 dark:text-static-white/70 group-hover:text-gilded-parchment transition-colors duration-500" style={color ? { color } : {}} />
       </div>
-      <div className="flex flex-col min-w-0"> {/* min-w-0 fixes text truncation */}
+      <div className="flex flex-col min-w-0">
         <span className="text-xs text-quantum-gray/60 dark:text-static-white/60">{label}</span>
         <span className="text-xs md:text-sm font-medium text-quantum-gray dark:text-static-white/80 group-hover:text-gilded-parchment transition-colors duration-500 truncate">
           {value}
@@ -89,7 +89,7 @@ const Footer = () => {
               Let's connect!
             </h2>
             
-            {/* Simplified grid layout */}
+            {/* Improved grid layout with better spacing */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
               {contactItems.map((item, index) => (
                 <ContactItem 

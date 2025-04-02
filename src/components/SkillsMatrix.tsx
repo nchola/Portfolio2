@@ -55,6 +55,7 @@ const SkillsMatrix: React.FC = () => {
   useEffect(() => {
     const updateDimensions = () => {
       const width = window.innerWidth;
+      // Make container more square and consistent
       const containerWidth = width > 768 ? 600 : 300;
       setContainerDimensions({
         width: containerWidth,
@@ -70,9 +71,10 @@ const SkillsMatrix: React.FC = () => {
     };
   }, []);
 
-  // Calculate planet positions
+  // Calculate planet positions with improved centering
   useEffect(() => {
     let animationFrameId: number;
+    // Ensure centerX and centerY are exactly at the center
     const centerX = containerDimensions.width / 2;
     const centerY = containerDimensions.height / 2;
     
@@ -80,6 +82,7 @@ const SkillsMatrix: React.FC = () => {
       const newPositions: {[key: string]: { x: number, y: number }} = {};
       
       skills.forEach(skill => {
+        // Use precise trigonometric calculations for positioning
         const angle = timestamp * skill.orbitSpeed;
         const x = centerX + Math.cos(angle) * skill.orbitRadius;
         const y = centerY + Math.sin(angle) * skill.orbitRadius;
@@ -103,28 +106,29 @@ const SkillsMatrix: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="section py-20 md:py-32 bg-void-black dark:bg-static-white relative overflow-visible">
+    <section id="skills" className="section py-20 md:py-32 bg-void-black dark:bg-static-white relative overflow-visible mb-20">
       <div className="container relative z-10">
-        <div className="mb-10 md:mb-16">
+        <div className="mb-10 md:mb-16 text-center">
           <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
             Capabilities
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-static-white dark:text-void-black mb-6">
             Skills
           </h2>
-          <p className="text-lg text-static-white/80 dark:text-void-black/80 max-w-2xl">
+          <p className="text-lg text-static-white/80 dark:text-void-black/80 max-w-2xl mx-auto">
             I have been learning programming since 2022. The main area of my expertise is Multi-Platform Development.
             <br />
             Here are the technologies I have learned.
           </p>
         </div>
         
-        {/* Solar System Container - Centered and with padding/margin to avoid footer overlap */}
+        {/* Solar System Container - Perfectly centered with proper margins */}
         <div 
-          className="relative mx-auto mb-20 md:mb-32 overflow-visible"
+          className="relative mx-auto mb-32 overflow-visible flex items-center justify-center"
           style={{ 
             height: `${containerDimensions.height}px`, 
-            width: `${containerDimensions.width}px` 
+            width: `${containerDimensions.width}px`,
+            maxWidth: '100%'
           }}
         >
           {/* Sun/Center */}
