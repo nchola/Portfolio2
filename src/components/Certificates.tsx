@@ -1,6 +1,14 @@
 
 import React from 'react';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Award, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Certificate {
   id: string;
@@ -11,6 +19,7 @@ interface Certificate {
   link?: string;
 }
 
+// Filter out empty certificates
 const certificates: Certificate[] = [
   {
     id: 'cert1',
@@ -91,104 +100,46 @@ const certificates: Certificate[] = [
     date: 'July 2024',
     description: 'It covers topics like Problem solving and SQL.',
     link: 'https://www.hackerrank.com/certificates/9928225c8a33'
-  },
-  {
-    id: 'cert',
-    title: '',
-    issuer: '',
-    date: '2024',
-    description: '',
-    link: ''
-  },
-  {
-    id: 'cert',
-    title: '',
-    issuer: '',
-    date: '2024',
-    description: '',
-    link: ''
-  },
-  {
-    id: 'cert',
-    title: '',
-    issuer: '',
-    date: '2024',
-    description: '',
-    link: ''
-  },
-  {
-    id: 'cert',
-    title: '',
-    issuer: '',
-    date: '2024',
-    description: '',
-    link: ''
-  },
-  {
-    id: 'cert',
-    title: '',
-    issuer: '',
-    date: '2024',
-    description: '',
-    link: ''
-  },
-  {
-    id: 'cert',
-    title: '',
-    issuer: '',
-    date: '2024',
-    description: '',
-    link: ''
-  },
-  {
-    id: 'cert',
-    title: '',
-    issuer: '',
-    date: '2024',
-    description: '',
-    link: ''
-  },
-  {
-    id: 'cert',
-    title: '',
-    issuer: '',
-    date: '2024',
-    description: '',
-    link: ''
-  },
-  {
-    id: 'cert',
-    title: '',
-    issuer: '',
-    date: '2024',
-    description: '',
-    link: ''
-  },
-  {
-    id: 'cert',
-    title: '',
-    issuer: '',
-    date: '2024',
-    description: '',
-    link: ''
-  },
-  {
-    id: 'cert',
-    title: '',
-    issuer: '',
-    date: '2024',
-    description: '',
-    link: ''
-  },
-  {
-    id: 'cert',
-    title: '',
-    issuer: '',
-    date: '2024',
-    description: '',
-    link: ''
   }
-];
+].filter(cert => cert.title !== '');
+
+const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
+  return (
+    <div 
+      className="bg-quantum-gray/5 dark:bg-static-white/5 backdrop-blur-sm border border-gilded-parchment/20 p-6 rounded-md transition-all duration-300 hover:border-gilded-parchment/40 hover:shadow-lg flex flex-col h-full"
+    >
+      <div className="flex items-start mb-4">
+        <div className="w-10 h-10 bg-gilded-parchment/20 rounded-full flex items-center justify-center text-gilded-parchment mr-4">
+          <Award className="w-5 h-5" />
+        </div>
+        <div>
+          <h3 className="text-xl font-bold text-void-black dark:text-static-white">{certificate.title}</h3>
+          <p className="text-gilded-parchment">{certificate.issuer}</p>
+        </div>
+      </div>
+      
+      <div className="flex-grow flex items-center justify-center">
+        <p className="text-sm text-center text-void-black/80 dark:text-static-white/80">
+          {certificate.description}
+        </p>
+      </div>
+      
+      <div className="flex justify-between items-center mt-4 pt-4 border-t border-gilded-parchment/10">
+        <span className="text-xs text-void-black/60 dark:text-static-white/60">{certificate.date}</span>
+        {certificate.link && (
+          <a 
+            href={certificate.link} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-sm text-gilded-parchment hover:underline"
+          >
+            View Certificate
+          </a>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const Certificates: React.FC = () => {
   return (
@@ -201,46 +152,51 @@ const Certificates: React.FC = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-void-black dark:text-static-white">
             Certificates
           </h2>
+          <p className="mt-4 text-quantum-gray/80 dark:text-static-white/80 max-w-2xl mx-auto">
+            Swipe through my professional certifications and achievements
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {certificates.map((certificate) => (
-            <div 
-              key={certificate.id}
-              className="bg-quantum-gray/5 dark:bg-static-white/5 backdrop-blur-sm border border-gilded-parchment/20 p-6 rounded-md transition-all duration-300 hover:border-gilded-parchment/40 hover:shadow-lg flex flex-col h-full"
-            >
-              <div className="flex items-start mb-4">
-                <div className="w-10 h-10 bg-gilded-parchment/20 rounded-full flex items-center justify-center text-gilded-parchment mr-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="8" r="6"></circle>
-                    <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-void-black dark:text-static-white">{certificate.title}</h3>
-                  <p className="text-gilded-parchment">{certificate.issuer}</p>
-                </div>
+        <div className="relative px-4 py-8">
+          {/* Floating decorative elements */}
+          <div className="absolute top-0 left-0 w-24 h-24 bg-gilded-parchment/10 rounded-full blur-3xl animate-float z-0"></div>
+          <div className="absolute bottom-0 right-0 w-32 h-32 bg-gilded-parchment/10 rounded-full blur-3xl animate-float z-0" style={{ animationDelay: '2s' }}></div>
+          
+          <Carousel
+            opts={{ 
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {certificates.map((certificate) => (
+                <CarouselItem key={certificate.id} className="pl-2 md:pl-4 sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+                  <CertificateCard certificate={certificate} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex items-center justify-center gap-4 mt-8">
+              <CarouselPrevious className="relative inset-auto left-0 translate-y-0" />
+              <div className="flex items-center gap-1">
+                {Array.from({ length: Math.ceil(certificates.length / 4) }).map((_, index) => (
+                  <div 
+                    key={index} 
+                    className="w-2 h-2 rounded-full bg-gilded-parchment/40"
+                  />
+                ))}
               </div>
-              
-              <div className="flex-grow flex items-center justify-center">
-                <p className="text-sm text-center text-void-black/80 dark:text-static-white/80">{certificate.description}</p>
-              </div>
-              
-              <div className="flex justify-between items-center mt-4 pt-4 border-t border-gilded-parchment/10">
-                <span className="text-xs text-void-black/60 dark:text-static-white/60">{certificate.date}</span>
-                {certificate.link && (
-                  <a 
-                    href={certificate.link} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-sm text-gilded-parchment hover:underline"
-                  >
-                    View Certificate
-                  </a>
-                )}
-              </div>
+              <CarouselNext className="relative inset-auto right-0 translate-y-0" />
             </div>
-          ))}
+          </Carousel>
+
+          <div className="flex justify-center mt-12">
+            <ScrollArea className="max-h-36 border border-gilded-parchment/10 rounded-md p-4 w-full max-w-lg bg-quantum-gray/5 dark:bg-static-white/5 backdrop-blur-sm">
+              <p className="text-sm italic text-center text-quantum-gray dark:text-static-white/80">
+                "Continuous learning has been key to my professional growth. These certificates represent my commitment to staying current with technologies and methodologies in the ever-evolving tech landscape."
+              </p>
+            </ScrollArea>
+          </div>
         </div>
       </div>
     </section>
