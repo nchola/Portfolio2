@@ -49,12 +49,32 @@ const stars = generateStars(70);
 const SkillsMatrix: React.FC = () => {
   const [activeSkill, setActiveSkill] = useState<Skill | null>(null);
   const [orbits, setOrbits] = useState<{[key: string]: { x: number, y: number }}>({}); 
+  const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
+
+  // Calculate container dimensions and update on resize
+  useEffect(() => {
+    const updateDimensions = () => {
+      const width = window.innerWidth;
+      const containerWidth = width > 768 ? 600 : 300;
+      setContainerDimensions({
+        width: containerWidth,
+        height: containerWidth
+      });
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    
+    return () => {
+      window.removeEventListener('resize', updateDimensions);
+    };
+  }, []);
 
   // Calculate planet positions
   useEffect(() => {
     let animationFrameId: number;
-    const centerX = window.innerWidth > 768 ? 300 : 150; // Adjust center based on viewport
-    const centerY = window.innerWidth > 768 ? 300 : 150;
+    const centerX = containerDimensions.width / 2;
+    const centerY = containerDimensions.height / 2;
     
     const updatePositions = (timestamp: number) => {
       const newPositions: {[key: string]: { x: number, y: number }} = {};
@@ -75,7 +95,7 @@ const SkillsMatrix: React.FC = () => {
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [containerDimensions]);
 
   // Function to determine color based on skill type
   const getSkillColor = (type: 'technical' | 'conceptual') => {
@@ -83,9 +103,9 @@ const SkillsMatrix: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="section py-32 bg-void-black dark:bg-static-white relative overflow-hidden">
+    <section id="skills" className="section py-20 md:py-32 bg-void-black dark:bg-static-white relative overflow-visible">
       <div className="container relative z-10">
-        <div className="mb-16">
+        <div className="mb-10 md:mb-16">
           <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
             Capabilities
           </span>
@@ -99,8 +119,14 @@ const SkillsMatrix: React.FC = () => {
           </p>
         </div>
         
-        {/* Solar System Container */}
-        <div className="relative h-[600px] md:h-[600px] mx-auto max-w-3xl">
+        {/* Solar System Container - Centered and with padding/margin to avoid footer overlap */}
+        <div 
+          className="relative mx-auto mb-20 md:mb-32 overflow-visible"
+          style={{ 
+            height: `${containerDimensions.height}px`, 
+            width: `${containerDimensions.width}px` 
+          }}
+        >
           {/* Sun/Center */}
           <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]">
             <span className="text-void-black font-bold text-xs">Skills</span>
