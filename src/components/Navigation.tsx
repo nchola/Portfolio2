@@ -45,8 +45,12 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
+      // Use smooth scroll with offset to account for fixed header
+      const yOffset = -80; 
+      const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+      
       window.scrollTo({
-        top: element.offsetTop,
+        top: y,
         behavior: 'smooth'
       });
     }

@@ -81,7 +81,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer id="footer" className="pt-12 pb-8 relative z-10">
+    <footer id="footer" className="pt-12 pb-8 relative z-20">
       <div className="container mx-auto px-4 md:px-6">
         <Card className="bg-static-white/50 dark:bg-void-black/50 border border-quantum-gray/10 dark:border-static-white/10 backdrop-blur-sm">
           <div className="p-4 md:p-6">
@@ -89,8 +89,8 @@ const Footer = () => {
               Let's connect!
             </h2>
             
-            {/* Simplified grid layout */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
+            {/* 2 rows of 3 items on all screen sizes */}
+            <div className="grid grid-cols-3 gap-2 md:gap-3">
               {contactItems.map((item, index) => (
                 <ContactItem 
                   key={index}

@@ -55,7 +55,8 @@ const SkillsMatrix: React.FC = () => {
   useEffect(() => {
     const updateDimensions = () => {
       const width = window.innerWidth;
-      const containerWidth = width > 768 ? 600 : 300;
+      // Adjust container size for mobile
+      const containerWidth = width > 768 ? 600 : Math.min(width - 40, 300);
       setContainerDimensions({
         width: containerWidth,
         height: containerWidth
@@ -70,9 +71,10 @@ const SkillsMatrix: React.FC = () => {
     };
   }, []);
 
-  // Calculate planet positions
+  // Calculate planet positions with improved centering
   useEffect(() => {
     let animationFrameId: number;
+    // Ensure centerX and centerY are exactly half of container dimensions
     const centerX = containerDimensions.width / 2;
     const centerY = containerDimensions.height / 2;
     
@@ -81,6 +83,7 @@ const SkillsMatrix: React.FC = () => {
       
       skills.forEach(skill => {
         const angle = timestamp * skill.orbitSpeed;
+        // Calculate positions relative to exact center
         const x = centerX + Math.cos(angle) * skill.orbitRadius;
         const y = centerY + Math.sin(angle) * skill.orbitRadius;
         newPositions[skill.id] = { x, y };
@@ -103,7 +106,7 @@ const SkillsMatrix: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="section py-20 md:py-32 bg-void-black dark:bg-static-white relative overflow-visible" style={{ paddingBottom: '270px' }}>
+    <section id="skills" className="section py-20 md:py-32 bg-void-black dark:bg-static-white relative overflow-visible mb-48 md:mb-32">
       <div className="container relative z-10">
         <div className="mb-10 md:mb-16">
           <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
@@ -119,20 +122,21 @@ const SkillsMatrix: React.FC = () => {
           </p>
         </div>
         
-        {/* Solar System Container - Centered and with padding/margin to avoid footer overlap */}
+        {/* Solar System Container - Properly centered with sufficient bottom margin */}
         <div 
-          className="relative mx-auto mb-20 md:mb-32 overflow-visible"
+          className="relative mx-auto mb-28 md:mb-20 overflow-visible"
           style={{ 
             height: `${containerDimensions.height}px`, 
-            width: `${containerDimensions.width}px` 
+            width: `${containerDimensions.width}px`,
+            margin: '0 auto'
           }}
         >
-          {/* Sun/Center */}
+          {/* Sun/Center - Exact center using transform */}
           <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]">
             <span className="text-void-black font-bold text-xs">Skills</span>
           </div>
           
-          {/* Orbit Paths - Render circles for orbits */}
+          {/* Orbit Paths - Perfectly centered with transform */}
           {skills.map((skill) => (
             <div 
               key={`orbit-${skill.id}`}
@@ -145,7 +149,7 @@ const SkillsMatrix: React.FC = () => {
             />
           ))}
           
-          {/* Planets/Skills */}
+          {/* Planets/Skills - Exact positioning relative to center */}
           {skills.map((skill) => (
             <div
               key={skill.id}
@@ -157,8 +161,8 @@ const SkillsMatrix: React.FC = () => {
               style={{
                 width: `${skill.size * 2}px`,
                 height: `${skill.size * 2}px`,
-                left: orbits[skill.id]?.x || 0,
-                top: orbits[skill.id]?.y || 0,
+                left: orbits[skill.id]?.x || containerDimensions.width / 2,
+                top: orbits[skill.id]?.y || containerDimensions.height / 2,
                 transition: activeSkill?.id === skill.id ? 'all 0.3s ease' : 'none',
               }}
               onMouseEnter={() => setActiveSkill(skill)}
