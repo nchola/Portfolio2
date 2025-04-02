@@ -1,5 +1,4 @@
-
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Project } from '@/data/projects';
 import { cn } from '@/lib/utils';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
@@ -14,6 +13,21 @@ interface ProjectCardProps {
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  // State for current image index in carousel
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  // For this to work, we need to modify the Project interface to include multiple images
+  // This assumes project has an 'images' array containing image URLs
+  const images = project.images || [project.thumbnailSrc];
+
+  // Auto-cycle through images
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 3000); // Change image every 3 seconds
+    
+    return () => clearInterval(interval);
+  }, [images.length]);
 
   useEffect(() => {
     const card = cardRef.current;
@@ -82,11 +96,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
     >
       <div className="h-full w-full relative">
         <AspectRatio ratio={16/9} className="h-full">
-          <img 
-            src={project.thumbnailSrc}
-            alt={project.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
+          <div className="relative w-full h-full">
+            {/* Images for carousel */}
+            {images.map((imgSrc, index) => (
+              <img 
+                key={index}
+                src={imgSrc}
+                alt={`${project.title} - ${index + 1}`}
+                className={cn(
+                  "absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500",
+                  index === currentImageIndex ? "opacity-100" : "opacity-0"
+                )}
+              />
+            ))}
+          </div>
         </AspectRatio>
         
         <div className="absolute inset-0 bg-gradient-to-t from-void-black to-transparent opacity-70"></div>
@@ -115,6 +138,25 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
                 </span>
               ))}
             </div>
+            
+            {/* Image carousel indicators */}
+            {images.length > 1 && (
+              <div className="flex gap-1 mt-3 justify-center">
+                {images.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={cn(
+                      "w-2 h-2 rounded-full transition-all",
+                      index === currentImageIndex 
+                        ? "bg-gilded-parchment" 
+                        : "bg-static-white/40"
+                    )}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
+                ))}
+              </div>
+            )}
             
             {/* Media link/preview */}
             {(project.viewUrl || project.mediaType === 'image') && (
@@ -148,7 +190,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
                       ) : (
                         <AspectRatio ratio={16/9}>
                           <img 
-                            src={project.thumbnailSrc} 
+                            src={images[currentImageIndex]} 
                             alt={project.title}
                             className="w-full h-full object-cover" 
                           />

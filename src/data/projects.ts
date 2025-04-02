@@ -6,8 +6,9 @@ export interface Project {
   category: string;
   technologies: string[];
   thumbnailSrc: string;
-  mediaType: 'youtube' | 'image' | 'website'; // Define the type of media to display
-  viewUrl?: string; // URL for "View Project" link (different from thumbnailSrc for YouTube/website)
+  images?: string[];
+  mediaType: 'youtube' | 'image' | 'website';
+  viewUrl?: string;
   gitMetadata: {
     commits: number;
     lastUpdated: string;
@@ -23,6 +24,20 @@ export const projects: Project[] = [
     category: 'Mobile Application',
     technologies: ['Flutter', 'Firebase', 'Google Cloud Console'],
     thumbnailSrc: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1632&auto=format&fit=crop',
+    images: [
+      "/projects/polyglotpath/Loginscreen.png",
+      "/projects/polyglotpath/SignupScreen.png",
+      "/projects/polyglotpath/Homescreen.png",
+      "/projects/polyglotpath/Favoritescreen.png",
+      "/projects/polyglotpath/Communityforum.png",
+      "/projects/polyglotpath/ForumPageScreen.png",
+      "/projects/polyglotpath/ForumDetailScreen.png",
+      "/projects/polyglotpath/detailScreen1-levelScreen.png",
+      "/projects/polyglotpath/detailScreen2-lessonScreen.png",
+      "/projects/polyglotpath/GeminiAI-ChatScreen.png",
+      "/projects/polyglotpath/Profilescreen.png",
+      "/projects/polyglotpath/EditProfilescreen.png"
+    ],
     mediaType: 'youtube',
     viewUrl: 'https://www.youtube.com/watch?v=K3Vq_peTSTI',
     gitMetadata: {
@@ -33,11 +48,20 @@ export const projects: Project[] = [
   },
   {
     id: 'project-2',
-    title: 'Architectural Visualization Tool',
+    title: 'Frontend Anime Catalog',
     description: 'Real-time 3D visualization tool for architectural concepts',
     category: 'Web Application',
-    technologies: ['Three.js', 'WebGL', 'React'],
+    technologies: ['React', 'Typescript', 'Tailwind CSS','Shadcn UI','Supabase'],
     thumbnailSrc: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1170&auto=format&fit=crop',
+    images: [
+      "/projects/anime-cyber-hub/home.png",
+      "/projects/anime-cyber-hub/animelist.png",
+      "/projects/anime-cyber-hub/animedetail.png",
+      "/projects/anime-cyber-hub/loading.png",
+      "/projects/anime-cyber-hub/searchsuggestion.png",
+      "/projects/anime-cyber-hub/footer&genre.png",
+    ],
+    viewUrl: 'https://anime-cyber-hub.vercel.app/',
     mediaType: 'image',
     gitMetadata: {
       commits: 92,
@@ -83,6 +107,20 @@ export const projects: Project[] = [
     technologies: ['Next.js', 'Tailwind CSS', 'Stripe API'],
     thumbnailSrc: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1115&auto=format&fit=crop',
     mediaType: 'image',
+    images: [
+      "/projects/polyglotpath/Loginscreen.png",
+      "/projects/polyglotpath/SignupScreen.png",
+      "/projects/polyglotpath/Homescreen.png",
+      "/projects/polyglotpath/Favoritescreen.png",
+      "/projects/polyglotpath/Communityforum.png",
+      "/projects/polyglotpath/ForumPageScreen.png",
+      "/projects/polyglotpath/ForumDetailScreen.png",
+      "/projects/polyglotpath/detailScreen1-levelScreen.png",
+      "/projects/polyglotpath/detailScreen2-lessonScreen.png",
+      "/projects/polyglotpath/GeminiAI-ChatScreen.png",
+      "/projects/polyglotpath/Profilescreen.png",
+      "/projects/polyglotpath/EditProfilescreen.png"
+    ],
     gitMetadata: {
       commits: 118,
       lastUpdated: '2023-08-30',
