@@ -1,9 +1,8 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Instagram, Linkedin, AtSign, Phone, MapPin, Github } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 
-// Contact data
+// Contact item data array for cleaner code
 const contactItems = [
   {
     icon: Instagram,
@@ -46,21 +45,21 @@ const contactItems = [
   }
 ];
 
-// Contact item component
+// Contact item component with improved responsive design
 const ContactItem = ({ icon: Icon, label, value, link, color }) => {
   return (
     <a 
       href={link}
       target="_blank" 
       rel="noopener noreferrer"
-      className="group flex items-center gap-2 p-3 bg-quantum-gray/10 dark:bg-void-black/30 rounded-lg border border-transparent hover:border-gilded-parchment/30 transition-all duration-300"
+      className="group flex items-center gap-2 p-2 md:p-3 bg-quantum-gray/10 dark:bg-void-black/30 rounded-lg border border-transparent hover:border-gilded-parchment/30 transition-all duration-500"
     >
       <div className="flex-shrink-0">
-        <Icon className="w-5 h-5 text-quantum-gray/70 dark:text-static-white/70 group-hover:text-gilded-parchment transition-colors duration-300" style={color ? { color } : {}} />
+        <Icon className="w-4 h-4 md:w-5 md:h-5 text-quantum-gray/70 dark:text-static-white/70 group-hover:text-gilded-parchment transition-colors duration-500" style={color ? { color } : {}} />
       </div>
       <div className="flex flex-col min-w-0">
         <span className="text-xs text-quantum-gray/60 dark:text-static-white/60">{label}</span>
-        <span className="text-sm font-medium text-quantum-gray dark:text-static-white/80 group-hover:text-gilded-parchment transition-colors duration-300 truncate">
+        <span className="text-xs md:text-sm font-medium text-quantum-gray dark:text-static-white/80 group-hover:text-gilded-parchment transition-colors duration-500 truncate">
           {value}
         </span>
       </div>
@@ -69,8 +68,18 @@ const ContactItem = ({ icon: Icon, label, value, link, color }) => {
 };
 
 const Footer = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Update isMobile state based on window width
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
-    <footer id="footer" className="pt-6 pb-8 bg-transparent relative z-20">
+    <footer id="footer" className="pt-6 pb-8 relative z-20">
       <div className="container mx-auto px-4 md:px-6">
         <Card className="bg-static-white/50 dark:bg-void-black/50 border border-quantum-gray/10 dark:border-static-white/10 backdrop-blur-sm">
           <div className="p-4 md:p-6">
@@ -78,8 +87,8 @@ const Footer = () => {
               Let's connect!
             </h2>
             
-            {/* Contact Grid - Always display in 2 rows of 3 items */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {/* Always 2 rows of 3 items on all screen sizes */}
+            <div className="grid grid-cols-3 gap-2 md:gap-3">
               {contactItems.map((item, index) => (
                 <ContactItem 
                   key={index}
@@ -108,14 +117,16 @@ const Footer = () => {
         </Card>
       </div>
       
-      {/* Mobile Floating Action Button */}
-      <a
-        href="mailto:nchola@mhs.mdp.ac.id"
-        className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-gilded-parchment flex items-center justify-center shadow-lg z-20 md:hidden"
-      >
-        <AtSign className="text-void-black w-5 h-5" />
-        <span className="absolute inset-0 rounded-full bg-gilded-parchment animate-ping opacity-30"></span>
-      </a>
+      {/* Mobile Floating Action Button - only show on mobile */}
+      {isMobile && (
+        <a
+          href="mailto:nchola@mhs.mdp.ac.id"
+          className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-gilded-parchment flex items-center justify-center shadow-lg z-20"
+        >
+          <AtSign className="text-void-black w-5 h-5" />
+          <span className="absolute inset-0 rounded-full bg-gilded-parchment animate-ping opacity-30"></span>
+        </a>
+      )}
     </footer>
   );
 };
