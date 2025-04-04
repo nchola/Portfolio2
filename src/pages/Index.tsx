@@ -24,7 +24,7 @@ const sections = [
 const Index: React.FC = () => {
   const location = useLocation();
 
-  // Section navigation
+  // Handle navigation to section from URL hash
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.substring(1);
@@ -42,10 +42,10 @@ const Index: React.FC = () => {
   }, [location]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-static-white to-static-white/50 dark:from-void-black dark:to-void-black/90">
+    <>
       <Navigation sections={sections} />
       
-      <main className="relative">
+      <main className="min-h-screen">
         <Hero 
           title="Muhammad Nanda" 
           subtitle="I'm"
@@ -55,12 +55,14 @@ const Index: React.FC = () => {
         <Experience />
         <Certificates />
         <ProjectGrid />
-        <SkillsMatrix />
-        <Footer />
+        <div className="relative">
+          <SkillsMatrix />
+          <Footer />
+        </div>
       </main>
       
       <DarkModeToggle />
-    </div>
+    </>
   );
 };
 
