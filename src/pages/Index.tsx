@@ -24,7 +24,7 @@ const sections = [
 const Index: React.FC = () => {
   const location = useLocation();
 
-  // Handle navigation to section from URL hash
+  // Improved section navigation
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.substring(1);
@@ -45,7 +45,7 @@ const Index: React.FC = () => {
     <>
       <Navigation sections={sections} />
       
-      <main className="min-h-screen">
+      <main className="relative min-h-screen">
         <Hero 
           title="Muhammad Nanda" 
           subtitle="I'm"
@@ -55,6 +55,8 @@ const Index: React.FC = () => {
         <Experience />
         <Certificates />
         <ProjectGrid />
+        
+        {/* Wrap both SkillsMatrix and Footer in a div to ensure proper scrolling */}
         <div className="relative">
           <SkillsMatrix />
           <Footer />

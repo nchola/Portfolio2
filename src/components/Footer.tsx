@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { Instagram, Linkedin, AtSign, Phone, MapPin, Github } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 
-// Contact item data array for cleaner code
+// Contact data
 const contactItems = [
   {
     icon: Instagram,
@@ -45,7 +46,7 @@ const contactItems = [
   }
 ];
 
-// Contact item component with improved responsive design
+// Contact item component
 const ContactItem = ({ icon: Icon, label, value, link, color }) => {
   return (
     <a 
@@ -70,7 +71,6 @@ const ContactItem = ({ icon: Icon, label, value, link, color }) => {
 const Footer = () => {
   const [isMobile, setIsMobile] = useState(false);
   
-  // Update isMobile state based on window width
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
@@ -79,7 +79,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer id="footer" className="pt-6 pb-8 relative z-20">
+    <footer id="footer" className="pt-6 pb-8 bg-transparent relative z-20">
       <div className="container mx-auto px-4 md:px-6">
         <Card className="bg-static-white/50 dark:bg-void-black/50 border border-quantum-gray/10 dark:border-static-white/10 backdrop-blur-sm">
           <div className="p-4 md:p-6">
@@ -87,7 +87,7 @@ const Footer = () => {
               Let's connect!
             </h2>
             
-            {/* Always 2 rows of 3 items on all screen sizes */}
+            {/* Always display in 2 rows of 3 items */}
             <div className="grid grid-cols-3 gap-2 md:gap-3">
               {contactItems.map((item, index) => (
                 <ContactItem 

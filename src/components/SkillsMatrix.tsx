@@ -10,9 +10,9 @@ interface Skill {
   type: 'technical' | 'conceptual';
   description: string;
   level: number; // 1-5
-  orbitRadius: number; // Radius of orbit path
-  orbitSpeed: number; // Speed of rotation
-  size: number; // Size of the planet
+  orbitRadius: number;
+  orbitSpeed: number;
+  size: number;
 }
 
 const skills: Skill[] = [
@@ -31,7 +31,7 @@ const skills: Skill[] = [
   { id: 'python', name: 'Python', type: 'conceptual', description: '70%', level: 3, orbitRadius: 560, orbitSpeed: 0.00018, size: 24 },
 ];
 
-// Generate blinking stars data
+// Generate stars for background
 const generateStars = (count: number) => {
   return Array.from({ length: count }).map((_, i) => ({
     id: `star-${i}`,
@@ -51,12 +51,10 @@ const SkillsMatrix: React.FC = () => {
   const [orbits, setOrbits] = useState<{[key: string]: { x: number, y: number }}>({}); 
   const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
 
-  // Calculate container dimensions and update on resize
+  // Update dimensions on resize
   useEffect(() => {
     const updateDimensions = () => {
-      const width = window.innerWidth;
-      // Adjust container size for mobile
-      const containerWidth = width > 768 ? 600 : Math.min(width - 40, 300);
+      const containerWidth = window.innerWidth > 768 ? 600 : Math.min(window.innerWidth - 40, 300);
       setContainerDimensions({
         width: containerWidth,
         height: containerWidth
@@ -71,10 +69,9 @@ const SkillsMatrix: React.FC = () => {
     };
   }, []);
 
-  // Calculate planet positions with improved centering
+  // Calculate orbit positions
   useEffect(() => {
     let animationFrameId: number;
-    // Ensure centerX and centerY are exactly half of container dimensions
     const centerX = containerDimensions.width / 2;
     const centerY = containerDimensions.height / 2;
     
@@ -83,7 +80,6 @@ const SkillsMatrix: React.FC = () => {
       
       skills.forEach(skill => {
         const angle = timestamp * skill.orbitSpeed;
-        // Calculate positions relative to exact center
         const x = centerX + Math.cos(angle) * skill.orbitRadius;
         const y = centerY + Math.sin(angle) * skill.orbitRadius;
         newPositions[skill.id] = { x, y };
@@ -100,15 +96,18 @@ const SkillsMatrix: React.FC = () => {
     };
   }, [containerDimensions]);
 
-  // Function to determine color based on skill type
+  // Get skill color based on type
   const getSkillColor = (type: 'technical' | 'conceptual') => {
     return type === 'technical' ? 'bg-quantum-gray text-static-white' : 'bg-gilded-parchment text-void-black';
   };
 
   return (
-    <section id="skills" className="section py-12 md:py-24 bg-void-black dark:bg-static-white relative overflow-visible">
-      <div className="container relative z-10">
-        <div className="mb-8 md:mb-12">
+    <section 
+      id="skills" 
+      className="relative py-24 bg-void-black dark:bg-static-white overflow-hidden"
+    >
+      <div className="container mx-auto relative z-10">
+        <div className="mb-12">
           <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
             Capabilities
           </span>
@@ -122,77 +121,79 @@ const SkillsMatrix: React.FC = () => {
           </p>
         </div>
         
-        {/* Solar System Container - Properly centered with sufficient bottom margin */}
-        <div 
-          className="relative mx-auto mb-12 md:mb-16 overflow-visible flex items-center justify-center"
-          style={{ 
-            height: `${containerDimensions.height}px`, 
-            width: `${containerDimensions.width}px`,
-            paddingBottom: `${containerDimensions.height * 0.4}px`,
+        {/* Solar System Container with explicit bottom margin */}
+        <div className="flex justify-center items-center mb-32">
+          <div 
+            className="relative"
+            style={{ 
+              height: `${containerDimensions.height}px`, 
+              width: `${containerDimensions.width}px`
+            }}
+          >
+            {/* Orbit Paths */}
+            {skills.map((skill) => (
+              <div 
+                key={`orbit-${skill.id}`}
+                className="absolute border border-gilded-parchment/20 rounded-full" 
+                style={{
+                  width: `${skill.orbitRadius * 2}px`,
+                  height: `${skill.orbitRadius * 2}px`,
+                  left: '50%',
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)'
+                }}
+              />
+            ))}
             
-          }}
-        >
-          {/* Orbit Paths - Perfectly centered */}
-          {skills.map((skill) => (
+            {/* Center Sun */}
             <div 
-              key={`orbit-${skill.id}`}
-              className="absolute border border-gilded-parchment/20 rounded-full" 
+              className="absolute w-16 h-16 bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]"
               style={{
-                width: `${skill.orbitRadius * 2}px`,
-                height: `${skill.orbitRadius * 2}px`,
                 left: '50%',
                 top: '50%',
-                transform: 'translate(-50%, -50%)',
-                marginBottom: `${containerDimensions.height * 0.3}px`
+                transform: 'translate(-50%, -50%)'
               }}
-            />
-          ))}
-          
-          {/* Sun/Center - Exact center */}
-          <div className="absolute w-16 h-16 bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]"
-               style={{
-                 left: '50%',
-                 top: '50%',
-                 transform: 'translate(-50%, -50%)'
-               }}>
-            <span className="text-void-black font-bold text-xs">Skills</span>
-          </div>
-          
-          {/* Planets/Skills */}
-          {skills.map((skill) => (
-            <div
-              key={skill.id}
-              className={cn(
-                "absolute rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer z-10",
-                getSkillColor(skill.type),
-                activeSkill?.id === skill.id ? "ring-2 ring-gilded-parchment scale-110 z-30" : ""
-              )}
-              style={{
-                width: `${skill.size * 2}px`,
-                height: `${skill.size * 2}px`,
-                left: orbits[skill.id]?.x || '50%',
-                top: orbits[skill.id]?.y || '50%',
-                transform: 'translate(-50%, -50%)',
-                transition: activeSkill?.id === skill.id ? 'all 0.3s ease' : 'none',
-              }}
-              onMouseEnter={() => setActiveSkill(skill)}
-              onMouseLeave={() => setActiveSkill(null)}
             >
-              <span className="text-xs font-medium">{skill.name}</span>
-              
-              {activeSkill?.id === skill.id && (
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3 bg-void-black dark:bg-static-white text-static-white dark:text-void-black px-3 py-2 rounded-md text-xs whitespace-nowrap z-40 flex flex-col items-center">
-                  <span className="font-bold mb-1">{skill.name}</span>
-                  <Progress value={parseInt(skill.description)} className="w-20 h-2" />
-                  <span className="mt-1">{skill.description}</span>
-                </div>
-              )}
+              <span className="text-void-black font-bold text-xs">Skills</span>
             </div>
-          ))}
+            
+            {/* Skills Planets */}
+            {skills.map((skill) => (
+              <div
+                key={skill.id}
+                className={cn(
+                  "absolute rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer z-10",
+                  getSkillColor(skill.type),
+                  activeSkill?.id === skill.id ? "ring-2 ring-gilded-parchment scale-110 z-30" : ""
+                )}
+                style={{
+                  width: `${skill.size * 2}px`,
+                  height: `${skill.size * 2}px`,
+                  left: orbits[skill.id]?.x || '50%',
+                  top: orbits[skill.id]?.y || '50%',
+                  transform: 'translate(-50%, -50%)',
+                  transition: activeSkill?.id === skill.id ? 'all 0.3s ease' : 'none',
+                }}
+                onMouseEnter={() => setActiveSkill(skill)}
+                onMouseLeave={() => setActiveSkill(null)}
+              >
+                <span className="text-xs font-medium">{skill.name}</span>
+                
+                {/* Tooltip */}
+                {activeSkill?.id === skill.id && (
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3 bg-void-black dark:bg-static-white text-static-white dark:text-void-black px-3 py-2 rounded-md text-xs whitespace-nowrap z-40 flex flex-col items-center">
+                    <span className="font-bold mb-1">{skill.name}</span>
+                    <Progress value={parseInt(skill.description)} className="w-20 h-2" />
+                    <span className="mt-1">{skill.description}</span>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       
-      {/* Blinking stars background */}
+      {/* Background stars */}
       <div className="absolute inset-0 overflow-hidden">
         {stars.map((star) => (
           <div 
