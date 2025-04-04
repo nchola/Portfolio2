@@ -1,218 +1,95 @@
 
 import React, { useState, useEffect } from 'react';
-import { cn } from '@/lib/utils';
+import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Star } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface Skill {
-  id: string;
   name: string;
-  type: 'technical' | 'conceptual';
-  description: string;
-  level: number; // 1-5
-  orbitRadius: number;
-  orbitSpeed: number;
-  size: number;
+  level: number;
+  category: 'frontend' | 'backend' | 'tools' | 'other';
 }
 
 const skills: Skill[] = [
-  // Technical skills
-  { id: 'flutter', name: 'Flutter', type: 'technical', description: '80%', level: 4, orbitRadius: 120, orbitSpeed: 0.0015, size: 25 },
-  { id: 'dart', name: 'Dart', type: 'technical', description: '75%', level: 4, orbitRadius: 160, orbitSpeed: 0.002, size: 20 },
-  { id: 'mongodb', name: 'MongoDB', type: 'technical', description: '70%', level: 3, orbitRadius: 200, orbitSpeed: 0.0018, size: 22 },
-  { id: 'mysql', name: 'MySQL', type: 'technical', description: '75%', level: 4, orbitRadius: 240, orbitSpeed: 0.0016, size: 24 },
-  { id: 'expressjs', name: 'ExpressJS', type: 'technical', description: '80%', level: 4, orbitRadius: 280, orbitSpeed: 0.0014, size: 25 },
-  { id: 'html', name: 'HTML', type: 'technical', description: '75%', level: 4, orbitRadius: 320, orbitSpeed: 0.0012, size: 22 },
-  { id: 'css', name: 'CSS', type: 'technical', description: '65%', level: 3, orbitRadius: 360, orbitSpeed: 0.001, size: 20 },
-  { id: 'javascript', name: 'JavaScript', type: 'conceptual', description: '70%', level: 3, orbitRadius: 400, orbitSpeed: 0.0008, size: 26 },
-  { id: 'laravel', name: 'Laravel', type: 'conceptual', description: '70%', level: 3, orbitRadius: 440, orbitSpeed: 0.0006, size: 21 },
-  { id: 'nodejs', name: 'NodeJS', type: 'conceptual', description: '55%', level: 3, orbitRadius: 480, orbitSpeed: 0.0004, size: 23 },
-  { id: 'php', name: 'PHP', type: 'conceptual', description: '60%', level: 3, orbitRadius: 520, orbitSpeed: 0.0002, size: 19 },
-  { id: 'python', name: 'Python', type: 'conceptual', description: '70%', level: 3, orbitRadius: 560, orbitSpeed: 0.00018, size: 24 },
+  // Frontend skills
+  { name: 'React', level: 85, category: 'frontend' },
+  { name: 'TypeScript', level: 80, category: 'frontend' },
+  { name: 'HTML/CSS', level: 90, category: 'frontend' },
+  { name: 'JavaScript', level: 85, category: 'frontend' },
+  { name: 'Tailwind CSS', level: 90, category: 'frontend' },
+  { name: 'Next.js', level: 75, category: 'frontend' },
+  
+  // Backend skills
+  { name: 'Node.js', level: 75, category: 'backend' },
+  { name: 'Express', level: 70, category: 'backend' },
+  { name: 'MongoDB', level: 65, category: 'backend' },
+  { name: 'PostgreSQL', level: 60, category: 'backend' },
+  { name: 'RESTful API', level: 80, category: 'backend' },
+  
+  // Tools and others
+  { name: 'Git', level: 85, category: 'tools' },
+  { name: 'Docker', level: 60, category: 'tools' },
+  { name: 'CI/CD', level: 65, category: 'tools' },
+  { name: 'Figma', level: 70, category: 'tools' },
+  { name: 'Agile', level: 75, category: 'other' },
+  { name: 'Problem Solving', level: 85, category: 'other' },
+  { name: 'Team Collaboration', level: 90, category: 'other' },
 ];
 
-// Generate stars for background
-const generateStars = (count: number) => {
-  return Array.from({ length: count }).map((_, i) => ({
-    id: `star-${i}`,
-    size: Math.random() * 2 + 1,
-    top: Math.random() * 100,
-    left: Math.random() * 100,
-    opacity: Math.random() * 0.7 + 0.3,
-    animationDuration: Math.random() * 5 + 3,
-    delay: Math.random() * 5,
-  }));
-};
-
-const stars = generateStars(70);
-
 const SkillsMatrix: React.FC = () => {
-  const [activeSkill, setActiveSkill] = useState<Skill | null>(null);
-  const [orbits, setOrbits] = useState<{[key: string]: { x: number, y: number }}>({}); 
-  const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
-  // Update dimensions on resize
-  useEffect(() => {
-    const updateDimensions = () => {
-      const containerWidth = window.innerWidth > 768 ? 600 : Math.min(window.innerWidth - 40, 300);
-      setContainerDimensions({
-        width: containerWidth,
-        height: containerWidth
-      });
-    };
-
-    updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    
-    return () => {
-      window.removeEventListener('resize', updateDimensions);
-    };
-  }, []);
-
-  // Calculate orbit positions
-  useEffect(() => {
-    let animationFrameId: number;
-    const centerX = containerDimensions.width / 2;
-    const centerY = containerDimensions.height / 2;
-    
-    const updatePositions = (timestamp: number) => {
-      const newPositions: {[key: string]: { x: number, y: number }} = {};
-      
-      skills.forEach(skill => {
-        const angle = timestamp * skill.orbitSpeed;
-        const x = centerX + Math.cos(angle) * skill.orbitRadius;
-        const y = centerY + Math.sin(angle) * skill.orbitRadius;
-        newPositions[skill.id] = { x, y };
-      });
-      
-      setOrbits(newPositions);
-      animationFrameId = requestAnimationFrame(updatePositions);
-    };
-    
-    animationFrameId = requestAnimationFrame(updatePositions);
-    
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [containerDimensions]);
-
-  // Get skill color based on type
-  const getSkillColor = (type: 'technical' | 'conceptual') => {
-    return type === 'technical' ? 'bg-quantum-gray text-static-white' : 'bg-gilded-parchment text-void-black';
-  };
+  const filteredSkills = selectedCategory === 'all' 
+    ? skills 
+    : skills.filter(skill => skill.category === selectedCategory);
 
   return (
-    <section 
-      id="skills" 
-      className="relative py-24 bg-void-black dark:bg-static-white overflow-hidden"
-    >
-      <div className="container mx-auto relative z-10">
-        <div className="mb-12">
-          <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
-            Capabilities
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-static-white dark:text-void-black mb-6">
-            Skills
-          </h2>
-          <p className="text-lg text-static-white/80 dark:text-void-black/80 max-w-2xl">
-            I have been learning programming since 2022. The main area of my expertise is Multi-Platform Development.
-            <br />
-            Here are the technologies I have learned.
-          </p>
-        </div>
-        
-        {/* Solar System Container with explicit bottom margin */}
-        <div className="flex justify-center items-center mb-32">
-          <div 
-            className="relative"
-            style={{ 
-              height: `${containerDimensions.height}px`, 
-              width: `${containerDimensions.width}px`
-            }}
-          >
-            {/* Orbit Paths */}
-            {skills.map((skill) => (
-              <div 
-                key={`orbit-${skill.id}`}
-                className="absolute border border-gilded-parchment/20 rounded-full" 
-                style={{
-                  width: `${skill.orbitRadius * 2}px`,
-                  height: `${skill.orbitRadius * 2}px`,
-                  left: '50%',
-                  top: '50%',
-                  transform: 'translate(-50%, -50%)'
-                }}
-              />
-            ))}
-            
-            {/* Center Sun */}
-            <div 
-              className="absolute w-16 h-16 bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]"
-              style={{
-                left: '50%',
-                top: '50%',
-                transform: 'translate(-50%, -50%)'
-              }}
+    <section id="skills" className="py-16 md:py-24 bg-static-white/50 dark:bg-void-black/50 relative">
+      <div className="container mx-auto px-4 md:px-6">
+        <h2 className="text-3xl md:text-4xl font-cormorant font-bold text-quantum-gray dark:text-static-white mb-8 text-center">
+          Technical Skills
+        </h2>
+
+        {/* Category Filter */}
+        <div className="flex justify-center mb-12 flex-wrap gap-2">
+          {['all', 'frontend', 'backend', 'tools', 'other'].map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={cn(
+                "px-4 py-2 rounded-full text-sm transition-all duration-300",
+                selectedCategory === category
+                  ? "bg-gilded-parchment text-void-black font-medium"
+                  : "bg-quantum-gray/10 dark:bg-quantum-gray/20 text-quantum-gray dark:text-static-white hover:bg-gilded-parchment/20"
+              )}
             >
-              <span className="text-void-black font-bold text-xs">Skills</span>
-            </div>
-            
-            {/* Skills Planets */}
-            {skills.map((skill) => (
-              <div
-                key={skill.id}
-                className={cn(
-                  "absolute rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer z-10",
-                  getSkillColor(skill.type),
-                  activeSkill?.id === skill.id ? "ring-2 ring-gilded-parchment scale-110 z-30" : ""
-                )}
-                style={{
-                  width: `${skill.size * 2}px`,
-                  height: `${skill.size * 2}px`,
-                  left: orbits[skill.id]?.x || '50%',
-                  top: orbits[skill.id]?.y || '50%',
-                  transform: 'translate(-50%, -50%)',
-                  transition: activeSkill?.id === skill.id ? 'all 0.3s ease' : 'none',
-                }}
-                onMouseEnter={() => setActiveSkill(skill)}
-                onMouseLeave={() => setActiveSkill(null)}
-              >
-                <span className="text-xs font-medium">{skill.name}</span>
-                
-                {/* Tooltip */}
-                {activeSkill?.id === skill.id && (
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3 bg-void-black dark:bg-static-white text-static-white dark:text-void-black px-3 py-2 rounded-md text-xs whitespace-nowrap z-40 flex flex-col items-center">
-                    <span className="font-bold mb-1">{skill.name}</span>
-                    <Progress value={parseInt(skill.description)} className="w-20 h-2" />
-                    <span className="mt-1">{skill.description}</span>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </button>
+          ))}
         </div>
-      </div>
-      
-      {/* Background stars */}
-      <div className="absolute inset-0 overflow-hidden">
-        {stars.map((star) => (
-          <div 
-            key={star.id} 
-            className="absolute"
-            style={{
-              top: `${star.top}%`,
-              left: `${star.left}%`,
-              opacity: 0,
-              animation: `starBlink ${star.animationDuration}s ease-in-out infinite ${star.delay}s`,
-            }}
-          >
-            <Star 
-              size={star.size} 
-              className="text-static-white dark:text-void-black" 
-              fill="currentColor"
-            />
-          </div>
-        ))}
+
+        {/* Skills Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          {filteredSkills.map((skill, index) => (
+            <Card 
+              key={index}
+              className="p-4 border border-quantum-gray/10 dark:border-static-white/10 bg-static-white/50 dark:bg-void-black/50 backdrop-blur-sm"
+            >
+              <div className="mb-2 flex justify-between items-center">
+                <h3 className="font-medium text-quantum-gray dark:text-static-white">{skill.name}</h3>
+                <span className="text-sm text-gilded-parchment font-semibold">{skill.level}%</span>
+              </div>
+              <Progress 
+                value={skill.level} 
+                className="h-2 bg-quantum-gray/20 dark:bg-static-white/10"
+              />
+              <div className="h-1.5" />
+              <span className="text-xs text-quantum-gray/60 dark:text-static-white/60 italic">
+                {skill.category.charAt(0).toUpperCase() + skill.category.slice(1)}
+              </span>
+            </Card>
+          ))}
+        </div>
       </div>
     </section>
   );
