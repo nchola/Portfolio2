@@ -1,8 +1,14 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Progress } from '@/components/ui/progress';
-import { Star } from 'lucide-react';
+import { Star, Info } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider
+} from '@/components/ui/tooltip';
 
 interface Skill {
   id: string;
@@ -10,7 +16,7 @@ interface Skill {
   type: 'technical' | 'conceptual';
   description: string;
   level: number; // 1-5
-  orbitRadius: number; // Radius of orbit path
+  orbitRadius: number; // Base radius of orbit path
   orbitSpeed: number; // Speed of rotation
   size: number; // Size of the planet
 }
@@ -50,17 +56,28 @@ const SkillsMatrix: React.FC = () => {
   const [activeSkill, setActiveSkill] = useState<Skill | null>(null);
   const [orbits, setOrbits] = useState<{[key: string]: { x: number, y: number }}>({}); 
   const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
+  const [isLoaded, setIsLoaded] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Calculate container dimensions and update on resize
+  // Calculate container dimensions and update on resize with perfect square aspect ratio
   useEffect(() => {
     const updateDimensions = () => {
-      const width = window.innerWidth;
-      // Adjust container size for mobile
-      const containerWidth = width > 768 ? 600 : Math.min(width - 40, 300);
+      if (!containerRef.current) return;
+      
+      const container = containerRef.current;
+      const containerParent = container.parentElement;
+      if (!containerParent) return;
+      
+      const parentWidth = containerParent.clientWidth;
+      const maxSize = parentWidth > 768 ? Math.min(600, parentWidth - 40) : Math.min(300, parentWidth - 40);
+      
       setContainerDimensions({
-        width: containerWidth,
-        height: containerWidth
+        width: maxSize,
+        height: maxSize // Force square aspect ratio
       });
+      
+      // Add small delay to ensure dimensions are applied before animations start
+      setTimeout(() => setIsLoaded(true), 100);
     };
 
     updateDimensions();
@@ -71,8 +88,16 @@ const SkillsMatrix: React.FC = () => {
     };
   }, []);
 
-  // Calculate planet positions with improved centering
+  // Calculate adjusted orbit radius based on container size
+  const getAdjustedOrbit = useCallback((baseRadius: number) => {
+    const maxRadius = containerDimensions.width * 0.4; // Limit to 40% of container width
+    return Math.min(baseRadius, maxRadius);
+  }, [containerDimensions.width]);
+
+  // Calculate planet positions with improved 3D transformations
   useEffect(() => {
+    if (!isLoaded) return;
+
     let animationFrameId: number;
     // Ensure centerX and centerY are exactly half of container dimensions
     const centerX = containerDimensions.width / 2;
@@ -82,10 +107,13 @@ const SkillsMatrix: React.FC = () => {
       const newPositions: {[key: string]: { x: number, y: number }} = {};
       
       skills.forEach(skill => {
+        const orbitRadius = getAdjustedOrbit(skill.orbitRadius);
         const angle = timestamp * skill.orbitSpeed;
-        // Calculate positions relative to exact center
-        const x = centerX + Math.cos(angle) * skill.orbitRadius;
-        const y = centerY + Math.sin(angle) * skill.orbitRadius;
+        
+        // Calculate positions relative to center
+        const x = centerX + Math.cos(angle) * orbitRadius;
+        const y = centerY + Math.sin(angle) * orbitRadius;
+        
         newPositions[skill.id] = { x, y };
       });
       
@@ -98,15 +126,23 @@ const SkillsMatrix: React.FC = () => {
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [containerDimensions]);
+  }, [containerDimensions, isLoaded, getAdjustedOrbit]);
 
   // Function to determine color based on skill type
   const getSkillColor = (type: 'technical' | 'conceptual') => {
     return type === 'technical' ? 'bg-quantum-gray text-static-white' : 'bg-gilded-parchment text-void-black';
   };
 
+  // Calculate 3D transform for planets
+  const getPlanetTransform = useCallback((skillId: string) => {
+    const position = orbits[skillId];
+    if (!position) return 'translate(-50%, -50%)';
+    
+    return `translate3d(${position.x}px, ${position.y}px, 0)`;
+  }, [orbits]);
+
   return (
-    <section id="skills" className="section py-12 md:py-24 bg-void-black dark:bg-static-white relative overflow-visible">
+    <section id="skills" className="section py-12 md:py-24 bg-void-black dark:bg-static-white relative overflow-hidden">
       <div className="container relative z-10">
         <div className="mb-8 md:mb-12">
           <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
@@ -122,74 +158,113 @@ const SkillsMatrix: React.FC = () => {
           </p>
         </div>
         
-        {/* Solar System Container - Properly centered with sufficient bottom margin */}
-        <div 
-          className="relative mx-auto mb-12 md:mb-16 overflow-visible flex items-center justify-center"
-          style={{ 
-            height: `${containerDimensions.height}px`, 
-            width: `${containerDimensions.width}px`,
-            paddingBottom: `${containerDimensions.height * 0.4}px`,
+        {/* Solar System Container with proper 3D transformations */}
+        <div className="flex justify-center items-center">
+          <div 
+            ref={containerRef}
+            className={cn(
+              "relative mx-auto mb-16 overflow-hidden",
+              isLoaded ? "opacity-100" : "opacity-0"
+            )}
+            style={{ 
+              width: `${containerDimensions.width}px`, 
+              height: `${containerDimensions.height}px`,
+              transformStyle: 'preserve-3d',
+              transition: 'opacity 0.5s ease-in-out',
+            }}
+          >
+            {/* Orbit Paths - Perfectly centered */}
+            {skills.map((skill) => {
+              const orbitRadius = getAdjustedOrbit(skill.orbitRadius);
+              return (
+                <div 
+                  key={`orbit-${skill.id}`}
+                  className="absolute border border-gilded-parchment/20 rounded-full" 
+                  style={{
+                    width: `${orbitRadius * 2}px`,
+                    height: `${orbitRadius * 2}px`,
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate3d(-50%, -50%, 0)',
+                    transformStyle: 'preserve-3d',
+                  }}
+                />
+              );
+            })}
             
-          }}
-        >
-          {/* Orbit Paths - Perfectly centered */}
-          {skills.map((skill) => (
+            {/* Sun/Center - Exact center */}
             <div 
-              key={`orbit-${skill.id}`}
-              className="absolute border border-gilded-parchment/20 rounded-full" 
+              className="absolute w-16 h-16 bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]"
               style={{
-                width: `${skill.orbitRadius * 2}px`,
-                height: `${skill.orbitRadius * 2}px`,
                 left: '50%',
                 top: '50%',
-                transform: 'translate(-50%, -50%)',
-                marginBottom: `${containerDimensions.height * 0.3}px`
+                transform: 'translate3d(-50%, -50%, 0)',
+                transformStyle: 'preserve-3d',
               }}
-            />
-          ))}
-          
-          {/* Sun/Center - Exact center */}
-          <div className="absolute w-16 h-16 bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]"
-               style={{
-                 left: '50%',
-                 top: '50%',
-                 transform: 'translate(-50%, -50%)'
-               }}>
-            <span className="text-void-black font-bold text-xs">Skills</span>
-          </div>
-          
-          {/* Planets/Skills */}
-          {skills.map((skill) => (
-            <div
-              key={skill.id}
-              className={cn(
-                "absolute rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer z-10",
-                getSkillColor(skill.type),
-                activeSkill?.id === skill.id ? "ring-2 ring-gilded-parchment scale-110 z-30" : ""
-              )}
-              style={{
-                width: `${skill.size * 2}px`,
-                height: `${skill.size * 2}px`,
-                left: orbits[skill.id]?.x || '50%',
-                top: orbits[skill.id]?.y || '50%',
-                transform: 'translate(-50%, -50%)',
-                transition: activeSkill?.id === skill.id ? 'all 0.3s ease' : 'none',
-              }}
-              onMouseEnter={() => setActiveSkill(skill)}
-              onMouseLeave={() => setActiveSkill(null)}
             >
-              <span className="text-xs font-medium">{skill.name}</span>
-              
-              {activeSkill?.id === skill.id && (
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3 bg-void-black dark:bg-static-white text-static-white dark:text-void-black px-3 py-2 rounded-md text-xs whitespace-nowrap z-40 flex flex-col items-center">
-                  <span className="font-bold mb-1">{skill.name}</span>
-                  <Progress value={parseInt(skill.description)} className="w-20 h-2" />
-                  <span className="mt-1">{skill.description}</span>
-                </div>
-              )}
+              <span className="text-void-black font-bold text-xs">Skills</span>
             </div>
-          ))}
+            
+            {/* Planets/Skills with 3D transformations */}
+            {skills.map((skill) => (
+              <TooltipProvider key={skill.id}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div
+                      className={cn(
+                        "absolute rounded-full flex items-center justify-center cursor-pointer z-10",
+                        getSkillColor(skill.type),
+                        activeSkill?.id === skill.id ? "ring-2 ring-gilded-parchment scale-110 z-30" : ""
+                      )}
+                      style={{
+                        width: `${skill.size * 2}px`,
+                        height: `${skill.size * 2}px`,
+                        transformStyle: 'preserve-3d',
+                        position: 'absolute',
+                        transform: getPlanetTransform(skill.id),
+                        transition: activeSkill?.id === skill.id ? 'all 0.3s ease' : 'none',
+                        boxShadow: `0 0 ${skill.size/2}px rgba(${skill.type === 'technical' ? '74, 74, 74' : '193, 154, 107'}, 0.5)`,
+                      }}
+                      onMouseEnter={() => setActiveSkill(skill)}
+                      onMouseLeave={() => setActiveSkill(null)}
+                    >
+                      <span className="text-xs font-medium">{skill.name}</span>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="bg-void-black/90 dark:bg-static-white/90 border-gilded-parchment">
+                    <div className="flex flex-col items-center">
+                      <span className="font-bold mb-1">{skill.name}</span>
+                      <Progress value={parseInt(skill.description)} className="w-20 h-2" />
+                      <span className="mt-1 text-xs">{skill.description}</span>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            ))}
+            
+            {/* Mobile fallback for skill list - shown only on very small screens */}
+            <div className="md:hidden absolute bottom-0 left-0 w-full bg-void-black/70 dark:bg-static-white/70 backdrop-blur-sm p-4 rounded-t-lg">
+              <div className="text-static-white dark:text-void-black text-xs font-bold mb-2">All Skills:</div>
+              <div className="flex flex-wrap gap-2">
+                {skills.map(skill => (
+                  <span key={`mobile-${skill.id}`} className={cn(
+                    "px-2 py-1 rounded-full text-xs",
+                    skill.type === 'technical' ? 'bg-quantum-gray/80 text-static-white' : 'bg-gilded-parchment/80 text-void-black'
+                  )}>
+                    {skill.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
+        
+        {/* Loading state before animation starts */}
+        {!isLoaded && (
+          <div className="flex justify-center items-center h-60">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-gilded-parchment"></div>
+          </div>
+        )}
       </div>
       
       {/* Blinking stars background */}

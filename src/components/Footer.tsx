@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Instagram, Linkedin, AtSign, Phone, MapPin, Github } from 'lucide-react';
 import { Card } from '@/components/ui/card';

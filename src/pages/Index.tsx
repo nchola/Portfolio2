@@ -55,10 +55,8 @@ const Index: React.FC = () => {
         <Experience />
         <Certificates />
         <ProjectGrid />
-        <div className="relative">
-          <SkillsMatrix />
-          <Footer />
-        </div>
+        <SkillsMatrix />
+        <Footer />
       </main>
       
       <DarkModeToggle />
