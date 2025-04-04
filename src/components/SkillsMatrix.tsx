@@ -1,293 +1,285 @@
 
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { Progress } from '@/components/ui/progress';
-import { Star, Info } from 'lucide-react';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipProvider
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Skill {
-  id: string;
   name: string;
-  type: 'technical' | 'conceptual';
-  description: string;
-  level: number; // 1-5
-  orbitRadius: number; // Base radius of orbit path
-  orbitSpeed: number; // Speed of rotation
-  size: number; // Size of the planet
+  level: number;
+  category: 'frontend' | 'backend' | 'tools' | 'other';
+}
+
+interface Planet {
+  name: string;
+  color: string;
+  size: number;
+  orbitSize: number;
+  speed: number;
+  category: 'frontend' | 'backend' | 'tools' | 'other';
+  level: number;
 }
 
 const skills: Skill[] = [
-  // Technical skills
-  { id: 'flutter', name: 'Flutter', type: 'technical', description: '80%', level: 4, orbitRadius: 120, orbitSpeed: 0.0015, size: 25 },
-  { id: 'dart', name: 'Dart', type: 'technical', description: '75%', level: 4, orbitRadius: 160, orbitSpeed: 0.002, size: 20 },
-  { id: 'mongodb', name: 'MongoDB', type: 'technical', description: '70%', level: 3, orbitRadius: 200, orbitSpeed: 0.0018, size: 22 },
-  { id: 'mysql', name: 'MySQL', type: 'technical', description: '75%', level: 4, orbitRadius: 240, orbitSpeed: 0.0016, size: 24 },
-  { id: 'expressjs', name: 'ExpressJS', type: 'technical', description: '80%', level: 4, orbitRadius: 280, orbitSpeed: 0.0014, size: 25 },
-  { id: 'html', name: 'HTML', type: 'technical', description: '75%', level: 4, orbitRadius: 320, orbitSpeed: 0.0012, size: 22 },
-  { id: 'css', name: 'CSS', type: 'technical', description: '65%', level: 3, orbitRadius: 360, orbitSpeed: 0.001, size: 20 },
-  { id: 'javascript', name: 'JavaScript', type: 'conceptual', description: '70%', level: 3, orbitRadius: 400, orbitSpeed: 0.0008, size: 26 },
-  { id: 'laravel', name: 'Laravel', type: 'conceptual', description: '70%', level: 3, orbitRadius: 440, orbitSpeed: 0.0006, size: 21 },
-  { id: 'nodejs', name: 'NodeJS', type: 'conceptual', description: '55%', level: 3, orbitRadius: 480, orbitSpeed: 0.0004, size: 23 },
-  { id: 'php', name: 'PHP', type: 'conceptual', description: '60%', level: 3, orbitRadius: 520, orbitSpeed: 0.0002, size: 19 },
-  { id: 'python', name: 'Python', type: 'conceptual', description: '70%', level: 3, orbitRadius: 560, orbitSpeed: 0.00018, size: 24 },
+  // Frontend skills
+  { name: 'React', level: 85, category: 'frontend' },
+  { name: 'TypeScript', level: 80, category: 'frontend' },
+  { name: 'HTML/CSS', level: 90, category: 'frontend' },
+  { name: 'JavaScript', level: 85, category: 'frontend' },
+  { name: 'Tailwind CSS', level: 90, category: 'frontend' },
+  { name: 'Next.js', level: 75, category: 'frontend' },
+  
+  // Backend skills
+  { name: 'Node.js', level: 75, category: 'backend' },
+  { name: 'Express', level: 70, category: 'backend' },
+  { name: 'MongoDB', level: 65, category: 'backend' },
+  { name: 'PostgreSQL', level: 60, category: 'backend' },
+  { name: 'RESTful API', level: 80, category: 'backend' },
+  
+  // Tools and others
+  { name: 'Git', level: 85, category: 'tools' },
+  { name: 'Docker', level: 60, category: 'tools' },
+  { name: 'CI/CD', level: 65, category: 'tools' },
+  { name: 'Figma', level: 70, category: 'tools' },
+  { name: 'Agile', level: 75, category: 'other' },
+  { name: 'Problem Solving', level: 85, category: 'other' },
+  { name: 'Team Collaboration', level: 90, category: 'other' },
 ];
 
-// Generate blinking stars data
-const generateStars = (count: number) => {
-  return Array.from({ length: count }).map((_, i) => ({
-    id: `star-${i}`,
-    size: Math.random() * 2 + 1,
-    top: Math.random() * 100,
-    left: Math.random() * 100,
-    opacity: Math.random() * 0.7 + 0.3,
-    animationDuration: Math.random() * 5 + 3,
-    delay: Math.random() * 5,
-  }));
+// Convert skills to planets for the solar system
+const skillsToPlanets = (skills: Skill[]): Planet[] => {
+  return skills.map((skill) => {
+    const baseOrbitSize = 80; // Base size for orbit
+    const orbitIncrease = 40; // How much each orbit increases
+    
+    // Calculate orbit size based on skill level and category
+    let orbitMultiplier = 1;
+    if (skill.category === 'backend') orbitMultiplier = 1.5;
+    if (skill.category === 'tools') orbitMultiplier = 2;
+    if (skill.category === 'other') orbitMultiplier = 2.5;
+    
+    // Calculate planet size based on skill level
+    const size = 20 + (skill.level / 10);
+    
+    // Generate color based on category
+    let color = '#C19A6B'; // Default (gilded-parchment)
+    if (skill.category === 'frontend') color = '#3B82F6'; // blue-500
+    if (skill.category === 'backend') color = '#10B981'; // emerald-500
+    if (skill.category === 'tools') color = '#8B5CF6'; // violet-500
+    if (skill.category === 'other') color = '#F59E0B'; // amber-500
+    
+    // Calculate orbit size and speed (higher skills are closer to center and move faster)
+    const orbitSize = baseOrbitSize + ((4 - orbitMultiplier) * orbitIncrease);
+    const speed = 20 + ((100 - skill.level) / 5); // Faster for higher skills
+
+    return {
+      name: skill.name,
+      color,
+      size,
+      orbitSize,
+      speed,
+      category: skill.category,
+      level: skill.level
+    };
+  });
 };
 
-const stars = generateStars(70);
-
 const SkillsMatrix: React.FC = () => {
-  const [activeSkill, setActiveSkill] = useState<Skill | null>(null);
-  const [orbits, setOrbits] = useState<{[key: string]: { x: number, y: number }}>({}); 
-  const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
-  const [isLoaded, setIsLoaded] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [hoveredPlanet, setHoveredPlanet] = useState<Planet | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [planetPositions, setPlanetPositions] = useState<{[key: string]: {x: number, y: number}}>({});
 
-  // Calculate container dimensions and update on resize with perfect square aspect ratio
+  // Filter planets based on selected category
+  const allPlanets = skillsToPlanets(skills);
+  const filteredPlanets = selectedCategory === 'all' 
+    ? allPlanets 
+    : allPlanets.filter(planet => planet.category === selectedCategory);
+
+  // Simulate loading state
   useEffect(() => {
-    const updateDimensions = () => {
-      if (!containerRef.current) return;
-      
-      const container = containerRef.current;
-      const containerParent = container.parentElement;
-      if (!containerParent) return;
-      
-      const parentWidth = containerParent.clientWidth;
-      const maxSize = parentWidth > 768 ? Math.min(600, parentWidth - 40) : Math.min(300, parentWidth - 40);
-      
-      setContainerDimensions({
-        width: maxSize,
-        height: maxSize // Force square aspect ratio
-      });
-      
-      // Add small delay to ensure dimensions are applied before animations start
-      setTimeout(() => setIsLoaded(true), 100);
-    };
-
-    updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    
-    return () => {
-      window.removeEventListener('resize', updateDimensions);
-    };
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 600);
+    return () => clearTimeout(timer);
   }, []);
 
-  // Calculate adjusted orbit radius based on container size
-  const getAdjustedOrbit = useCallback((baseRadius: number) => {
-    const maxRadius = containerDimensions.width * 0.4; // Limit to 40% of container width
-    return Math.min(baseRadius, maxRadius);
-  }, [containerDimensions.width]);
-
-  // Calculate planet positions with improved 3D transformations
+  // Calculate positions for tooltip placement
   useEffect(() => {
-    if (!isLoaded) return;
-
-    let animationFrameId: number;
-    // Ensure centerX and centerY are exactly half of container dimensions
-    const centerX = containerDimensions.width / 2;
-    const centerY = containerDimensions.height / 2;
-    
-    const updatePositions = (timestamp: number) => {
-      const newPositions: {[key: string]: { x: number, y: number }} = {};
+    const interval = setInterval(() => {
+      const newPositions: {[key: string]: {x: number, y: number}} = {};
       
-      skills.forEach(skill => {
-        const orbitRadius = getAdjustedOrbit(skill.orbitRadius);
-        const angle = timestamp * skill.orbitSpeed;
-        
-        // Calculate positions relative to center
-        const x = centerX + Math.cos(angle) * orbitRadius;
-        const y = centerY + Math.sin(angle) * orbitRadius;
-        
-        newPositions[skill.id] = { x, y };
+      filteredPlanets.forEach(planet => {
+        const planetElement = document.getElementById(`planet-${planet.name}`);
+        if (planetElement) {
+          const rect = planetElement.getBoundingClientRect();
+          newPositions[planet.name] = {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2
+          };
+        }
       });
       
-      setOrbits(newPositions);
-      animationFrameId = requestAnimationFrame(updatePositions);
-    };
+      setPlanetPositions(newPositions);
+    }, 100);
     
-    animationFrameId = requestAnimationFrame(updatePositions);
-    
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [containerDimensions, isLoaded, getAdjustedOrbit]);
-
-  // Function to determine color based on skill type
-  const getSkillColor = (type: 'technical' | 'conceptual') => {
-    return type === 'technical' ? 'bg-quantum-gray text-static-white' : 'bg-gilded-parchment text-void-black';
-  };
-
-  // Calculate 3D transform for planets
-  const getPlanetTransform = useCallback((skillId: string) => {
-    const position = orbits[skillId];
-    if (!position) return 'translate(-50%, -50%)';
-    
-    return `translate3d(${position.x}px, ${position.y}px, 0)`;
-  }, [orbits]);
+    return () => clearInterval(interval);
+  }, [filteredPlanets]);
 
   return (
-    <section id="skills" className="section py-12 md:py-24 bg-void-black dark:bg-static-white relative overflow-hidden">
-      <div className="container relative z-10">
-        <div className="mb-8 md:mb-12">
-          <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
-            Capabilities
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-static-white dark:text-void-black mb-6">
-            Skills
-          </h2>
-          <p className="text-lg text-static-white/80 dark:text-void-black/80 max-w-2xl">
-            I have been learning programming since 2022. The main area of my expertise is Multi-Platform Development.
-            <br />
-            Here are the technologies I have learned.
-          </p>
+    <section id="skills" className="py-16 md:py-24 bg-static-white/50 dark:bg-void-black/50 relative overflow-hidden">
+      <div className="container mx-auto px-4 md:px-6">
+        <h2 className="text-3xl md:text-4xl font-cormorant font-bold text-quantum-gray dark:text-static-white mb-8 text-center">
+          Technical Skills
+        </h2>
+
+        {/* Category Filter */}
+        <div className="flex justify-center mb-12 flex-wrap gap-2">
+          {['all', 'frontend', 'backend', 'tools', 'other'].map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={cn(
+                "px-4 py-2 rounded-full text-sm transition-all duration-300",
+                selectedCategory === category
+                  ? "bg-gilded-parchment text-void-black font-medium"
+                  : "bg-quantum-gray/10 dark:bg-quantum-gray/20 text-quantum-gray dark:text-static-white hover:bg-gilded-parchment/20"
+              )}
+            >
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </button>
+          ))}
         </div>
-        
-        {/* Solar System Container with proper 3D transformations */}
-        <div className="flex justify-center items-center">
-          <div 
-            ref={containerRef}
-            className={cn(
-              "relative mx-auto mb-16 overflow-hidden",
-              isLoaded ? "opacity-100" : "opacity-0"
-            )}
-            style={{ 
-              width: `${containerDimensions.width}px`, 
-              height: `${containerDimensions.height}px`,
-              transformStyle: 'preserve-3d',
-              transition: 'opacity 0.5s ease-in-out',
-            }}
-          >
-            {/* Orbit Paths - Perfectly centered */}
-            {skills.map((skill) => {
-              const orbitRadius = getAdjustedOrbit(skill.orbitRadius);
-              return (
-                <div 
-                  key={`orbit-${skill.id}`}
-                  className="absolute border border-gilded-parchment/20 rounded-full" 
+
+        {/* Solar System */}
+        <div className="relative w-full mx-auto" style={{ height: '600px' }}>
+          {loading ? (
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+              <Skeleton className="w-20 h-20 rounded-full" />
+              {[120, 180, 240, 300, 360].map((size, index) => (
+                <Skeleton 
+                  key={index}
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-gray-200 dark:border-gray-800"
                   style={{
-                    width: `${orbitRadius * 2}px`,
-                    height: `${orbitRadius * 2}px`,
-                    left: '50%',
-                    top: '50%',
-                    transform: 'translate3d(-50%, -50%, 0)',
-                    transformStyle: 'preserve-3d',
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    opacity: 0.3
                   }}
                 />
-              );
-            })}
-            
-            {/* Sun/Center - Exact center */}
-            <div 
-              className="absolute w-16 h-16 bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]"
-              style={{
-                left: '50%',
-                top: '50%',
-                transform: 'translate3d(-50%, -50%, 0)',
-                transformStyle: 'preserve-3d',
-              }}
-            >
-              <span className="text-void-black font-bold text-xs">Skills</span>
+              ))}
             </div>
-            
-            {/* Planets/Skills with 3D transformations */}
-            {skills.map((skill) => (
-              <TooltipProvider key={skill.id}>
-                <Tooltip>
+          ) : (
+            <>
+              {/* Sun in the center */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-gilded-parchment z-10 shadow-lg shadow-gilded-parchment/40 flex items-center justify-center">
+                <span className="text-void-black font-bold">Skills</span>
+                <div className="absolute w-full h-full rounded-full animate-pulse opacity-70 bg-gilded-parchment"></div>
+              </div>
+              
+              {/* Orbit paths */}
+              {filteredPlanets.map((planet) => (
+                <div
+                  key={`orbit-${planet.name}`}
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border border-quantum-gray/10 dark:border-static-white/10 rounded-full"
+                  style={{
+                    width: `${planet.orbitSize * 2}px`,
+                    height: `${planet.orbitSize * 2}px`,
+                  }}
+                ></div>
+              ))}
+              
+              {/* Planets */}
+              {filteredPlanets.map((planet) => (
+                <Tooltip key={`tooltip-${planet.name}`}>
                   <TooltipTrigger asChild>
                     <div
-                      className={cn(
-                        "absolute rounded-full flex items-center justify-center cursor-pointer z-10",
-                        getSkillColor(skill.type),
-                        activeSkill?.id === skill.id ? "ring-2 ring-gilded-parchment scale-110 z-30" : ""
-                      )}
+                      id={`planet-${planet.name}`}
+                      className="absolute left-1/2 top-1/2 rounded-full cursor-pointer z-20 hover:scale-110 transition-transform shadow-lg"
                       style={{
-                        width: `${skill.size * 2}px`,
-                        height: `${skill.size * 2}px`,
-                        transformStyle: 'preserve-3d',
-                        position: 'absolute',
-                        transform: getPlanetTransform(skill.id),
-                        transition: activeSkill?.id === skill.id ? 'all 0.3s ease' : 'none',
-                        boxShadow: `0 0 ${skill.size/2}px rgba(${skill.type === 'technical' ? '74, 74, 74' : '193, 154, 107'}, 0.5)`,
+                        width: `${planet.size}px`,
+                        height: `${planet.size}px`,
+                        backgroundColor: planet.color,
+                        boxShadow: `0 0 10px ${planet.color}80`,
+                        transform: `translate(-50%, -50%) 
+                          rotate(0deg) 
+                          translateX(${planet.orbitSize}px) 
+                          rotate(0deg)`,
+                        animation: `orbit-${planet.name} ${planet.speed}s linear infinite`
                       }}
-                      onMouseEnter={() => setActiveSkill(skill)}
-                      onMouseLeave={() => setActiveSkill(null)}
+                      onMouseEnter={() => setHoveredPlanet(planet)}
+                      onMouseLeave={() => setHoveredPlanet(null)}
                     >
-                      <span className="text-xs font-medium">{skill.name}</span>
+                      <div className="absolute inset-0 rounded-full" style={{
+                        backgroundImage: `radial-gradient(circle at 30% 30%, ${planet.color}dd 0%, ${planet.color}aa 70%, ${planet.color}55 100%)`,
+                      }}></div>
                     </div>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="bg-void-black/90 dark:bg-static-white/90 border-gilded-parchment">
-                    <div className="flex flex-col items-center">
-                      <span className="font-bold mb-1">{skill.name}</span>
-                      <Progress value={parseInt(skill.description)} className="w-20 h-2" />
-                      <span className="mt-1 text-xs">{skill.description}</span>
+                  <TooltipContent 
+                    className="bg-white/90 dark:bg-void-black/90 backdrop-blur-sm border border-quantum-gray/20 dark:border-static-white/20 p-3 shadow-lg"
+                  >
+                    <div className="text-quantum-gray dark:text-static-white font-medium">{planet.name}</div>
+                    <div className="text-gilded-parchment text-sm">{planet.level}%</div>
+                    <div className="text-xs text-quantum-gray/70 dark:text-static-white/70 mt-1 capitalize">
+                      {planet.category}
                     </div>
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider>
-            ))}
-            
-            {/* Mobile fallback for skill list - shown only on very small screens */}
-            <div className="md:hidden absolute bottom-0 left-0 w-full bg-void-black/70 dark:bg-static-white/70 backdrop-blur-sm p-4 rounded-t-lg">
-              <div className="text-static-white dark:text-void-black text-xs font-bold mb-2">All Skills:</div>
-              <div className="flex flex-wrap gap-2">
-                {skills.map(skill => (
-                  <span key={`mobile-${skill.id}`} className={cn(
-                    "px-2 py-1 rounded-full text-xs",
-                    skill.type === 'technical' ? 'bg-quantum-gray/80 text-static-white' : 'bg-gilded-parchment/80 text-void-black'
-                  )}>
-                    {skill.name}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
+              ))}
+            </>
+          )}
         </div>
-        
-        {/* Loading state before animation starts */}
-        {!isLoaded && (
-          <div className="flex justify-center items-center h-60">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-gilded-parchment"></div>
-          </div>
-        )}
+
+        {/* Mobile Skill Listing (visible on smaller screens) */}
+        <div className="md:hidden mt-12 grid grid-cols-1 gap-4">
+          {filteredPlanets.map((planet) => (
+            <Card 
+              key={`mobile-${planet.name}`}
+              className="p-4 border border-quantum-gray/10 dark:border-static-white/10 bg-static-white/50 dark:bg-void-black/50 backdrop-blur-sm"
+            >
+              <div className="mb-2 flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <div 
+                    className="w-3 h-3 rounded-full" 
+                    style={{backgroundColor: planet.color}}
+                  ></div>
+                  <h3 className="font-medium text-quantum-gray dark:text-static-white">{planet.name}</h3>
+                </div>
+                <span className="text-sm text-gilded-parchment font-semibold">{planet.level}%</span>
+              </div>
+              <div 
+                className="h-2 w-full bg-quantum-gray/20 dark:bg-static-white/10 rounded-full overflow-hidden"
+              >
+                <div 
+                  className="h-full rounded-full" 
+                  style={{
+                    width: `${planet.level}%`,
+                    backgroundColor: planet.color
+                  }}
+                ></div>
+              </div>
+              <div className="h-1.5"></div>
+              <span className="text-xs text-quantum-gray/60 dark:text-static-white/60 italic capitalize">
+                {planet.category}
+              </span>
+            </Card>
+          ))}
+        </div>
       </div>
-      
-      {/* Blinking stars background */}
-      <div className="absolute inset-0 overflow-hidden">
-        {stars.map((star) => (
-          <div 
-            key={star.id} 
-            className="absolute"
-            style={{
-              top: `${star.top}%`,
-              left: `${star.left}%`,
-              opacity: 0,
-              animation: `starBlink ${star.animationDuration}s ease-in-out infinite ${star.delay}s`,
-            }}
-          >
-            <Star 
-              size={star.size} 
-              className="text-static-white dark:text-void-black" 
-              fill="currentColor"
-            />
-          </div>
-        ))}
-      </div>
+
+      {/* CSS for planet orbit animations */}
+      <style>
+        {filteredPlanets.map(planet => `
+          @keyframes orbit-${planet.name} {
+            from {
+              transform: translate(-50%, -50%) rotate(0deg) translateX(${planet.orbitSize}px) rotate(0deg);
+            }
+            to {
+              transform: translate(-50%, -50%) rotate(360deg) translateX(${planet.orbitSize}px) rotate(-360deg);
+            }
+          }
+        `).join('\n')}
+      </style>
     </section>
   );
 };
