@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Skill {
   name: string;
@@ -47,7 +49,7 @@ const skills: Skill[] = [
 
 // Convert skills to planets for the solar system
 const skillsToPlanets = (skills: Skill[]): Planet[] => {
-  return skills.map((skill, index) => {
+  return skills.map((skill) => {
     const baseOrbitSize = 80; // Base size for orbit
     const orbitIncrease = 40; // How much each orbit increases
     
@@ -86,8 +88,8 @@ const skillsToPlanets = (skills: Skill[]): Planet[] => {
 const SkillsMatrix: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [hoveredPlanet, setHoveredPlanet] = useState<Planet | null>(null);
+  const [loading, setLoading] = useState(true);
   const [planetPositions, setPlanetPositions] = useState<{[key: string]: {x: number, y: number}}>({});
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
   // Filter planets based on selected category
   const allPlanets = skillsToPlanets(skills);
@@ -95,16 +97,12 @@ const SkillsMatrix: React.FC = () => {
     ? allPlanets 
     : allPlanets.filter(planet => planet.category === selectedCategory);
 
-  // Update window width on resize
+  // Simulate loading state
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 600);
+    return () => clearTimeout(timer);
   }, []);
 
   // Calculate positions for tooltip placement
@@ -156,61 +154,79 @@ const SkillsMatrix: React.FC = () => {
 
         {/* Solar System */}
         <div className="relative w-full mx-auto" style={{ height: '600px' }}>
-          {/* Sun in the center */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-gilded-parchment z-10 shadow-lg shadow-gilded-parchment/40 flex items-center justify-center">
-            <span className="text-void-black font-bold">Skills</span>
-            <div className="absolute w-full h-full rounded-full animate-pulse opacity-70 bg-gilded-parchment"></div>
-          </div>
-          
-          {/* Orbit paths */}
-          {filteredPlanets.map((planet, index) => (
-            <div
-              key={`orbit-${planet.name}`}
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border border-quantum-gray/10 dark:border-static-white/10 rounded-full"
-              style={{
-                width: `${planet.orbitSize * 2}px`,
-                height: `${planet.orbitSize * 2}px`,
-              }}
-            ></div>
-          ))}
-          
-          {/* Planets */}
-          {filteredPlanets.map((planet, index) => (
-            <div
-              id={`planet-${planet.name}`}
-              key={`planet-${planet.name}`}
-              className="absolute left-1/2 top-1/2 rounded-full flex items-center justify-center cursor-pointer z-20 hover:scale-110 transition-transform"
-              style={{
-                width: `${planet.size}px`,
-                height: `${planet.size}px`,
-                backgroundColor: planet.color,
-                transform: 'translate(-50%, -50%)',
-                animation: `orbit ${planet.speed}s linear infinite`,
-                transformOrigin: 'center center',
-                boxShadow: `0 0 10px ${planet.color}80`,
-              }}
-              onMouseEnter={() => setHoveredPlanet(planet)}
-              onMouseLeave={() => setHoveredPlanet(null)}
-            ></div>
-          ))}
-          
-          {/* Skill tooltip */}
-          {hoveredPlanet && (
-            <div
-              className="absolute z-30 bg-static-white dark:bg-void-black border border-quantum-gray/20 dark:border-static-white/20 p-3 rounded-lg shadow-lg transform -translate-x-1/2 -translate-y-full"
-              style={{
-                left: planetPositions[hoveredPlanet.name]?.x || '50%',
-                top: (planetPositions[hoveredPlanet.name]?.y || 0) - 15,
-                maxWidth: '200px',
-                opacity: planetPositions[hoveredPlanet.name] ? 1 : 0,
-              }}
-            >
-              <div className="text-quantum-gray dark:text-static-white font-medium">{hoveredPlanet.name}</div>
-              <div className="text-gilded-parchment text-sm">{hoveredPlanet.level}%</div>
-              <div className="text-xs text-quantum-gray/70 dark:text-static-white/70 mt-1 capitalize">
-                {hoveredPlanet.category}
-              </div>
+          {loading ? (
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+              <Skeleton className="w-20 h-20 rounded-full" />
+              {[120, 180, 240, 300, 360].map((size, index) => (
+                <Skeleton 
+                  key={index}
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-gray-200 dark:border-gray-800"
+                  style={{
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    opacity: 0.3
+                  }}
+                />
+              ))}
             </div>
+          ) : (
+            <>
+              {/* Sun in the center */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-gilded-parchment z-10 shadow-lg shadow-gilded-parchment/40 flex items-center justify-center">
+                <span className="text-void-black font-bold">Skills</span>
+                <div className="absolute w-full h-full rounded-full animate-pulse opacity-70 bg-gilded-parchment"></div>
+              </div>
+              
+              {/* Orbit paths */}
+              {filteredPlanets.map((planet) => (
+                <div
+                  key={`orbit-${planet.name}`}
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border border-quantum-gray/10 dark:border-static-white/10 rounded-full"
+                  style={{
+                    width: `${planet.orbitSize * 2}px`,
+                    height: `${planet.orbitSize * 2}px`,
+                  }}
+                ></div>
+              ))}
+              
+              {/* Planets */}
+              {filteredPlanets.map((planet) => (
+                <Tooltip key={`tooltip-${planet.name}`}>
+                  <TooltipTrigger asChild>
+                    <div
+                      id={`planet-${planet.name}`}
+                      className="absolute left-1/2 top-1/2 rounded-full cursor-pointer z-20 hover:scale-110 transition-transform shadow-lg"
+                      style={{
+                        width: `${planet.size}px`,
+                        height: `${planet.size}px`,
+                        backgroundColor: planet.color,
+                        boxShadow: `0 0 10px ${planet.color}80`,
+                        transform: `translate(-50%, -50%) 
+                          rotate(0deg) 
+                          translateX(${planet.orbitSize}px) 
+                          rotate(0deg)`,
+                        animation: `orbit-${planet.name} ${planet.speed}s linear infinite`
+                      }}
+                      onMouseEnter={() => setHoveredPlanet(planet)}
+                      onMouseLeave={() => setHoveredPlanet(null)}
+                    >
+                      <div className="absolute inset-0 rounded-full" style={{
+                        backgroundImage: `radial-gradient(circle at 30% 30%, ${planet.color}dd 0%, ${planet.color}aa 70%, ${planet.color}55 100%)`,
+                      }}></div>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent 
+                    className="bg-white/90 dark:bg-void-black/90 backdrop-blur-sm border border-quantum-gray/20 dark:border-static-white/20 p-3 shadow-lg"
+                  >
+                    <div className="text-quantum-gray dark:text-static-white font-medium">{planet.name}</div>
+                    <div className="text-gilded-parchment text-sm">{planet.level}%</div>
+                    <div className="text-xs text-quantum-gray/70 dark:text-static-white/70 mt-1 capitalize">
+                      {planet.category}
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              ))}
+            </>
           )}
         </div>
 
@@ -251,72 +267,19 @@ const SkillsMatrix: React.FC = () => {
         </div>
       </div>
 
-      {/* Add animations for planet orbit */}
-      <style jsx>{`
-        @keyframes orbit {
-          from {
-            transform: translate(-50%, -50%) rotate(0deg) translateX(var(--orbit-size)) rotate(0deg);
+      {/* CSS for planet orbit animations */}
+      <style>
+        {filteredPlanets.map(planet => `
+          @keyframes orbit-${planet.name} {
+            from {
+              transform: translate(-50%, -50%) rotate(0deg) translateX(${planet.orbitSize}px) rotate(0deg);
+            }
+            to {
+              transform: translate(-50%, -50%) rotate(360deg) translateX(${planet.orbitSize}px) rotate(-360deg);
+            }
           }
-          to {
-            transform: translate(-50%, -50%) rotate(360deg) translateX(var(--orbit-size)) rotate(-360deg);
-          }
-        }
-        
-        #planet-React {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'React')?.orbitSize || 80}px;
-        }
-        #planet-TypeScript {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'TypeScript')?.orbitSize || 90}px;
-        }
-        #planet-HTML\/CSS {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'HTML/CSS')?.orbitSize || 100}px;
-        }
-        #planet-JavaScript {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'JavaScript')?.orbitSize || 110}px;
-        }
-        #planet-Tailwind\ CSS {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'Tailwind CSS')?.orbitSize || 120}px;
-        }
-        #planet-Next\.js {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'Next.js')?.orbitSize || 130}px;
-        }
-        #planet-Node\.js {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'Node.js')?.orbitSize || 140}px;
-        }
-        #planet-Express {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'Express')?.orbitSize || 150}px;
-        }
-        #planet-MongoDB {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'MongoDB')?.orbitSize || 160}px;
-        }
-        #planet-PostgreSQL {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'PostgreSQL')?.orbitSize || 170}px;
-        }
-        #planet-RESTful\ API {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'RESTful API')?.orbitSize || 180}px;
-        }
-        #planet-Git {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'Git')?.orbitSize || 190}px;
-        }
-        #planet-Docker {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'Docker')?.orbitSize || 200}px;
-        }
-        #planet-CI\/CD {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'CI/CD')?.orbitSize || 210}px;
-        }
-        #planet-Figma {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'Figma')?.orbitSize || 220}px;
-        }
-        #planet-Agile {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'Agile')?.orbitSize || 230}px;
-        }
-        #planet-Problem\ Solving {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'Problem Solving')?.orbitSize || 240}px;
-        }
-        #planet-Team\ Collaboration {
-          --orbit-size: ${filteredPlanets.find(p => p.name === 'Team Collaboration')?.orbitSize || 250}px;
-        }
-      `}</style>
+        `).join('\n')}
+      </style>
     </section>
   );
 };
