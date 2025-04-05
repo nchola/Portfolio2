@@ -157,11 +157,10 @@ const SkillsMatrix: React.FC = () => {
             margin: '0 auto' // Center horizontally
           }}
         >
-          {/* Orbit Paths - Centered with absolute position */}
+          {/* Orbit Paths - Using the requested positioning with 53% */}
           {skills.map((skill) => {
             // Scale radius based on container size
-            const scaleFactor = Math.min(1, (containerDimensions.width / 600) * 0.8);
-            const scaledRadius = skill.orbitRadius * scaleFactor;
+            const scaledRadius = skill.orbitRadius * (containerDimensions.width / 600);
             
             return (
               <div 
@@ -170,29 +169,29 @@ const SkillsMatrix: React.FC = () => {
                 style={{
                   width: `${scaledRadius * 2}px`,
                   height: `${scaledRadius * 2}px`,
-                  left: '50%',
-                  top: '50%',
-                  transform: 'translate(-50%, -50%)'
+                  left: '53%',
+                  top: '53%',
+                  transform: 'translate(-53%, -52%)'
                 }}
               />
             );
           })}
           
-          {/* Sun/Center - Exact center with scaled size */}
+          {/* Sun/Center - Using the requested positioning with 53% */}
           <div 
             className="absolute bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]"
             style={{
               width: `${getScaledSize(32)}px`, 
               height: `${getScaledSize(32)}px`,
-              left: '50%',
-              top: '50%',
-              transform: 'translate(-50%, -50%)'
+              left: '53%',
+              top: '53%',
+              transform: 'translate(-53%, -52%)'
             }}
           >
             <span className="text-void-black font-bold text-xs">Skills</span>
           </div>
           
-          {/* Planets/Skills with precise positioning */}
+          {/* Planets/Skills with adjusted positions */}
           {skills.map((skill) => {
             // Scale size based on container size
             const scaledSize = getScaledSize(skill.size);
