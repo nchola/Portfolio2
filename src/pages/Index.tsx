@@ -42,10 +42,10 @@ const Index: React.FC = () => {
   }, [location]);
 
   return (
-    <>
+    <div className="overflow-x-hidden w-full">
       <Navigation sections={sections} />
       
-      <main className="min-h-screen">
+      <main className="min-h-screen w-full">
         <Hero 
           title="Muhammad Nanda" 
           subtitle="I'm"
@@ -60,7 +60,7 @@ const Index: React.FC = () => {
       </main>
       
       <DarkModeToggle />
-    </>
+    </div>
   );
 };
 

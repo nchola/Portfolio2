@@ -69,7 +69,8 @@ const SkillsMatrix: React.FC = () => {
       if (!containerParent) return;
       
       const parentWidth = containerParent.clientWidth;
-      const maxSize = parentWidth > 768 ? Math.min(600, parentWidth - 40) : Math.min(300, parentWidth - 40);
+      // Make the container larger to ensure orbits aren't cut off
+      const maxSize = parentWidth > 768 ? Math.min(700, parentWidth) : Math.min(360, parentWidth);
       
       setContainerDimensions({
         width: maxSize,
@@ -90,7 +91,8 @@ const SkillsMatrix: React.FC = () => {
 
   // Calculate adjusted orbit radius based on container size
   const getAdjustedOrbit = useCallback((baseRadius: number) => {
-    const maxRadius = containerDimensions.width * 0.4; // Limit to 40% of container width
+    // Allow larger orbits relative to container size (0.48 instead of 0.4)
+    const maxRadius = containerDimensions.width * 0.48;
     return Math.min(baseRadius, maxRadius);
   }, [containerDimensions.width]);
 
@@ -99,7 +101,7 @@ const SkillsMatrix: React.FC = () => {
     if (!isLoaded) return;
 
     let animationFrameId: number;
-    // Ensure centerX and centerY are exactly half of container dimensions
+    // Position center point for orbits - exactly 50% for perfect centering
     const centerX = containerDimensions.width / 2;
     const centerY = containerDimensions.height / 2;
     
@@ -136,34 +138,35 @@ const SkillsMatrix: React.FC = () => {
   // Calculate 3D transform for planets
   const getPlanetTransform = useCallback((skillId: string) => {
     const position = orbits[skillId];
-    if (!position) return 'translate(-50%, -50%)';
+    if (!position) return 'translate(0px, 0px)';
     
-    return `translate3d(${position.x}px, ${position.y}px, 0)`;
+    // Use standard transform instead of translate3d for better compatibility
+    return `translate(${position.x}px, ${position.y}px)`;
   }, [orbits]);
 
   return (
     <section id="skills" className="section py-12 md:py-24 bg-void-black dark:bg-static-white relative overflow-hidden">
-      <div className="container relative z-10">
-        <div className="mb-8 md:mb-12">
+      <div className="container relative z-10 px-0 md:px-6">
+        <div className="mb-8 md:mb-12 px-4">
           <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
             Capabilities
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-static-white dark:text-void-black mb-6">
             Skills
           </h2>
-          <p className="text-lg text-static-white/80 dark:text-void-black/80 max-w-2xl">
+          <p className="text-lg text-static-white/80 dark:text-void-black/80 max-w-2xl mx-auto">
             I have been learning programming since 2022. The main area of my expertise is Multi-Platform Development.
             <br />
             Here are the technologies I have learned.
           </p>
         </div>
         
-        {/* Solar System Container with proper 3D transformations */}
-        <div className="flex justify-center items-center">
+        {/* Solar System Container with proper centering */}
+        <div className="flex justify-center items-center mx-auto w-full">
           <div 
             ref={containerRef}
             className={cn(
-              "relative mx-auto mb-16 overflow-hidden",
+              "relative mx-auto mb-16",
               isLoaded ? "opacity-100" : "opacity-0"
             )}
             style={{ 
@@ -173,7 +176,7 @@ const SkillsMatrix: React.FC = () => {
               transition: 'opacity 0.5s ease-in-out',
             }}
           >
-            {/* Orbit Paths - Perfectly centered */}
+            {/* Orbit Paths - Centered using 53% */}
             {skills.map((skill) => {
               const orbitRadius = getAdjustedOrbit(skill.orbitRadius);
               return (
@@ -183,29 +186,27 @@ const SkillsMatrix: React.FC = () => {
                   style={{
                     width: `${orbitRadius * 2}px`,
                     height: `${orbitRadius * 2}px`,
-                    left: '50%',
-                    top: '50%',
-                    transform: 'translate3d(-50%, -50%, 0)',
-                    transformStyle: 'preserve-3d',
+                    left: '53%',
+                    top: '53%',
+                    transform: 'translate(-53%, -53%)',
                   }}
                 />
               );
             })}
             
-            {/* Sun/Center - Exact center */}
+            {/* Sun/Center */}
             <div 
               className="absolute w-16 h-16 bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]"
               style={{
-                left: '50%',
-                top: '50%',
-                transform: 'translate3d(-50%, -50%, 0)',
-                transformStyle: 'preserve-3d',
+                left: '53%',
+                top: '53%',
+                transform: 'translate(-53%, -53%)',
               }}
             >
               <span className="text-void-black font-bold text-xs">Skills</span>
             </div>
             
-            {/* Planets/Skills with 3D transformations */}
+            {/* Planets/Skills */}
             {skills.map((skill) => (
               <TooltipProvider key={skill.id}>
                 <Tooltip>
