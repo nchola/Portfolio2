@@ -16,19 +16,19 @@ interface Skill {
 }
 
 const skills: Skill[] = [
-  // Technical skills
-  { id: 'flutter', name: 'Flutter', type: 'technical', description: '80%', level: 4, orbitRadius: 120, orbitSpeed: 0.0015, size: 40 },
-  { id: 'dart', name: 'Dart', type: 'technical', description: '75%', level: 4, orbitRadius: 160, orbitSpeed: 0.002, size: 40 },
-  { id: 'mongodb', name: 'MongoDB', type: 'technical', description: '70%', level: 3, orbitRadius: 200, orbitSpeed: 0.0018, size: 40 },
-  { id: 'mysql', name: 'MySQL', type: 'technical', description: '75%', level: 4, orbitRadius: 240, orbitSpeed: 0.0016, size: 45 },
-  { id: 'expressjs', name: 'ExpressJS', type: 'technical', description: '80%', level: 4, orbitRadius: 280, orbitSpeed: 0.0014, size: 45 },
-  { id: 'html', name: 'HTML', type: 'technical', description: '75%', level: 4, orbitRadius: 320, orbitSpeed: 0.0012, size: 60 },
-  { id: 'css', name: 'CSS', type: 'technical', description: '65%', level: 3, orbitRadius: 360, orbitSpeed: 0.001, size: 60 },
-  { id: 'javascript', name: 'JavaScript', type: 'conceptual', description: '70%', level: 3, orbitRadius: 400, orbitSpeed: 0.0008, size: 60 },
-  { id: 'laravel', name: 'Laravel', type: 'conceptual', description: '70%', level: 3, orbitRadius: 440, orbitSpeed: 0.0006, size: 55 },
-  { id: 'nodejs', name: 'NodeJS', type: 'conceptual', description: '55%', level: 3, orbitRadius: 480, orbitSpeed: 0.0004, size: 55 },
-  { id: 'php', name: 'PHP', type: 'conceptual', description: '60%', level: 3, orbitRadius: 520, orbitSpeed: 0.0002, size: 55 },
-  { id: 'python', name: 'Python', type: 'conceptual', description: '70%', level: 3, orbitRadius: 560, orbitSpeed: 0.00018, size: 35 },
+  // Technical skills - updated orbit radius for horizontal layout
+  { id: 'flutter', name: 'Flutter', type: 'technical', description: '80%', level: 4, orbitRadius: 120, orbitSpeed: 0.0015, size: 30 },
+  { id: 'dart', name: 'Dart', type: 'technical', description: '75%', level: 4, orbitRadius: 170, orbitSpeed: 0.002, size: 35 },
+  { id: 'mongodb', name: 'MongoDB', type: 'technical', description: '70%', level: 3, orbitRadius: 210, orbitSpeed: 0.0018, size: 40 },
+  { id: 'mysql', name: 'MySQL', type: 'technical', description: '75%', level: 4, orbitRadius: 250, orbitSpeed: 0.0016, size: 30 },
+  { id: 'expressjs', name: 'ExpressJS', type: 'technical', description: '80%', level: 4, orbitRadius: 290, orbitSpeed: 0.0014, size: 35 },
+  { id: 'html', name: 'HTML', type: 'technical', description: '75%', level: 4, orbitRadius: 330, orbitSpeed: 0.0012, size: 40 },
+  { id: 'css', name: 'CSS', type: 'technical', description: '65%', level: 3, orbitRadius: 370, orbitSpeed: 0.001, size: 30 },
+  { id: 'javascript', name: 'JavaScript', type: 'conceptual', description: '70%', level: 3, orbitRadius: 410, orbitSpeed: 0.0008, size: 35 },
+  { id: 'laravel', name: 'Laravel', type: 'conceptual', description: '70%', level: 3, orbitRadius: 450, orbitSpeed: 0.0006, size: 40 },
+  { id: 'nodejs', name: 'NodeJS', type: 'conceptual', description: '55%', level: 3, orbitRadius: 490, orbitSpeed: 0.0004, size: 30 },
+  { id: 'php', name: 'PHP', type: 'conceptual', description: '60%', level: 3, orbitRadius: 530, orbitSpeed: 0.0002, size: 35 },
+  { id: 'python', name: 'Python', type: 'conceptual', description: '70%', level: 3, orbitRadius: 570, orbitSpeed: 0.00018, size: 40 },
 ];
 
 // Generate blinking stars data
@@ -39,7 +39,7 @@ const generateStars = (count: number) => {
     top: Math.random() * 100,
     left: Math.random() * 100,
     opacity: Math.random() * 1,
-    animationDuration: Math.random() * 5 ,
+    animationDuration: Math.random() * 5,
     delay: Math.random() * 5,
   }));
 };
@@ -55,14 +55,18 @@ const SkillsMatrix: React.FC = () => {
   useEffect(() => {
     const updateDimensions = () => {
       const width = window.innerWidth;
-      // Improve container sizing logic to prevent overflow
-      const containerSize = width > 768 
-        ? Math.min(600, width * 0.8) 
-        : Math.min(width - 40, 400);
+      // Use more horizontal proportions (width > height)
+      const containerWidth = width > 768 
+        ? Math.min(800, width * 0.9)  // Wider container on larger screens
+        : Math.min(width - 20, 500);  // Almost full width on mobile
+      
+      const containerHeight = width > 768
+        ? Math.min(500, width * 0.5)  // Lower height for landscape effect
+        : Math.min(350, width * 0.6); // More compact height on mobile
         
       setContainerDimensions({
-        width: containerSize,
-        height: containerSize
+        width: containerWidth,
+        height: containerHeight
       });
     };
 
@@ -74,11 +78,11 @@ const SkillsMatrix: React.FC = () => {
     };
   }, []);
 
-  // Calculate planet positions with improved mathematical precision
+  // Calculate planet positions with elliptical orbits
   useEffect(() => {
     let animationFrameId: number;
     
-    // Definisikan center dengan presisi
+    // Define center position
     const centerX = containerDimensions.width / 2;
     const centerY = containerDimensions.height / 2;
     
@@ -86,13 +90,20 @@ const SkillsMatrix: React.FC = () => {
       const newPositions: {[key: string]: { x: number, y: number }} = {};
       
       skills.forEach(skill => {
-        // Gunakan transformasi yang konsisten
+        // Use different angles for horizontal elliptical paths
         const angle = timestamp * skill.orbitSpeed;
         
-        // Hitung posisi eksak menggunakan fungsi trigonometri
-        const scaledRadius = skill.orbitRadius * (containerDimensions.width / 600);
-        const x = centerX + Math.cos(angle) * scaledRadius;
-        const y = centerY + Math.sin(angle) * scaledRadius;
+        // Create elliptical orbit with width > height (horizontal/landscape orientation)
+        // The horizontal radius is larger than the vertical radius
+        const horizontalScale = 1.0; // Full horizontal scale
+        const verticalScale = 0.6;   // Compressed vertical scale for oval effect
+        
+        const scaledHRadius = skill.orbitRadius * (containerDimensions.width / 800) * horizontalScale;
+        const scaledVRadius = skill.orbitRadius * (containerDimensions.height / 500) * verticalScale;
+        
+        // Calculate elliptical position
+        const x = centerX + Math.cos(angle) * scaledHRadius;
+        const y = centerY + Math.sin(angle) * scaledVRadius;
         
         newPositions[skill.id] = { x, y };
       });
@@ -117,7 +128,7 @@ const SkillsMatrix: React.FC = () => {
   
   // Function to calculate scaled size based on container
   const getScaledSize = (size: number) => {
-    const scale = containerDimensions.width / 600;
+    const scale = Math.min(containerDimensions.width / 800, containerDimensions.height / 500);
     return size * scale;
   };
 
@@ -138,9 +149,9 @@ const SkillsMatrix: React.FC = () => {
           </p>
         </div>
         
-        {/* Solar System Container - With improved containment */}
+        {/* Solar System Container - With horizontal elliptical orbits */}
         <div 
-          className="relative mx-auto mb-20 overflow-hidden"
+          className="relative mx-auto mb-16 overflow-hidden"
           style={{ 
             height: `${containerDimensions.height}px`, 
             width: `${containerDimensions.width}px`,
@@ -148,21 +159,26 @@ const SkillsMatrix: React.FC = () => {
             position: 'relative'
           }}
         >
-          {/* Orbit Paths - Centered with improved positioning */}
+          {/* Orbit Paths - Elliptical paths */}
           {skills.map((skill) => {
-            // Scale radius based on container
-            const scaledRadius = skill.orbitRadius * (containerDimensions.width / 600);
+            // Scale radius based on container with horizontal emphasis
+            const horizontalScale = 1.0;
+            const verticalScale = 0.6;
+            
+            const scaledHRadius = skill.orbitRadius * (containerDimensions.width / 800) * horizontalScale;
+            const scaledVRadius = skill.orbitRadius * (containerDimensions.height / 500) * verticalScale;
             
             return (
               <div 
                 key={`orbit-${skill.id}`}
-                className="absolute border border-gilded-parchment/20 rounded-full" 
+                className="absolute border border-gilded-parchment/20" 
                 style={{
-                  width: `${scaledRadius * 2}px`,
-                  height: `${scaledRadius * 2}px`,
-                  left: '53%',
-                  top: '53%',
-                  transform: 'translate(-53%, -52%)'
+                  width: `${scaledHRadius * 2}px`,
+                  height: `${scaledVRadius * 2}px`,
+                  borderRadius: '50%',
+                  left: '50%',
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)'
                 }}
               />
             );
@@ -182,10 +198,11 @@ const SkillsMatrix: React.FC = () => {
             <span className="text-void-black font-bold text-xs">Skills</span>
           </div>
           
-          {/* Planets/Skills with proper containment */}
+          {/* Planets/Skills with varying sizes */}
           {skills.map((skill) => {
-            // Scale size based on container
-            const scaledSize = getScaledSize(skill.size);
+            // Get a random size between 30-50px based on the skill id
+            const randomSizeFactor = ((parseInt(skill.id.charCodeAt(0).toString()) % 20) + 30) / 40;
+            const scaledSize = getScaledSize(skill.size * randomSizeFactor);
             
             // Get the position from orbits state or use fallback
             const position = orbits[skill.id] || { x: containerDimensions.width / 2, y: containerDimensions.height / 2 };
@@ -246,8 +263,8 @@ const SkillsMatrix: React.FC = () => {
         ))}
       </div>
       
-      {/* Remove the extra spacing div */}
-      <div className="h-10"></div>
+      {/* Minimal spacing at bottom */}
+      <div className="h-8"></div>
     </section>
   );
 };
