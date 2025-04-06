@@ -80,8 +80,8 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer id="footer" className="pt-12 pb-8 relative z-20 overflow-hidden">
-      <div className="container mx-auto px-4 md:px-6 max-w-full">
+    <footer id="footer" className="pt-6 pb-8 relative z-20">
+      <div className="container mx-auto px-4 md:px-6">
         <Card className="bg-static-white/50 dark:bg-void-black/50 border border-quantum-gray/10 dark:border-static-white/10 backdrop-blur-sm">
           <div className="p-4 md:p-6">
             <h2 className="text-xl md:text-2xl font-cormorant font-bold text-quantum-gray dark:text-static-white mb-4 text-center">
@@ -122,7 +122,7 @@ const Footer = () => {
       {isMobile && (
         <a
           href="mailto:nchola@mhs.mdp.ac.id"
-          className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-gilded-parchment flex items-center justify-center shadow-lg z-30"
+          className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-gilded-parchment flex items-center justify-center shadow-lg z-20"
         >
           <AtSign className="text-void-black w-5 h-5" />
           <span className="absolute inset-0 rounded-full bg-gilded-parchment animate-ping opacity-30"></span>

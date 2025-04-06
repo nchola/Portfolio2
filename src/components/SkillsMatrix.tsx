@@ -1,8 +1,14 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Progress } from '@/components/ui/progress';
-import { Star } from 'lucide-react';
+import { Star, Info } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider
+} from '@/components/ui/tooltip';
 
 interface Skill {
   id: string;
@@ -10,36 +16,36 @@ interface Skill {
   type: 'technical' | 'conceptual';
   description: string;
   level: number; // 1-5
-  orbitRadius: number; // Radius of orbit path
+  orbitRadius: number; // Base radius of orbit path
   orbitSpeed: number; // Speed of rotation
   size: number; // Size of the planet
 }
 
 const skills: Skill[] = [
   // Technical skills
-  { id: 'flutter', name: 'Flutter', type: 'technical', description: '80%', level: 4, orbitRadius: 120, orbitSpeed: 0.0015, size: 40 },
-  { id: 'dart', name: 'Dart', type: 'technical', description: '75%', level: 4, orbitRadius: 160, orbitSpeed: 0.002, size: 40 },
-  { id: 'mongodb', name: 'MongoDB', type: 'technical', description: '70%', level: 3, orbitRadius: 200, orbitSpeed: 0.0018, size: 40 },
-  { id: 'mysql', name: 'MySQL', type: 'technical', description: '75%', level: 4, orbitRadius: 240, orbitSpeed: 0.0016, size: 45 },
-  { id: 'expressjs', name: 'ExpressJS', type: 'technical', description: '80%', level: 4, orbitRadius: 280, orbitSpeed: 0.0014, size: 45 },
-  { id: 'html', name: 'HTML', type: 'technical', description: '75%', level: 4, orbitRadius: 320, orbitSpeed: 0.0012, size: 60 },
-  { id: 'css', name: 'CSS', type: 'technical', description: '65%', level: 3, orbitRadius: 360, orbitSpeed: 0.001, size: 60 },
-  { id: 'javascript', name: 'JavaScript', type: 'conceptual', description: '70%', level: 3, orbitRadius: 400, orbitSpeed: 0.0008, size: 60 },
-  { id: 'laravel', name: 'Laravel', type: 'conceptual', description: '70%', level: 3, orbitRadius: 440, orbitSpeed: 0.0006, size: 55 },
-  { id: 'nodejs', name: 'NodeJS', type: 'conceptual', description: '55%', level: 3, orbitRadius: 480, orbitSpeed: 0.0004, size: 55 },
-  { id: 'php', name: 'PHP', type: 'conceptual', description: '60%', level: 3, orbitRadius: 520, orbitSpeed: 0.0002, size: 55 },
-  { id: 'python', name: 'Python', type: 'conceptual', description: '70%', level: 3, orbitRadius: 560, orbitSpeed: 0.00018, size: 35 },
+  { id: 'flutter', name: 'Flutter', type: 'technical', description: '80%', level: 4, orbitRadius: 120, orbitSpeed: 0.0015, size: 25 },
+  { id: 'dart', name: 'Dart', type: 'technical', description: '75%', level: 4, orbitRadius: 160, orbitSpeed: 0.002, size: 20 },
+  { id: 'mongodb', name: 'MongoDB', type: 'technical', description: '70%', level: 3, orbitRadius: 200, orbitSpeed: 0.0018, size: 22 },
+  { id: 'mysql', name: 'MySQL', type: 'technical', description: '75%', level: 4, orbitRadius: 240, orbitSpeed: 0.0016, size: 24 },
+  { id: 'expressjs', name: 'ExpressJS', type: 'technical', description: '80%', level: 4, orbitRadius: 280, orbitSpeed: 0.0014, size: 25 },
+  { id: 'html', name: 'HTML', type: 'technical', description: '75%', level: 4, orbitRadius: 320, orbitSpeed: 0.0012, size: 22 },
+  { id: 'css', name: 'CSS', type: 'technical', description: '65%', level: 3, orbitRadius: 360, orbitSpeed: 0.001, size: 20 },
+  { id: 'javascript', name: 'JavaScript', type: 'conceptual', description: '70%', level: 3, orbitRadius: 400, orbitSpeed: 0.0008, size: 26 },
+  { id: 'laravel', name: 'Laravel', type: 'conceptual', description: '70%', level: 3, orbitRadius: 440, orbitSpeed: 0.0006, size: 21 },
+  { id: 'nodejs', name: 'NodeJS', type: 'conceptual', description: '55%', level: 3, orbitRadius: 480, orbitSpeed: 0.0004, size: 23 },
+  { id: 'php', name: 'PHP', type: 'conceptual', description: '60%', level: 3, orbitRadius: 520, orbitSpeed: 0.0002, size: 19 },
+  { id: 'python', name: 'Python', type: 'conceptual', description: '70%', level: 3, orbitRadius: 560, orbitSpeed: 0.00018, size: 24 },
 ];
 
 // Generate blinking stars data
 const generateStars = (count: number) => {
   return Array.from({ length: count }).map((_, i) => ({
     id: `star-${i}`,
-    size: Math.random() * 4 + 1,
+    size: Math.random() * 2 + 1,
     top: Math.random() * 100,
     left: Math.random() * 100,
-    opacity: Math.random() * 1,
-    animationDuration: Math.random() * 5 ,
+    opacity: Math.random() * 0.7 + 0.3,
+    animationDuration: Math.random() * 5 + 3,
     delay: Math.random() * 5,
   }));
 };
@@ -50,23 +56,28 @@ const SkillsMatrix: React.FC = () => {
   const [activeSkill, setActiveSkill] = useState<Skill | null>(null);
   const [orbits, setOrbits] = useState<{[key: string]: { x: number, y: number }}>({}); 
   const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
-  const [isMounted, setIsMounted] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Calculate container dimensions and update on resize
+  // Calculate container dimensions and update on resize with perfect square aspect ratio
   useEffect(() => {
-    setIsMounted(true);
-    
     const updateDimensions = () => {
-      const viewportWidth = Math.min(window.innerWidth, document.documentElement.clientWidth);
-      // Use a more conservative approach for container sizing
-      const containerSize = viewportWidth > 768 
-        ? Math.min(600, viewportWidth - 40) 
-        : Math.min(viewportWidth - 40, 400);
+      if (!containerRef.current) return;
+      
+      const container = containerRef.current;
+      const containerParent = container.parentElement;
+      if (!containerParent) return;
+      
+      const parentWidth = containerParent.clientWidth;
+      const maxSize = parentWidth > 768 ? Math.min(600, parentWidth - 40) : Math.min(300, parentWidth - 40);
       
       setContainerDimensions({
-        width: containerSize,
-        height: containerSize // Keep height same as width for circular orbits
+        width: maxSize,
+        height: maxSize // Force square aspect ratio
       });
+      
+      // Add small delay to ensure dimensions are applied before animations start
+      setTimeout(() => setIsLoaded(true), 100);
     };
 
     updateDimensions();
@@ -77,13 +88,18 @@ const SkillsMatrix: React.FC = () => {
     };
   }, []);
 
-  // Calculate planet positions with improved mathematical precision
+  // Calculate adjusted orbit radius based on container size
+  const getAdjustedOrbit = useCallback((baseRadius: number) => {
+    const maxRadius = containerDimensions.width * 0.4; // Limit to 40% of container width
+    return Math.min(baseRadius, maxRadius);
+  }, [containerDimensions.width]);
+
+  // Calculate planet positions with improved 3D transformations
   useEffect(() => {
-    if (!isMounted) return;
-    
+    if (!isLoaded) return;
+
     let animationFrameId: number;
-    
-    // Define center with precision
+    // Ensure centerX and centerY are exactly half of container dimensions
     const centerX = containerDimensions.width / 2;
     const centerY = containerDimensions.height / 2;
     
@@ -91,16 +107,12 @@ const SkillsMatrix: React.FC = () => {
       const newPositions: {[key: string]: { x: number, y: number }} = {};
       
       skills.forEach(skill => {
-        // Use consistent transformation
+        const orbitRadius = getAdjustedOrbit(skill.orbitRadius);
         const angle = timestamp * skill.orbitSpeed;
         
-        // Calculate exact position using trigonometric functions
-        // Scale radius to fit within container
-        const scaleFactor = Math.min(1, (containerDimensions.width / 600) * 0.8);
-        const scaledRadius = skill.orbitRadius * scaleFactor;
-        
-        const x = centerX + Math.cos(angle) * scaledRadius;
-        const y = centerY + Math.sin(angle) * scaledRadius;
+        // Calculate positions relative to center
+        const x = centerX + Math.cos(angle) * orbitRadius;
+        const y = centerY + Math.sin(angle) * orbitRadius;
         
         newPositions[skill.id] = { x, y };
       });
@@ -109,29 +121,29 @@ const SkillsMatrix: React.FC = () => {
       animationFrameId = requestAnimationFrame(updatePositions);
     };
     
-    if (containerDimensions.width > 0) {
-      animationFrameId = requestAnimationFrame(updatePositions);
-    }
+    animationFrameId = requestAnimationFrame(updatePositions);
     
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [containerDimensions, isMounted]);
+  }, [containerDimensions, isLoaded, getAdjustedOrbit]);
 
   // Function to determine color based on skill type
   const getSkillColor = (type: 'technical' | 'conceptual') => {
     return type === 'technical' ? 'bg-quantum-gray text-static-white' : 'bg-gilded-parchment text-void-black';
   };
-  
-  // Function to calculate scaled size based on container
-  const getScaledSize = (size: number) => {
-    const scale = containerDimensions.width / 600;
-    return Math.max(size * scale, 20); // Enforce minimum size for visibility
-  };
+
+  // Calculate 3D transform for planets
+  const getPlanetTransform = useCallback((skillId: string) => {
+    const position = orbits[skillId];
+    if (!position) return 'translate(-50%, -50%)';
+    
+    return `translate3d(${position.x}px, ${position.y}px, 0)`;
+  }, [orbits]);
 
   return (
     <section id="skills" className="section py-12 md:py-24 bg-void-black dark:bg-static-white relative overflow-hidden">
-      <div className="container relative z-10 overflow-hidden">
+      <div className="container relative z-10">
         <div className="mb-8 md:mb-12">
           <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
             Capabilities
@@ -139,105 +151,124 @@ const SkillsMatrix: React.FC = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-static-white dark:text-void-black mb-6">
             Skills
           </h2>
-          <p className="text-lg text-static-white/80 dark:text-void-black/80 max-w-2xl mx-auto">
+          <p className="text-lg text-static-white/80 dark:text-void-black/80 max-w-2xl">
             I have been learning programming since 2022. The main area of my expertise is Multi-Platform Development.
             <br />
             Here are the technologies I have learned.
           </p>
         </div>
         
-        {/* Solar System Container - Fixed aspect ratio and position */}
-        <div 
-          className="relative mx-auto mb-24 overflow-hidden"
-          style={{ 
-            height: `${containerDimensions.height}px`, 
-            width: `${containerDimensions.width}px`,
-            maxWidth: '100%', // Ensure it never exceeds the viewport width
-            position: 'relative',
-            margin: '0 auto' // Center horizontally
-          }}
-        >
-          {/* Orbit Paths - Using the requested positioning with 53% */}
-          {skills.map((skill) => {
-            // Scale radius based on container size
-            const scaledRadius = skill.orbitRadius * (containerDimensions.width / 600);
-            
-            return (
-              <div 
-                key={`orbit-${skill.id}`}
-                className="absolute border border-gilded-parchment/20 rounded-full" 
-                style={{
-                  width: `${scaledRadius * 2}px`,
-                  height: `${scaledRadius * 2}px`,
-                  left: '53%',
-                  top: '53%',
-                  transform: 'translate(-53%, -52%)'
-                }}
-              />
-            );
-          })}
-          
-          {/* Sun/Center - Using the requested positioning with 53% */}
+        {/* Solar System Container with proper 3D transformations */}
+        <div className="flex justify-center items-center">
           <div 
-            className="absolute bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]"
-            style={{
-              width: `${getScaledSize(32)}px`, 
-              height: `${getScaledSize(32)}px`,
-              left: '53%',
-              top: '53%',
-              transform: 'translate(-53%, -52%)'
+            ref={containerRef}
+            className={cn(
+              "relative mx-auto mb-16 overflow-hidden",
+              isLoaded ? "opacity-100" : "opacity-0"
+            )}
+            style={{ 
+              width: `${containerDimensions.width}px`, 
+              height: `${containerDimensions.height}px`,
+              transformStyle: 'preserve-3d',
+              transition: 'opacity 0.5s ease-in-out',
             }}
           >
-            <span className="text-void-black font-bold text-xs">Skills</span>
-          </div>
-          
-          {/* Planets/Skills with adjusted positions */}
-          {skills.map((skill) => {
-            // Scale size based on container size
-            const scaledSize = getScaledSize(skill.size);
+            {/* Orbit Paths - Perfectly centered */}
+            {skills.map((skill) => {
+              const orbitRadius = getAdjustedOrbit(skill.orbitRadius);
+              return (
+                <div 
+                  key={`orbit-${skill.id}`}
+                  className="absolute border border-gilded-parchment/20 rounded-full" 
+                  style={{
+                    width: `${orbitRadius * 2}px`,
+                    height: `${orbitRadius * 2}px`,
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate3d(-50%, -50%, 0)',
+                    transformStyle: 'preserve-3d',
+                  }}
+                />
+              );
+            })}
             
-            // Get the position from orbits state or use fallback
-            const position = orbits[skill.id] || { 
-              x: containerDimensions.width / 2, 
-              y: containerDimensions.height / 2 
-            };
+            {/* Sun/Center - Exact center */}
+            <div 
+              className="absolute w-16 h-16 bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]"
+              style={{
+                left: '50%',
+                top: '50%',
+                transform: 'translate3d(-50%, -50%, 0)',
+                transformStyle: 'preserve-3d',
+              }}
+            >
+              <span className="text-void-black font-bold text-xs">Skills</span>
+            </div>
             
-            return (
-              <div
-                key={skill.id}
-                className={cn(
-                  "absolute rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer z-10",
-                  getSkillColor(skill.type),
-                  activeSkill?.id === skill.id ? "ring-2 ring-gilded-parchment scale-110 z-30" : ""
-                )}
-                style={{
-                  width: `${scaledSize}px`,
-                  height: `${scaledSize}px`,
-                  left: `${position.x}px`,
-                  top: `${position.y}px`,
-                  transform: 'translate(-50%, -50%)', // Ensure consistent transformation
-                  transition: activeSkill?.id === skill.id ? 'all 0.3s ease' : 'none',
-                }}
-                onMouseEnter={() => setActiveSkill(skill)}
-                onMouseLeave={() => setActiveSkill(null)}
-              >
-                <span className="text-xs font-medium whitespace-nowrap">{skill.name}</span>
-                
-                {activeSkill?.id === skill.id && (
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-3 bg-void-black dark:bg-static-white text-static-white dark:text-void-black px-3 py-2 rounded-md text-xs whitespace-nowrap z-40 flex flex-col items-center">
-                    <span className="font-bold mb-1">{skill.name}</span>
-                    <Progress value={parseInt(skill.description)} className="w-20 h-2" />
-                    <span className="mt-1">{skill.description}</span>
-                  </div>
-                )}
+            {/* Planets/Skills with 3D transformations */}
+            {skills.map((skill) => (
+              <TooltipProvider key={skill.id}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div
+                      className={cn(
+                        "absolute rounded-full flex items-center justify-center cursor-pointer z-10",
+                        getSkillColor(skill.type),
+                        activeSkill?.id === skill.id ? "ring-2 ring-gilded-parchment scale-110 z-30" : ""
+                      )}
+                      style={{
+                        width: `${skill.size * 2}px`,
+                        height: `${skill.size * 2}px`,
+                        transformStyle: 'preserve-3d',
+                        position: 'absolute',
+                        transform: getPlanetTransform(skill.id),
+                        transition: activeSkill?.id === skill.id ? 'all 0.3s ease' : 'none',
+                        boxShadow: `0 0 ${skill.size/2}px rgba(${skill.type === 'technical' ? '74, 74, 74' : '193, 154, 107'}, 0.5)`,
+                      }}
+                      onMouseEnter={() => setActiveSkill(skill)}
+                      onMouseLeave={() => setActiveSkill(null)}
+                    >
+                      <span className="text-xs font-medium">{skill.name}</span>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="bg-void-black/90 dark:bg-static-white/90 border-gilded-parchment">
+                    <div className="flex flex-col items-center">
+                      <span className="font-bold mb-1">{skill.name}</span>
+                      <Progress value={parseInt(skill.description)} className="w-20 h-2" />
+                      <span className="mt-1 text-xs">{skill.description}</span>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            ))}
+            
+            {/* Mobile fallback for skill list - shown only on very small screens */}
+            <div className="md:hidden absolute bottom-0 left-0 w-full bg-void-black/70 dark:bg-static-white/70 backdrop-blur-sm p-4 rounded-t-lg">
+              <div className="text-static-white dark:text-void-black text-xs font-bold mb-2">All Skills:</div>
+              <div className="flex flex-wrap gap-2">
+                {skills.map(skill => (
+                  <span key={`mobile-${skill.id}`} className={cn(
+                    "px-2 py-1 rounded-full text-xs",
+                    skill.type === 'technical' ? 'bg-quantum-gray/80 text-static-white' : 'bg-gilded-parchment/80 text-void-black'
+                  )}>
+                    {skill.name}
+                  </span>
+                ))}
               </div>
-            );
-          })}
+            </div>
+          </div>
         </div>
+        
+        {/* Loading state before animation starts */}
+        {!isLoaded && (
+          <div className="flex justify-center items-center h-60">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-gilded-parchment"></div>
+          </div>
+        )}
       </div>
       
-      {/* Blinking stars background - proper z-index */}
-      <div className="absolute inset-0 overflow-hidden z-0">
+      {/* Blinking stars background */}
+      <div className="absolute inset-0 overflow-hidden">
         {stars.map((star) => (
           <div 
             key={star.id} 
@@ -257,9 +288,6 @@ const SkillsMatrix: React.FC = () => {
           </div>
         ))}
       </div>
-      
-      {/* Add spacing to avoid overlap with footer */}
-      <div className="h-20"></div>
     </section>
   );
 };

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Atom, BrainCircuit, Code, CircuitBoard, Infinity, Zap, Hexagon } from 'lucide-react';
 
@@ -172,8 +173,8 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
       </div>
       
       {/* Content - No Container Div */}
-      <div className="container mx-auto px-4 sm:px-6 z-10 relative max-w-full">
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-static-white dark:text-static-white mb-6 tracking-tighter text-shadow-lg text-center">
+      <div className="container mx-auto px-6 z-10 relative">
+        <h1 className="text-5xl md:text-7xl font-bold text-static-white dark:text-static-white mb-6 tracking-tighter text-shadow-lg text-center">
           {title}
         </h1>
         
@@ -228,6 +229,8 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
             </svg>
           </a>
         </div>
+        
+        
       </div>
     </section>
   );
