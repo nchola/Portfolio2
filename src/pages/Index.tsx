@@ -42,10 +42,10 @@ const Index: React.FC = () => {
   }, [location]);
 
   return (
-    <div className="overflow-x-hidden w-full">
+    <>
       <Navigation sections={sections} />
       
-      <main className="min-h-screen w-full">
+      <main className="min-h-screen">
         <Hero 
           title="Muhammad Nanda" 
           subtitle="I'm"
@@ -55,12 +55,14 @@ const Index: React.FC = () => {
         <Experience />
         <Certificates />
         <ProjectGrid />
-        <SkillsMatrix />
-        <Footer />
+        <div className="relative">
+          <SkillsMatrix />
+          <Footer />
+        </div>
       </main>
       
       <DarkModeToggle />
-    </div>
+    </>
   );
 };
 
