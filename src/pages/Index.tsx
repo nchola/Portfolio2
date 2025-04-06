@@ -45,7 +45,7 @@ const Index: React.FC = () => {
     <>
       <Navigation sections={sections} />
       
-      <main className="min-h-screen">
+      <main className="min-h-screen overflow-x-hidden">
         <Hero 
           title="Muhammad Nanda" 
           subtitle="I'm"
@@ -55,7 +55,7 @@ const Index: React.FC = () => {
         <Experience />
         <Certificates />
         <ProjectGrid />
-        <div className="relative">
+        <div className="relative overflow-hidden">
           <SkillsMatrix />
           <Footer />
         </div>
