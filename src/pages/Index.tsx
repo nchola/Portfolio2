@@ -45,7 +45,7 @@ const Index: React.FC = () => {
     <>
       <Navigation sections={sections} />
       
-      <main className="min-h-screen portfolio-container">
+      <main className="min-h-screen">
         <Hero 
           title="Muhammad Nanda" 
           subtitle="I'm"

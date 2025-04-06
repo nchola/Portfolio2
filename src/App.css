@@ -1,56 +1,10 @@
-
 #root {
-  max-width: 100%;
+  max-width: 1280px;
   margin: 0 auto;
+  padding: 2rem;
   text-align: center;
-  overflow-x: hidden;
 }
 
-.portfolio-container {
-  width: 100%;
-  overflow-x: hidden;
-}
-
-/* Ensure sections are consistent in sizing */
-.section {
-  width: 100vw;
-  min-height: 100vh;
-  padding: 4rem 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.section .container {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-/* Ensure proper scaling for mobile */
-@media (max-width: 768px) {
-  .section {
-    padding: 3rem 0;
-    width: 100%;
-    overflow-x: hidden;
-  }
-  
-  .section .container {
-    padding: 0 1rem;
-    width: 100%;
-  }
-}
-
-/* Fix for SkillsMatrix orbit system */
-#skills {
-  width: 100vw;
-  overflow: visible;
-  position: relative;
-}
-
-/* Original App.css styles below */
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -85,10 +39,4 @@
 
 .read-the-docs {
   color: #888;
-}
-
-/* Add animation for star blinking */
-@keyframes starBlink {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 1; }
 }
