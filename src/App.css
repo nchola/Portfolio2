@@ -1,17 +1,8 @@
-
 #root {
-  max-width: 100%;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0;
+  padding: 2rem;
   text-align: center;
-  overflow-x: hidden;
-}
-
-@media (max-width: 768px) {
-  #root {
-    overflow-x: auto;
-    max-width: none;
-  }
 }
 
 .logo {
@@ -49,4 +40,3 @@
 .read-the-docs {
   color: #888;
 }
-

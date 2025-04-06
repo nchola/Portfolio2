@@ -75,13 +75,6 @@
   
   html {
     @apply scroll-smooth;
-    overflow-x: hidden;
-  }
-
-  @media (max-width: 768px) {
-    html {
-      overflow-x: auto;
-    }
   }
 
   body {
@@ -89,14 +82,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
-  }
-
-  @media (max-width: 768px) {
-    body {
-      overflow-x: auto;
-      min-width: 100vw;
-    }
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -227,22 +212,8 @@
   @apply py-20;
 }
 
-@media (max-width: 768px) {
-  .section {
-    min-width: 150vw;
-    width: auto;
-  }
-}
-
 .container {
   @apply px-6 max-w-7xl mx-auto;
-}
-
-@media (max-width: 768px) {
-  .container {
-    width: 150vw;
-    max-width: none;
-  }
 }
 
 /* 3D Tilt Effect */
