@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Atom, BrainCircuit, Code, CircuitBoard, Infinity, Zap, Hexagon } from 'lucide-react';
 
@@ -62,7 +61,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
   }, []);
   
   return (
-    <section id="hero" className="h-screen flex flex-col justify-center items-center relative overflow-hidden">
+    <section id="hero" className="h-screen flex flex-col justify-center items-center relative w-full overflow-hidden">
       {/* Cosmic Background with Parallax Effect */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         <div 
@@ -81,7 +80,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           <div className="absolute left-1/2 top-1/2 w-20 h-20 md:w-40 md:h-40 rounded-full bg-void-black/60 border border-gilded-parchment/10 animate-[spin_15s_linear_infinite] -translate-x-1/2 -translate-y-1/2"></div>
         </div>
         
-        {/* Abstract Logo: Infinity Loop */}
+        {/* Abstract Logos and decorative elements */}
         <div className="absolute top-1/4 left-1/4 transform -translate-x-1/2 -translate-y-1/2 opacity-40 z-10">
           <Infinity 
             size={80} 
@@ -90,7 +89,6 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           />
         </div>
         
-        {/* Abstract Logo: Void Collapse (Atom) */}
         <div className="absolute top-3/4 left-1/5 transform -translate-x-1/2 -translate-y-1/2 opacity-30 z-10">
           <Atom 
             size={70} 
@@ -99,7 +97,6 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           />
         </div>
         
-        {/* Abstract Logo: Cyberpunk Circuit */}
         <div className="absolute top-2/3 right-1/4 transform translate-x-1/2 -translate-y-1/2 opacity-30 z-10">
           <CircuitBoard 
             size={60} 
@@ -108,7 +105,6 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           />
         </div>
         
-        {/* Abstract Logo: To The Infinity (Brain) */}
         <div className="absolute top-1/3 right-1/5 transform translate-x-1/2 -translate-y-1/2 opacity-40 z-10">
           <BrainCircuit 
             size={65} 
@@ -117,7 +113,6 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           />
         </div>
         
-        {/* Abstract Logo: Cyberpunk Code Symbol */}
         <div className="absolute top-1/2 right-1/3 transform translate-x-1/2 -translate-y-1/2 opacity-30 z-10">
           <Code 
             size={55} 
@@ -126,7 +121,6 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           />
         </div>
         
-        {/* Abstract Logo: Cyberpunk Hexagon */}
         <div className="absolute bottom-1/4 right-1/4 transform translate-x-1/2 translate-y-1/2 opacity-35 z-10">
           <Hexagon 
             size={75} 
@@ -135,7 +129,6 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
           />
         </div>
         
-        {/* Abstract Logo: Electric Symbol */}
         <div className="absolute top-2/5 left-1/3 transform -translate-x-1/2 -translate-y-1/2 opacity-40 z-10">
           <Zap 
             size={65} 
@@ -172,7 +165,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
         </div>
       </div>
       
-      {/* Content - No Container Div */}
+      {/* Content */}
       <div className="container mx-auto px-6 z-10 relative">
         <h1 className="text-5xl md:text-7xl font-bold text-static-white dark:text-static-white mb-6 tracking-tighter text-shadow-lg text-center">
           {title}
@@ -229,8 +222,6 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
             </svg>
           </a>
         </div>
-        
-        
       </div>
     </section>
   );

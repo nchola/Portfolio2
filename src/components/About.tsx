@@ -1,10 +1,11 @@
+
 import React from "react";
 
 const About: React.FC = () => {
   return (
     <section
       id="about"
-      className="section bg-static-white/5 dark:bg-quantum-gray/5"
+      className="section bg-static-white/5 dark:bg-quantum-gray/5 overflow-hidden"
     >
       <div className="container">
         <div className="mb-12">

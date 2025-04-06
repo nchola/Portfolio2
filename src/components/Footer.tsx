@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Instagram, Linkedin, AtSign, Phone, MapPin, Github } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -79,7 +80,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer id="footer" className="pt-12 pb-8 relative z-20">
+    <footer id="footer" className="pt-12 pb-8 relative z-20 overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
         <Card className="bg-static-white/50 dark:bg-void-black/50 border border-quantum-gray/10 dark:border-static-white/10 backdrop-blur-sm">
           <div className="p-4 md:p-6">
