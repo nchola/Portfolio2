@@ -1,6 +1,8 @@
+
 import React, { useState, useEffect } from 'react';
 import { Instagram, Linkedin, AtSign, Phone, MapPin, Github } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Contact item data array for cleaner code
 const contactItems = [
@@ -68,20 +70,12 @@ const ContactItem = ({ icon: Icon, label, value, link, color }) => {
 };
 
 const Footer = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
   
-  // Update isMobile state based on window width
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
   return (
-    <footer id="footer" className="pt-12 pb-8 relative z-20">
-      <div className="container mx-auto px-4 md:px-6">
-        <Card className="bg-static-white/50 dark:bg-void-black/50 border border-quantum-gray/10 dark:border-static-white/10 backdrop-blur-sm">
+    <footer id="footer" className="section pt-12 pb-8 relative z-20 w-full">
+      <div className="container mx-auto px-4 md:px-6 w-full max-w-7xl">
+        <Card className="bg-static-white/50 dark:bg-void-black/50 border border-quantum-gray/10 dark:border-static-white/10 backdrop-blur-sm w-full">
           <div className="p-4 md:p-6">
             <h2 className="text-xl md:text-2xl font-cormorant font-bold text-quantum-gray dark:text-static-white mb-4 text-center">
               Let's connect!

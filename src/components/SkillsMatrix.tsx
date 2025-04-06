@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Progress } from '@/components/ui/progress';
 import { Star } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Skill {
   id: string;
@@ -49,16 +51,21 @@ const SkillsMatrix: React.FC = () => {
   const [activeSkill, setActiveSkill] = useState<Skill | null>(null);
   const [orbits, setOrbits] = useState<{[key: string]: { x: number, y: number }}>({}); 
   const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
+  const isMobile = useIsMobile();
 
   // Calculate container dimensions and update on resize
   useEffect(() => {
     const updateDimensions = () => {
-      const width = window.innerWidth;
-      // Buat ukuran container yang konsisten dan sama antara width dan height
-      const containerSize = width > 768 ? 600 : Math.min(width - 40, 400);
+      const viewportWidth = window.innerWidth;
+      // Get the larger of either the viewport width or 100vw
+      // For mobile, use full viewport width
+      const containerSize = isMobile 
+        ? Math.max(viewportWidth, window.innerHeight * 0.8) 
+        : Math.min(Math.max(viewportWidth * 0.8, 600), 1000);
+        
       setContainerDimensions({
         width: containerSize,
-        height: containerSize // Pastikan height sama dengan width untuk lingkaran sempurna
+        height: containerSize // Keep it square for perfect orbits
       });
     };
 
@@ -68,13 +75,13 @@ const SkillsMatrix: React.FC = () => {
     return () => {
       window.removeEventListener('resize', updateDimensions);
     };
-  }, []);
+  }, [isMobile]);
 
   // Calculate planet positions with improved mathematical precision
   useEffect(() => {
     let animationFrameId: number;
     
-    // Definisikan center dengan presisi
+    // Define center with precision
     const centerX = containerDimensions.width / 2;
     const centerY = containerDimensions.height / 2;
     
@@ -82,10 +89,10 @@ const SkillsMatrix: React.FC = () => {
       const newPositions: {[key: string]: { x: number, y: number }} = {};
       
       skills.forEach(skill => {
-        // Gunakan transformasi yang konsisten
+        // Use consistent transformation
         const angle = timestamp * skill.orbitSpeed;
         
-        // Hitung posisi eksak menggunakan fungsi trigonometri
+        // Calculate exact position using trigonometric functions
         const scaledRadius = skill.orbitRadius * (containerDimensions.width / 600);
         const x = centerX + Math.cos(angle) * scaledRadius;
         const y = centerY + Math.sin(angle) * scaledRadius;
@@ -127,25 +134,27 @@ const SkillsMatrix: React.FC = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-static-white dark:text-void-black mb-6">
             Skills
           </h2>
-          <p className="text-lg text-static-white/80 dark:text-void-black/80 max-w-2xl">
+          <p className="text-lg text-static-white/80 dark:text-void-black/80 max-w-2xl mx-auto">
             I have been learning programming since 2022. The main area of my expertise is Multi-Platform Development.
             <br />
             Here are the technologies I have learned.
           </p>
         </div>
         
-        {/* Solar System Container - Fixed aspect ratio dan position */}
+        {/* Solar System Container - Full width with proper overflow */}
         <div 
           className="relative mx-auto mb-24 overflow-visible"
           style={{ 
             height: `${containerDimensions.height}px`, 
             width: `${containerDimensions.width}px`,
-            position: 'relative' // Pastikan posisi relative
+            position: 'relative',
+            margin: '0 auto',
+            maxWidth: '100vw'
           }}
         >
-          {/* Orbit Paths - Centered dengan posisi absolute */}
+          {/* Orbit Paths - Centered with absolute position */}
           {skills.map((skill) => {
-            // Scale radius berdasarkan ukuran container
+            // Scale radius based on container size
             const scaledRadius = skill.orbitRadius * (containerDimensions.width / 600);
             
             return (
@@ -163,7 +172,7 @@ const SkillsMatrix: React.FC = () => {
             );
           })}
           
-          {/* Sun/Center - Exact center dengan ukuran yang diskalakan */}
+          {/* Sun/Center - Exact center with scaled size */}
           <div 
             className="absolute bg-gilded-parchment rounded-full z-20 flex items-center justify-center animate-pulse shadow-[0_0_30px_rgba(193,154,107,0.6)]"
             style={{
@@ -177,9 +186,9 @@ const SkillsMatrix: React.FC = () => {
             <span className="text-void-black font-bold text-xs">Skills</span>
           </div>
           
-          {/* Planets/Skills dengan posisi yang tepat */}
+          {/* Planets/Skills with precise positioning */}
           {skills.map((skill) => {
-            // Scale size berdasarkan ukuran container
+            // Scale size based on container
             const scaledSize = getScaledSize(skill.size);
             
             // Get the position from orbits state or use fallback
@@ -198,7 +207,7 @@ const SkillsMatrix: React.FC = () => {
                   height: `${scaledSize}px`,
                   left: `${position.x}px`,
                   top: `${position.y}px`,
-                  transform: 'translate(-50%, -50%)', // Pastikan transformasi yang konsisten
+                  transform: 'translate(-50%, -50%)', // Consistent transformation
                   transition: activeSkill?.id === skill.id ? 'all 0.3s ease' : 'none',
                 }}
                 onMouseEnter={() => setActiveSkill(skill)}
@@ -219,7 +228,7 @@ const SkillsMatrix: React.FC = () => {
         </div>
       </div>
       
-      {/* Blinking stars background - buat z-index yang tepat */}
+      {/* Blinking stars background - correct z-index */}
       <div className="absolute inset-0 overflow-hidden z-0">
         {stars.map((star) => (
           <div 
@@ -241,7 +250,7 @@ const SkillsMatrix: React.FC = () => {
         ))}
       </div>
       
-      {/* Tambahkan div kosong untuk menghindari overlap dengan footer */}
+      {/* Empty div to avoid overlap with footer */}
       <div className="h-20"></div>
     </section>
   );
