@@ -267,6 +267,7 @@ const Sun = () => {
         Skills
       </Text>
     </mesh>
+    // 
   )
 }
 
