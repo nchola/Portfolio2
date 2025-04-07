@@ -18,7 +18,7 @@ interface Skill {
   orbitSpeed: number // Speed of rotation
   size: number // Size of the planet
 }
-
+// 
 const skills: Skill[] = [
   // Technical skills
   {
