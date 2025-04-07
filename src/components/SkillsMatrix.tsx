@@ -1,4 +1,3 @@
-
 "use client"
 
 import React, { useRef, useState, useEffect } from "react"
@@ -13,10 +12,10 @@ interface Skill {
   name: string
   type: "technical" | "conceptual"
   description: string
-  level: number // 1-5
-  orbitRadius: number // Radius of orbit path
-  orbitSpeed: number // Speed of rotation
-  size: number // Size of the planet
+  level: number
+  orbitRadius: number
+  orbitSpeed: number
+  size: number
 }
 
 const skills: Skill[] = [
@@ -143,7 +142,6 @@ const skills: Skill[] = [
   },
 ]
 
-// Orbit path component
 const OrbitPath = ({ radius }: { radius: number }) => {
   return (
     <mesh rotation={[Math.PI / 2, 0, 0]}>
@@ -158,7 +156,6 @@ const OrbitPath = ({ radius }: { radius: number }) => {
   )
 }
 
-// Skill planet component
 const SkillPlanet = ({
   skill,
   setActiveSkill,
@@ -172,7 +169,6 @@ const SkillPlanet = ({
   const { size } = useThree()
   const isMobile = useIsMobile()
 
-  // Rotate around the center
   useFrame(({ clock }) => {
     if (ref.current) {
       const angle = clock.getElapsedTime() * skill.orbitSpeed
@@ -203,7 +199,6 @@ const SkillPlanet = ({
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial attach="material" color={color} />
 
-      {/* Skill name label */}
       <Text
         position={[0, 1.5, 0]}
         fontSize={0.5}
@@ -216,7 +211,6 @@ const SkillPlanet = ({
         {skill.name}
       </Text>
 
-      {/* Skill details on hover */}
       {hovered && (
         <Html
           position={[0, -1.5, 0]}
@@ -242,7 +236,6 @@ const SkillPlanet = ({
   )
 }
 
-// Sun component
 const Sun = () => {
   const ref = useRef<THREE.Mesh>(null)
 
@@ -277,7 +270,6 @@ const Sun = () => {
   )
 }
 
-// Main scene component
 const Scene = () => {
   const [activeSkill, setActiveSkill] = useState<Skill | null>(null)
   const controlsRef = useRef<any>(null)
@@ -285,36 +277,22 @@ const Scene = () => {
 
   useEffect(() => {
     if (controlsRef.current) {
-      // Set initial camera position
       controlsRef.current.target.set(0, 0, 0)
     }
   }, [])
 
   return (
     <>
-      {/* Ambient light for overall scene illumination */}
       <ambientLight intensity={0.3} />
-
-      {/* Directional light to create shadows */}
       <directionalLight position={[10, 10, 5]} intensity={0.5} />
-
-      {/* Background stars */}
       <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-
-      {/* Sun at the center */}
       <Sun />
-
-      {/* Orbit paths */}
       {skills.map((skill) => (
         <OrbitPath key={`orbit-${skill.id}`} radius={skill.orbitRadius} />
       ))}
-
-      {/* Skill planets */}
       {skills.map((skill) => (
         <SkillPlanet key={skill.id} skill={skill} setActiveSkill={setActiveSkill} />
       ))}
-
-      {/* Camera controls */}
       <OrbitControls
         ref={controlsRef}
         enableZoom={true}
@@ -333,38 +311,42 @@ const SkillsMatrix: React.FC = () => {
   const isMobile = useIsMobile()
 
   return (
-    <section id="skills" className="section py-12 md:py-24 bg-void-black dark:bg-static-white relative">
-      <div className="container relative z-10">
-        <div className="mb-8 md:mb-12">
-          <span className="inline-block text-xs uppercase tracking-wider text-static-white/70 dark:text-quantum-gray mb-2">
+    <section 
+      id="skills" 
+      className="relative w-full"
+      style={{
+        margin: 0,
+        padding: 0,
+        height: '100vh'
+      }}
+    >
+      {/* Optional header that overlays the canvas */}
+      <div className="absolute top-0 left-0 z-10 w-full pt-8 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto">
+          <span className="inline-block text-xs uppercase tracking-wider text-white/70 mb-2">
             Capabilities
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-static-white dark:text-void-black mb-6">Skills</h2>
-          <p className="text-lg text-static-white/80 dark:text-void-black/80 max-w-2xl">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Skills</h2>
+          <p className="text-lg text-white/80 max-w-2xl">
             I have been learning programming since 2022. The main area of my expertise is Multi-Platform Development.
-            <br />
-            Here are the technologies I have learned.
           </p>
-        </div>
-
-        {/* 3D Solar System Container */}
-        <div className="w-full h-[500px] md:h-[600px] mx-auto mb-12 overflow-hidden rounded-lg">
-          <Canvas
-            camera={{ position: isMobile ? [0, 15, 25] : [0, 10, 30], fov: 60 }}
-            dpr={[1, 2]} // Optimize for mobile
-            style={{
-              background: "linear-gradient(to bottom, #000000, #111111)",
-            }}
-          >
-            <Scene />
-          </Canvas>
         </div>
       </div>
 
-      {/* Spacer to prevent overlap with footer */}
-      <div className="h-20"></div>
+      {/* Full-screen Canvas */}
+      <Canvas
+        camera={{ position: isMobile ? [0, 15, 25] : [0, 10, 30], fov: 60 }}
+        dpr={[1, 2]}
+        style={{
+          width: '100%',
+          height: '100%',
+          background: "linear-gradient(to bottom, #000000, #111111)",
+        }}
+      >
+        <Scene />
+      </Canvas>
     </section>
   )
 }
 
-export default SkillsMatrix;
+export default SkillsMatrix
