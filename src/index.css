@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Lora:wght@400;500&family=Space+Mono&display=swap');
 
 @tailwind base;
@@ -74,11 +75,11 @@
   }
   
   html {
-    @apply scroll-smooth;
+    @apply scroll-smooth overflow-x-hidden; /* Added overflow-x-hidden */
   }
 
   body {
-    @apply bg-background text-foreground font-lora leading-relaxed;
+    @apply bg-background text-foreground font-lora leading-relaxed overflow-x-hidden; /* Added overflow-x-hidden */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
