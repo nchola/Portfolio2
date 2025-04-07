@@ -148,7 +148,12 @@ const OrbitPath = ({ radius }: { radius: number }) => {
   return (
     <mesh rotation={[Math.PI / 2, 0, 0]}>
       <ringGeometry args={[radius, radius + 0.05, 64]} />
-      <meshBasicMaterial color="#C19A6B" opacity={0.2} transparent={true} />
+      <meshBasicMaterial 
+        attach="material" 
+        color="#C19A6B" 
+        opacity={0.2} 
+        transparent 
+      />
     </mesh>
   )
 }
@@ -179,8 +184,8 @@ const SkillPlanet = ({
     }
   })
 
-  const color = skill.type === "technical" ? "#4A4A4A" : "#C19A6B"
-  const textColor = skill.type === "technical" ? "#F5F5F5" : "#0A0A0A"
+  const color = skill.type === "technical" ? "#333333" : "#C19A6B"
+  const textColor = skill.type === "technical" ? "#FFFFFF" : "#000000"
 
   return (
     <mesh
@@ -196,7 +201,7 @@ const SkillPlanet = ({
       scale={hovered ? skill.size * 1.2 : skill.size}
     >
       <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial color={color} />
+      <meshStandardMaterial attach="material" color={color} />
 
       {/* Skill name label */}
       <Text
@@ -206,7 +211,7 @@ const SkillPlanet = ({
         anchorX="center"
         anchorY="middle"
         outlineWidth={0.05}
-        outlineColor={skill.type === "technical" ? "#4A4A4A" : "#C19A6B"}
+        outlineColor={skill.type === "technical" ? "#333333" : "#C19A6B"}
       >
         {skill.name}
       </Text>
@@ -219,8 +224,8 @@ const SkillPlanet = ({
           distanceFactor={15}
           style={{
             width: isMobile ? "80px" : "120px",
-            backgroundColor: "#0A0A0A",
-            color: "#F5F5F5",
+            backgroundColor: "#000",
+            color: "#fff",
             padding: "8px",
             borderRadius: "4px",
             textAlign: "center",
@@ -250,12 +255,17 @@ const Sun = () => {
   return (
     <mesh ref={ref}>
       <sphereGeometry args={[1.5, 32, 32]} />
-      <meshStandardMaterial color="#C19A6B" emissive="#C19A6B" emissiveIntensity={1} />
+      <meshStandardMaterial 
+        attach="material"
+        color="#C19A6B" 
+        emissive="#C19A6B" 
+        emissiveIntensity={1} 
+      />
       <pointLight color="#C19A6B" intensity={1} distance={50} />
       <Text
         position={[0, 2, 0]}
         fontSize={0.5}
-        color="#0A0A0A"
+        color="#000"
         anchorX="center"
         anchorY="middle"
         outlineWidth={0.05}
