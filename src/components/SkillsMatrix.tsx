@@ -3,7 +3,7 @@
 
 import React, { useRef, useState, useEffect } from "react"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
-import { OrbitControls, Text, Stars, Html } from "@react-three/drei" // Ensure this import is correct
+import { OrbitControls, Text, Stars, Html } from "@react-three/drei"
 import { Progress } from "@/components/ui/progress"
 import { useIsMobile } from "@/hooks/use-mobile"
 import type * as THREE from "three"
