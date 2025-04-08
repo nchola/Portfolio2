@@ -1,4 +1,3 @@
-
 "use client"
 
 import React, { useRef, useState, useEffect } from "react"
@@ -6,7 +5,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { OrbitControls, Text, Stars, Html, Billboard } from "@react-three/drei"
 import { Progress } from "@/components/ui/progress"
 import { useIsMobile } from "@/hooks/use-mobile"
-import type * as THREE from "three"
+import * as THREE from "three" // Changed from 'import type' to a proper import
 
 interface Skill {
   id: string
