@@ -344,7 +344,12 @@ const SkillPlanet = ({
       if (glowRef.current) {
         glowRef.current.position.x = x
         glowRef.current.position.z = z
-        glowRef.current.material.opacity = hovered ? 0.4 : 0.2
+        
+        // FIX: Type-safe approach for opacity
+        const glowMaterial = glowRef.current.material as THREE.Material;
+        if (glowMaterial && 'opacity' in glowMaterial) {
+          glowMaterial.opacity = hovered ? 0.4 : 0.2;
+        }
       }
     }
   })
