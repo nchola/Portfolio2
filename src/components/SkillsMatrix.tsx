@@ -175,7 +175,6 @@ const PlanetLabel = ({ position, name }: { position: [number, number, number]; n
       lockZ={false}
     >
       <Text
-        font="/fonts/Cormorant-Bold.woff"
         fontSize={0.4}
         color="#FFFFFF"
         anchorX="center"
@@ -183,6 +182,12 @@ const PlanetLabel = ({ position, name }: { position: [number, number, number]; n
         outlineWidth={0.05}
         outlineColor="#000000"
         fillOpacity={1}
+        font={undefined}// Use default font
+        fontWeight="thin" // Add font weight
+        letterSpacing={-0.05} // Add letter spacing
+        textAlign="center" // Center text
+        lineHeight={1} // Set line height
+        material-toneMapped={false} // Better text rendering
       >
         {name}
       </Text>
@@ -296,13 +301,18 @@ const Sun = () => {
       <pointLight color="#FDB813" intensity={1} distance={50} />
       <Billboard position={[0, 2, 0]} follow={true}>
         <Text
-          font="/fonts/Cormorant-Bold.woff"
           fontSize={0.5}
           color="#FFFFFF"
           anchorX="center"
           anchorY="middle"
           outlineWidth={0.05}
           outlineColor="#000000"
+          font={undefined} // Use default font
+          fontWeight="bold" // Add font weight
+          letterSpacing={-0.02} // Add letter spacing
+          textAlign="center" // Center text
+          lineHeight={1} // Set line height
+          material-toneMapped={false} // Better text rendering
         >
           Skills
         </Text>
