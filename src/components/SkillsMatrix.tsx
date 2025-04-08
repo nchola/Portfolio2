@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useRef, useState, useEffect } from "react"
@@ -224,174 +225,6 @@ const Galaxy = () => {
   )
 }
 
-// Black Hole Component
-const BlackHole = () => {
-  const blackHoleRef = useRef<THREE.Group>(null)
-  const diskRef = useRef<THREE.Mesh>(null)
-  
-  // Animation for black hole rotation
-  useFrame(({ clock }) => {
-    if (blackHoleRef.current) {
-      blackHoleRef.current.rotation.z = clock.getElapsedTime() * 0.1
-    }
-    
-    if (diskRef.current) {
-      diskRef.current.rotation.z = -clock.getElapsedTime() * 0.2
-    }
-  })
-  
-  return (
-    <group ref={blackHoleRef} position={[-25, 5, -15]}>
-      {/* Black hole center */}
-      <mesh>
-        <sphereGeometry args={[2, 32, 32]} />
-        <meshStandardMaterial 
-          color="#000000" 
-          emissive="#000000"
-          metalness={1}
-          roughness={0}
-        />
-      </mesh>
-      
-      {/* Accretion disk */}
-      <mesh ref={diskRef} rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[2, 6, 64]} />
-        <meshStandardMaterial 
-          side={THREE.DoubleSide}
-          transparent={true}
-          opacity={0.8}
-          color="#FF6700"
-          emissive="#FF2000"
-          emissiveIntensity={0.5}
-          metalness={0.8}
-          roughness={0.2}
-        />
-      </mesh>
-      
-      {/* Outer glow effect */}
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[6, 8, 64]} />
-        <meshStandardMaterial 
-          side={THREE.DoubleSide}
-          transparent={true}
-          opacity={0.4}
-          color="#FF9900"
-          emissive="#FF6700"
-          emissiveIntensity={0.3}
-        />
-      </mesh>
-      
-      {/* Light source in black hole for dramatic effect */}
-      <pointLight color="#FF6700" intensity={2} distance={20} />
-    </group>
-  )
-}
-
-// Meteor component
-const Meteor = ({ startPosition, endPosition, speed }: { 
-  startPosition: [number, number, number], 
-  endPosition: [number, number, number],
-  speed: number
-}) => {
-  const ref = useRef<THREE.Mesh>(null)
-  const [active, setActive] = useState(true)
-  const initialPosition = useRef(startPosition)
-  const targetPosition = useRef(endPosition)
-  const currentSpeed = useRef(speed)
-  
-  useFrame(({ clock }) => {
-    if (ref.current && active) {
-      // Move meteor along its path
-      const t = (clock.getElapsedTime() * currentSpeed.current) % 1
-      
-      ref.current.position.x = initialPosition.current[0] + (targetPosition.current[0] - initialPosition.current[0]) * t
-      ref.current.position.y = initialPosition.current[1] + (targetPosition.current[1] - initialPosition.current[1]) * t
-      ref.current.position.z = initialPosition.current[2] + (targetPosition.current[2] - initialPosition.current[2]) * t
-      
-      // Calculate direction for rotation
-      ref.current.lookAt(
-        targetPosition.current[0], 
-        targetPosition.current[1], 
-        targetPosition.current[2]
-      )
-      
-      // Reset when completed journey
-      if (t >= 0.99) {
-        // Randomize new start/end positions
-        const newStartX = Math.random() * 80 - 40
-        const newStartY = Math.random() * 40 - 20
-        const newStartZ = Math.random() * 80 - 40
-        
-        const newEndX = Math.random() * 80 - 40
-        const newEndY = Math.random() * 40 - 20
-        const newEndZ = Math.random() * 80 - 40
-        
-        initialPosition.current = [newStartX, newStartY, newStartZ]
-        targetPosition.current = [newEndX, newEndY, newEndZ]
-        
-        // Randomize speed
-        currentSpeed.current = 0.2 + Math.random() * 0.3
-      }
-    }
-  })
-  
-  return (
-    <mesh ref={ref} position={startPosition}>
-      {/* Meteor body */}
-      <sphereGeometry args={[0.2, 8, 8]} />
-      <meshStandardMaterial 
-        color="#888888" 
-        emissive="#444444"
-        roughness={0.8}
-      />
-      
-      {/* Meteor trail */}
-      <mesh position={[0, 0, -0.5]}>
-        <coneGeometry args={[0.1, 1, 8]} />
-        <meshBasicMaterial 
-          color="#FF6600" 
-          transparent={true}
-          opacity={0.6}
-        />
-      </mesh>
-      
-      {/* Light for the meteor */}
-      <pointLight color="#FF6600" intensity={0.8} distance={3} />
-    </mesh>
-  )
-}
-
-// Multiple meteors component
-const MeteorShower = () => {
-  const meteorCount = 8
-  const meteors = []
-  
-  for (let i = 0; i < meteorCount; i++) {
-    // Generate random starting and ending positions
-    const startX = Math.random() * 80 - 40
-    const startY = Math.random() * 40 - 20
-    const startZ = Math.random() * 80 - 40
-    
-    const endX = Math.random() * 80 - 40
-    const endY = Math.random() * 40 - 20
-    const endZ = Math.random() * 80 - 40
-    
-    // Random speed
-    const speed = 0.2 + Math.random() * 0.3
-    
-    meteors.push(
-      <Meteor 
-        key={`meteor-${i}`}
-        startPosition={[startX, startY, startZ]} 
-        endPosition={[endX, endY, endZ]}
-        speed={speed}
-      />
-    )
-  }
-  
-  return <>{meteors}</>
-}
-
 const OrbitPath = ({ radius }: { radius: number }) => {
   return (
     <mesh rotation={[Math.PI / 2, 0, 0]}>
@@ -424,6 +257,7 @@ const PlanetLabel = ({ position, name }: { position: [number, number, number], n
         outlineWidth={0.05}
         outlineColor="#000000"
         fillOpacity={1}
+        font="/fonts/Lora-Regular.ttf" // Using the main font of the project
       >
         {name}
       </Text>
@@ -431,7 +265,7 @@ const PlanetLabel = ({ position, name }: { position: [number, number, number], n
   )
 }
 
-// Texture for planets to create porous surface effect
+// Enhanced planet texture for more realistic appearance
 const PlanetTexture = ({ skill }: { skill: Skill }) => {
   const normalTexture = useRef<THREE.DataTexture>()
   
@@ -441,12 +275,31 @@ const PlanetTexture = ({ skill }: { skill: Skill }) => {
     const data = new Uint8Array(size * size * 4)
     
     for (let i = 0; i < size * size * 4; i += 4) {
-      // Create noise for bumpy surface
-      const noise = Math.random() * 0.5 + 0.25
+      // Enhanced noise for more realistic surface texture
+      const angle = Math.random() * Math.PI * 2
+      const radius = Math.random() * 0.2 + 0.3
+      
+      // Create craters and surface irregularities
+      const craterChance = Math.random()
+      let noise
+      
+      if (craterChance > 0.995) {
+        // Deep crater
+        noise = 0.1
+      } else if (craterChance > 0.97) {
+        // Medium crater
+        noise = 0.3
+      } else if (craterChance > 0.85) {
+        // Small crater or bump
+        noise = Math.random() * 0.3 + 0.3
+      } else {
+        // Regular surface
+        noise = Math.random() * 0.5 + 0.25
+      }
       
       // Normal map RGB values - midpoint is 127,127,255
-      data[i] = 127 + (Math.random() - 0.5) * 127 * noise
-      data[i + 1] = 127 + (Math.random() - 0.5) * 127 * noise
+      data[i] = 127 + Math.cos(angle) * 127 * radius * noise
+      data[i + 1] = 127 + Math.sin(angle) * 127 * radius * noise
       data[i + 2] = 255 * noise
       data[i + 3] = 255 // Alpha
     }
@@ -467,6 +320,7 @@ const SkillPlanet = ({
   setActiveSkill: (skill: Skill | null) => void
 }) => {
   const ref = useRef<THREE.Mesh>(null)
+  const glowRef = useRef<THREE.Mesh>(null)
   const [hovered, setHovered] = useState(false)
   const [position, setPosition] = useState<[number, number, number]>([0, 0, 0])
   const { size } = useThree()
@@ -475,12 +329,23 @@ const SkillPlanet = ({
 
   useFrame(({ clock }) => {
     if (ref.current) {
+      // Planet rotation
+      ref.current.rotation.y = clock.getElapsedTime() * 0.2
+      
+      // Planet orbit
       const angle = clock.getElapsedTime() * skill.orbitSpeed
       const x = Math.cos(angle) * skill.orbitRadius
       const z = Math.sin(angle) * skill.orbitRadius
       ref.current.position.x = x
       ref.current.position.z = z
       setPosition([x, 0, z])
+      
+      // Glow effect
+      if (glowRef.current) {
+        glowRef.current.position.x = x
+        glowRef.current.position.z = z
+        glowRef.current.material.opacity = hovered ? 0.4 : 0.2
+      }
     }
   })
 
@@ -514,6 +379,22 @@ const SkillPlanet = ({
 
   return (
     <group>
+      {/* Planet glow effect */}
+      <mesh
+        ref={glowRef}
+        position={[0, 0, 0]}
+        scale={skill.size * 1.2}
+      >
+        <sphereGeometry args={[1.05, 32, 32]} />
+        <meshBasicMaterial
+          color={skill.color}
+          transparent
+          opacity={0.2}
+          side={THREE.BackSide}
+        />
+      </mesh>
+      
+      {/* Planet body */}
       <mesh
         ref={ref}
         onPointerOver={() => {
@@ -532,6 +413,17 @@ const SkillPlanet = ({
           {...textureProps}
         />
         
+        {/* Atmosphere rim lighting */}
+        <mesh>
+          <sphereGeometry args={[1.02, 32, 32]} />
+          <meshBasicMaterial
+            color={skill.color}
+            transparent
+            opacity={0.1}
+            side={THREE.BackSide}
+          />
+        </mesh>
+        
         {hovered && (
           <Html
             position={[0, -1.5, 0]}
@@ -546,6 +438,7 @@ const SkillPlanet = ({
               textAlign: "center",
               fontSize: isMobile ? "10px" : "12px",
               pointerEvents: "none",
+              fontFamily: "Lora, serif", // Using main font
             }}
           >
             <div className="font-bold mb-1">{skill.name}</div>
@@ -563,23 +456,57 @@ const SkillPlanet = ({
 
 const Sun = () => {
   const ref = useRef<THREE.Mesh>(null)
+  const glowRef = useRef<THREE.Mesh>(null)
 
   useFrame(({ clock }) => {
     if (ref.current) {
       ref.current.rotation.y = clock.getElapsedTime() * 0.2
     }
+    
+    if (glowRef.current) {
+      glowRef.current.rotation.y = -clock.getElapsedTime() * 0.1
+      glowRef.current.rotation.z = clock.getElapsedTime() * 0.15
+    }
   })
 
   return (
-    <mesh ref={ref}>
-      <sphereGeometry args={[1.5, 32, 32]} />
-      <meshStandardMaterial 
-        attach="material"
-        color="#FDB813" 
-        emissive="#FDB813" 
-        emissiveIntensity={1} 
-      />
-      <pointLight color="#FDB813" intensity={1} distance={50} />
+    <group>
+      {/* Sun core */}
+      <mesh ref={ref}>
+        <sphereGeometry args={[1.5, 32, 32]} />
+        <meshStandardMaterial 
+          attach="material"
+          color="#FDB813" 
+          emissive="#FDB813" 
+          emissiveIntensity={1}
+          roughness={0.4}
+          metalness={0.3}
+        />
+        <pointLight color="#FDB813" intensity={1} distance={50} />
+      </mesh>
+      
+      {/* Sun atmosphere/corona */}
+      <mesh ref={glowRef}>
+        <sphereGeometry args={[1.8, 32, 32]} />
+        <meshBasicMaterial
+          color="#FDB813"
+          transparent
+          opacity={0.2}
+          side={THREE.BackSide}
+        />
+      </mesh>
+      
+      {/* Sun surface details */}
+      <mesh>
+        <sphereGeometry args={[1.55, 32, 32]} />
+        <meshBasicMaterial
+          color="#FF6B00"
+          transparent
+          opacity={0.1}
+          wireframe
+        />
+      </mesh>
+      
       <Billboard
         position={[0, 2, 0]}
         follow={true}
@@ -591,11 +518,12 @@ const Sun = () => {
           anchorY="middle"
           outlineWidth={0.05}
           outlineColor="#000000"
+          font="/fonts/Lora-Regular.ttf" // Using the main font of the project
         >
           Skills
         </Text>
       </Billboard>
-    </mesh>
+    </group>
   )
 }
 
@@ -623,8 +551,6 @@ const Scene = () => {
         <SkillPlanet key={skill.id} skill={skill} setActiveSkill={setActiveSkill} />
       ))}
       <Galaxy />
-      <BlackHole />
-      <MeteorShower />
       <OrbitControls
         ref={controlsRef}
         enableZoom={true}
