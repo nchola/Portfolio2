@@ -1,8 +1,9 @@
+
 "use client"
 
 import React, { useRef, useState, useEffect } from "react"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
-import { OrbitControls, Text, Stars, Html } from "@react-three/drei"
+import { OrbitControls, Text, Stars, Html, Billboard } from "@react-three/drei"
 import { Progress } from "@/components/ui/progress"
 import { useIsMobile } from "@/hooks/use-mobile"
 import type * as THREE from "three"
@@ -16,6 +17,7 @@ interface Skill {
   orbitRadius: number
   orbitSpeed: number
   size: number
+  color: string
 }
 
 const skills: Skill[] = [
@@ -29,6 +31,7 @@ const skills: Skill[] = [
     orbitRadius: 4,
     orbitSpeed: 0.15,
     size: 0.6,
+    color: "#6495ED", // Cornflower Blue - like Mercury
   },
   {
     id: "dart",
@@ -39,6 +42,7 @@ const skills: Skill[] = [
     orbitRadius: 5.5,
     orbitSpeed: 0.2,
     size: 0.6,
+    color: "#FFA500", // Orange - like Venus
   },
   {
     id: "mongodb",
@@ -49,6 +53,7 @@ const skills: Skill[] = [
     orbitRadius: 7,
     orbitSpeed: 0.18,
     size: 0.6,
+    color: "#0099CC", // Blue - like Earth
   },
   {
     id: "mysql",
@@ -59,6 +64,7 @@ const skills: Skill[] = [
     orbitRadius: 8.5,
     orbitSpeed: 0.16,
     size: 0.7,
+    color: "#FF6347", // Tomato - like Mars
   },
   {
     id: "expressjs",
@@ -69,6 +75,7 @@ const skills: Skill[] = [
     orbitRadius: 10,
     orbitSpeed: 0.14,
     size: 0.7,
+    color: "#DAA520", // Goldenrod - like Jupiter
   },
   {
     id: "html",
@@ -79,6 +86,7 @@ const skills: Skill[] = [
     orbitRadius: 11.5,
     orbitSpeed: 0.12,
     size: 0.8,
+    color: "#F4A460", // Sandy Brown - like Saturn
   },
   {
     id: "css",
@@ -89,6 +97,7 @@ const skills: Skill[] = [
     orbitRadius: 13,
     orbitSpeed: 0.1,
     size: 0.8,
+    color: "#00CED1", // Dark Turquoise - like Uranus
   },
   {
     id: "javascript",
@@ -99,6 +108,7 @@ const skills: Skill[] = [
     orbitRadius: 14.5,
     orbitSpeed: 0.08,
     size: 0.8,
+    color: "#1E90FF", // Dodger Blue - like Neptune
   },
   {
     id: "laravel",
@@ -109,6 +119,7 @@ const skills: Skill[] = [
     orbitRadius: 16,
     orbitSpeed: 0.06,
     size: 0.75,
+    color: "#800080", // Purple - like Pluto
   },
   {
     id: "nodejs",
@@ -119,6 +130,7 @@ const skills: Skill[] = [
     orbitRadius: 17.5,
     orbitSpeed: 0.04,
     size: 0.75,
+    color: "#8B4513", // Saddle Brown - like an exoplanet
   },
   {
     id: "php",
@@ -129,6 +141,7 @@ const skills: Skill[] = [
     orbitRadius: 19,
     orbitSpeed: 0.02,
     size: 0.75,
+    color: "#556B2F", // Dark Olive Green - like an exoplanet
   },
   {
     id: "python",
@@ -139,20 +152,46 @@ const skills: Skill[] = [
     orbitRadius: 20.5,
     orbitSpeed: 0.018,
     size: 0.6,
+    color: "#4682B4", // Steel Blue - like an exoplanet
   },
 ]
 
 const OrbitPath = ({ radius }: { radius: number }) => {
   return (
     <mesh rotation={[Math.PI / 2, 0, 0]}>
-      <ringGeometry args={[radius, radius + 0.05, 64]} />
+      <ringGeometry args={[radius, radius + 0.05, 128]} />
       <meshBasicMaterial 
         attach="material" 
         color="#C19A6B" 
-        opacity={0.2} 
+        opacity={0.4} 
         transparent 
+        side={THREE.DoubleSide}
       />
     </mesh>
+  )
+}
+
+const PlanetLabel = ({ position, name }: { position: [number, number, number], name: string }) => {
+  return (
+    <Billboard
+      position={[position[0], position[1] + 1.2, position[2]]}
+      follow={true}
+      lockX={false}
+      lockY={false}
+      lockZ={false}
+    >
+      <Text
+        fontSize={0.4}
+        color="#FFFFFF"
+        anchorX="center"
+        anchorY="middle"
+        outlineWidth={0.05}
+        outlineColor="#000000"
+        fillOpacity={1}
+      >
+        {name}
+      </Text>
+    </Billboard>
   )
 }
 
@@ -165,7 +204,7 @@ const SkillPlanet = ({
 }) => {
   const ref = useRef<THREE.Mesh>(null)
   const [hovered, setHovered] = useState(false)
-  const [position, setPosition] = useState([0, 0, 0])
+  const [position, setPosition] = useState<[number, number, number]>([0, 0, 0])
   const { size } = useThree()
   const isMobile = useIsMobile()
 
@@ -180,59 +219,72 @@ const SkillPlanet = ({
     }
   })
 
-  const color = skill.type === "technical" ? "#333333" : "#C19A6B"
-  const textColor = skill.type === "technical" ? "#FFFFFF" : "#000000"
+  // Create texture for the planet surface
+  const getTextureProps = () => {
+    // Different materials based on planet type
+    if (skill.type === "technical") {
+      return {
+        roughness: 0.7,
+        metalness: 0.3,
+        color: skill.color,
+      }
+    } else {
+      return {
+        roughness: 0.4,
+        metalness: 0.6,
+        color: skill.color,
+      }
+    }
+  }
+
+  const textureProps = getTextureProps()
 
   return (
-    <mesh
-      ref={ref}
-      onPointerOver={() => {
-        setHovered(true)
-        setActiveSkill(skill)
-      }}
-      onPointerOut={() => {
-        setHovered(false)
-        setActiveSkill(null)
-      }}
-      scale={hovered ? skill.size * 1.2 : skill.size}
-    >
-      <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial attach="material" color={color} />
-
-      <Text
-        position={[0, 1.5, 0]}
-        fontSize={0.5}
-        color={textColor}
-        anchorX="center"
-        anchorY="middle"
-        outlineWidth={0.05}
-        outlineColor={skill.type === "technical" ? "#333333" : "#C19A6B"}
+    <group>
+      <mesh
+        ref={ref}
+        onPointerOver={() => {
+          setHovered(true)
+          setActiveSkill(skill)
+        }}
+        onPointerOut={() => {
+          setHovered(false)
+          setActiveSkill(null)
+        }}
+        scale={hovered ? skill.size * 1.2 : skill.size}
       >
-        {skill.name}
-      </Text>
-
-      {hovered && (
-        <Html
-          position={[0, -1.5, 0]}
-          center
-          distanceFactor={15}
-          style={{
-            width: isMobile ? "80px" : "120px",
-            backgroundColor: "#000",
-            color: "#fff",
-            padding: "8px",
-            borderRadius: "4px",
-            textAlign: "center",
-            fontSize: isMobile ? "10px" : "12px",
-            pointerEvents: "none",
-          }}
-        >
-          <div className="font-bold mb-1">{skill.name}</div>
-          <Progress value={parseInt(skill.description)} className="w-full h-2" />
-          <div className="mt-1">{skill.description}</div>
-        </Html>
-      )}
-    </mesh>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial
+          attach="material"
+          {...textureProps}
+        />
+        
+        {hovered && (
+          <Html
+            position={[0, -1.5, 0]}
+            center
+            distanceFactor={15}
+            style={{
+              width: isMobile ? "80px" : "120px",
+              backgroundColor: "rgba(0,0,0,0.8)",
+              color: "#fff",
+              padding: "8px",
+              borderRadius: "4px",
+              textAlign: "center",
+              fontSize: isMobile ? "10px" : "12px",
+              pointerEvents: "none",
+            }}
+          >
+            <div className="font-bold mb-1">{skill.name}</div>
+            <Progress value={parseInt(skill.description)} className="w-full h-2" />
+            <div className="mt-1">{skill.description}</div>
+          </Html>
+        )}
+      </mesh>
+      
+      {/* Add a permanent label that follows the planet */}
+      <PlanetLabel position={position} name={skill.name} />
+    </group>
   )
 }
 
@@ -250,22 +302,26 @@ const Sun = () => {
       <sphereGeometry args={[1.5, 32, 32]} />
       <meshStandardMaterial 
         attach="material"
-        color="#C19A6B" 
-        emissive="#C19A6B" 
+        color="#FDB813" 
+        emissive="#FDB813" 
         emissiveIntensity={1} 
       />
-      <pointLight color="#C19A6B" intensity={1} distance={50} />
-      <Text
+      <pointLight color="#FDB813" intensity={1} distance={50} />
+      <Billboard
         position={[0, 2, 0]}
-        fontSize={0.5}
-        color="#000"
-        anchorX="center"
-        anchorY="middle"
-        outlineWidth={0.05}
-        outlineColor="#C19A6B"
+        follow={true}
       >
-        Skills
-      </Text>
+        <Text
+          fontSize={0.5}
+          color="#FFFFFF"
+          anchorX="center"
+          anchorY="middle"
+          outlineWidth={0.05}
+          outlineColor="#000000"
+        >
+          Skills
+        </Text>
+      </Billboard>
     </mesh>
   )
 }
