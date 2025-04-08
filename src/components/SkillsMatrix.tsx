@@ -596,7 +596,7 @@ const SkillsMatrix: React.FC = () => {
         </div>
       </div>
 
-      {/* Full-screen Canvas */}
+      {/* Full-screen Canvas with explicit size */}
       <Canvas
         camera={{ position: isMobile ? [0, 15, 25] : [0, 10, 30], fov: 60 }}
         dpr={[1, 2]}
