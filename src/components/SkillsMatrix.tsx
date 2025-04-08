@@ -1,4 +1,3 @@
-
 "use client"
 
 import React, { useRef, useState, useEffect } from "react"
@@ -20,6 +19,7 @@ interface Skill {
   color: string
 }
 
+// Updated skill colors with more distinct planetary colors
 const skills: Skill[] = [
   // Technical skills
   {
@@ -31,7 +31,7 @@ const skills: Skill[] = [
     orbitRadius: 4,
     orbitSpeed: 0.15,
     size: 0.6,
-    color: "#3B82F6", // Bright Blue
+    color: "#1E1E1E", // Dark Gray/Black
   },
   {
     id: "dart",
@@ -42,7 +42,7 @@ const skills: Skill[] = [
     orbitRadius: 5.5,
     orbitSpeed: 0.2,
     size: 0.6,
-    color: "#F97316", // Bright Orange
+    color: "#E67E22", // Deep Orange
   },
   {
     id: "mongodb",
@@ -53,7 +53,7 @@ const skills: Skill[] = [
     orbitRadius: 7,
     orbitSpeed: 0.18,
     size: 0.6,
-    color: "#16A34A", // Green
+    color: "#3E3E3E", // Dark Gray
   },
   {
     id: "mysql",
@@ -64,7 +64,7 @@ const skills: Skill[] = [
     orbitRadius: 8.5,
     orbitSpeed: 0.16,
     size: 0.7,
-    color: "#DC2626", // Red
+    color: "#C0392B", // Deep Red
   },
   {
     id: "expressjs",
@@ -75,7 +75,7 @@ const skills: Skill[] = [
     orbitRadius: 10,
     orbitSpeed: 0.14,
     size: 0.7,
-    color: "#FCD34D", // Gold/Yellow
+    color: "#F1C40F", // Gold Yellow
   },
   {
     id: "html",
@@ -86,7 +86,7 @@ const skills: Skill[] = [
     orbitRadius: 11.5,
     orbitSpeed: 0.12,
     size: 0.8,
-    color: "#EC4899", // Pink
+    color: "#7E7E7E", // Medium Gray
   },
   {
     id: "css",
@@ -97,7 +97,7 @@ const skills: Skill[] = [
     orbitRadius: 13,
     orbitSpeed: 0.1,
     size: 0.8,
-    color: "#0EA5E9", // Sky Blue
+    color: "#E74C3C", // Bright Red
   },
   {
     id: "javascript",
@@ -108,7 +108,7 @@ const skills: Skill[] = [
     orbitRadius: 14.5,
     orbitSpeed: 0.08,
     size: 0.8,
-    color: "#8B5CF6", // Purple
+    color: "#D4AC0D", // Dark Gold
   },
   {
     id: "laravel",
@@ -119,7 +119,7 @@ const skills: Skill[] = [
     orbitRadius: 16,
     orbitSpeed: 0.06,
     size: 0.75,
-    color: "#D946EF", // Fuchsia
+    color: "#515151", // Dark Gray
   },
   {
     id: "nodejs",
@@ -130,7 +130,7 @@ const skills: Skill[] = [
     orbitRadius: 17.5,
     orbitSpeed: 0.04,
     size: 0.75,
-    color: "#78716C", // Stone Gray
+    color: "#2C3E50", // Dark Blue-Gray
   },
   {
     id: "php",
@@ -141,7 +141,7 @@ const skills: Skill[] = [
     orbitRadius: 19,
     orbitSpeed: 0.02,
     size: 0.75,
-    color: "#10B981", // Emerald
+    color: "#D35400", // Burnt Orange
   },
   {
     id: "python",
@@ -152,7 +152,7 @@ const skills: Skill[] = [
     orbitRadius: 20.5,
     orbitSpeed: 0.018,
     size: 0.6,
-    color: "#3B82F6", // Blue
+    color: "#1C1C1C", // Almost Black
   },
 ]
 
@@ -222,6 +222,174 @@ const Galaxy = () => {
       />
     </points>
   )
+}
+
+// Black Hole Component
+const BlackHole = () => {
+  const blackHoleRef = useRef<THREE.Group>(null)
+  const diskRef = useRef<THREE.Mesh>(null)
+  
+  // Animation for black hole rotation
+  useFrame(({ clock }) => {
+    if (blackHoleRef.current) {
+      blackHoleRef.current.rotation.z = clock.getElapsedTime() * 0.1
+    }
+    
+    if (diskRef.current) {
+      diskRef.current.rotation.z = -clock.getElapsedTime() * 0.2
+    }
+  })
+  
+  return (
+    <group ref={blackHoleRef} position={[-25, 5, -15]}>
+      {/* Black hole center */}
+      <mesh>
+        <sphereGeometry args={[2, 32, 32]} />
+        <meshStandardMaterial 
+          color="#000000" 
+          emissive="#000000"
+          metalness={1}
+          roughness={0}
+        />
+      </mesh>
+      
+      {/* Accretion disk */}
+      <mesh ref={diskRef} rotation={[Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[2, 6, 64]} />
+        <meshStandardMaterial 
+          side={THREE.DoubleSide}
+          transparent={true}
+          opacity={0.8}
+          color="#FF6700"
+          emissive="#FF2000"
+          emissiveIntensity={0.5}
+          metalness={0.8}
+          roughness={0.2}
+        />
+      </mesh>
+      
+      {/* Outer glow effect */}
+      <mesh rotation={[Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[6, 8, 64]} />
+        <meshStandardMaterial 
+          side={THREE.DoubleSide}
+          transparent={true}
+          opacity={0.4}
+          color="#FF9900"
+          emissive="#FF6700"
+          emissiveIntensity={0.3}
+        />
+      </mesh>
+      
+      {/* Light source in black hole for dramatic effect */}
+      <pointLight color="#FF6700" intensity={2} distance={20} />
+    </group>
+  )
+}
+
+// Meteor component
+const Meteor = ({ startPosition, endPosition, speed }: { 
+  startPosition: [number, number, number], 
+  endPosition: [number, number, number],
+  speed: number
+}) => {
+  const ref = useRef<THREE.Mesh>(null)
+  const [active, setActive] = useState(true)
+  const initialPosition = useRef(startPosition)
+  const targetPosition = useRef(endPosition)
+  const currentSpeed = useRef(speed)
+  
+  useFrame(({ clock }) => {
+    if (ref.current && active) {
+      // Move meteor along its path
+      const t = (clock.getElapsedTime() * currentSpeed.current) % 1
+      
+      ref.current.position.x = initialPosition.current[0] + (targetPosition.current[0] - initialPosition.current[0]) * t
+      ref.current.position.y = initialPosition.current[1] + (targetPosition.current[1] - initialPosition.current[1]) * t
+      ref.current.position.z = initialPosition.current[2] + (targetPosition.current[2] - initialPosition.current[2]) * t
+      
+      // Calculate direction for rotation
+      ref.current.lookAt(
+        targetPosition.current[0], 
+        targetPosition.current[1], 
+        targetPosition.current[2]
+      )
+      
+      // Reset when completed journey
+      if (t >= 0.99) {
+        // Randomize new start/end positions
+        const newStartX = Math.random() * 80 - 40
+        const newStartY = Math.random() * 40 - 20
+        const newStartZ = Math.random() * 80 - 40
+        
+        const newEndX = Math.random() * 80 - 40
+        const newEndY = Math.random() * 40 - 20
+        const newEndZ = Math.random() * 80 - 40
+        
+        initialPosition.current = [newStartX, newStartY, newStartZ]
+        targetPosition.current = [newEndX, newEndY, newEndZ]
+        
+        // Randomize speed
+        currentSpeed.current = 0.2 + Math.random() * 0.3
+      }
+    }
+  })
+  
+  return (
+    <mesh ref={ref} position={startPosition}>
+      {/* Meteor body */}
+      <sphereGeometry args={[0.2, 8, 8]} />
+      <meshStandardMaterial 
+        color="#888888" 
+        emissive="#444444"
+        roughness={0.8}
+      />
+      
+      {/* Meteor trail */}
+      <mesh position={[0, 0, -0.5]}>
+        <coneGeometry args={[0.1, 1, 8]} />
+        <meshBasicMaterial 
+          color="#FF6600" 
+          transparent={true}
+          opacity={0.6}
+        />
+      </mesh>
+      
+      {/* Light for the meteor */}
+      <pointLight color="#FF6600" intensity={0.8} distance={3} />
+    </mesh>
+  )
+}
+
+// Multiple meteors component
+const MeteorShower = () => {
+  const meteorCount = 8
+  const meteors = []
+  
+  for (let i = 0; i < meteorCount; i++) {
+    // Generate random starting and ending positions
+    const startX = Math.random() * 80 - 40
+    const startY = Math.random() * 40 - 20
+    const startZ = Math.random() * 80 - 40
+    
+    const endX = Math.random() * 80 - 40
+    const endY = Math.random() * 40 - 20
+    const endZ = Math.random() * 80 - 40
+    
+    // Random speed
+    const speed = 0.2 + Math.random() * 0.3
+    
+    meteors.push(
+      <Meteor 
+        key={`meteor-${i}`}
+        startPosition={[startX, startY, startZ]} 
+        endPosition={[endX, endY, endZ]}
+        speed={speed}
+      />
+    )
+  }
+  
+  return <>{meteors}</>
 }
 
 const OrbitPath = ({ radius }: { radius: number }) => {
@@ -455,6 +623,8 @@ const Scene = () => {
         <SkillPlanet key={skill.id} skill={skill} setActiveSkill={setActiveSkill} />
       ))}
       <Galaxy />
+      <BlackHole />
+      <MeteorShower />
       <OrbitControls
         ref={controlsRef}
         enableZoom={true}
