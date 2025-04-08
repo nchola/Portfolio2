@@ -20,7 +20,6 @@ interface Skill {
   color: string
 }
 
-// Updated skill colors with more distinct planetary colors
 const skills: Skill[] = [
   // Technical skills
   {
@@ -32,7 +31,7 @@ const skills: Skill[] = [
     orbitRadius: 4,
     orbitSpeed: 0.15,
     size: 0.6,
-    color: "#1E1E1E", // Dark Gray/Black
+    color: "#3B82F6", // Bright Blue
   },
   {
     id: "dart",
@@ -43,7 +42,7 @@ const skills: Skill[] = [
     orbitRadius: 5.5,
     orbitSpeed: 0.2,
     size: 0.6,
-    color: "#E67E22", // Deep Orange
+    color: "#F97316", // Bright Orange
   },
   {
     id: "mongodb",
@@ -54,7 +53,7 @@ const skills: Skill[] = [
     orbitRadius: 7,
     orbitSpeed: 0.18,
     size: 0.6,
-    color: "#3E3E3E", // Dark Gray
+    color: "#16A34A", // Green
   },
   {
     id: "mysql",
@@ -65,7 +64,7 @@ const skills: Skill[] = [
     orbitRadius: 8.5,
     orbitSpeed: 0.16,
     size: 0.7,
-    color: "#C0392B", // Deep Red
+    color: "#DC2626", // Red
   },
   {
     id: "expressjs",
@@ -76,7 +75,7 @@ const skills: Skill[] = [
     orbitRadius: 10,
     orbitSpeed: 0.14,
     size: 0.7,
-    color: "#F1C40F", // Gold Yellow
+    color: "#FCD34D", // Gold/Yellow
   },
   {
     id: "html",
@@ -87,7 +86,7 @@ const skills: Skill[] = [
     orbitRadius: 11.5,
     orbitSpeed: 0.12,
     size: 0.8,
-    color: "#7E7E7E", // Medium Gray
+    color: "#EC4899", // Pink
   },
   {
     id: "css",
@@ -98,7 +97,7 @@ const skills: Skill[] = [
     orbitRadius: 13,
     orbitSpeed: 0.1,
     size: 0.8,
-    color: "#E74C3C", // Bright Red
+    color: "#0EA5E9", // Sky Blue
   },
   {
     id: "javascript",
@@ -109,7 +108,7 @@ const skills: Skill[] = [
     orbitRadius: 14.5,
     orbitSpeed: 0.08,
     size: 0.8,
-    color: "#D4AC0D", // Dark Gold
+    color: "#8B5CF6", // Purple
   },
   {
     id: "laravel",
@@ -120,7 +119,7 @@ const skills: Skill[] = [
     orbitRadius: 16,
     orbitSpeed: 0.06,
     size: 0.75,
-    color: "#515151", // Dark Gray
+    color: "#D946EF", // Fuchsia
   },
   {
     id: "nodejs",
@@ -131,7 +130,7 @@ const skills: Skill[] = [
     orbitRadius: 17.5,
     orbitSpeed: 0.04,
     size: 0.75,
-    color: "#2C3E50", // Dark Blue-Gray
+    color: "#78716C", // Stone Gray
   },
   {
     id: "php",
@@ -142,7 +141,7 @@ const skills: Skill[] = [
     orbitRadius: 19,
     orbitSpeed: 0.02,
     size: 0.75,
-    color: "#D35400", // Burnt Orange
+    color: "#10B981", // Emerald
   },
   {
     id: "python",
@@ -153,7 +152,7 @@ const skills: Skill[] = [
     orbitRadius: 20.5,
     orbitSpeed: 0.018,
     size: 0.6,
-    color: "#1C1C1C", // Almost Black
+    color: "#3B82F6", // Blue
   },
 ]
 
@@ -257,7 +256,6 @@ const PlanetLabel = ({ position, name }: { position: [number, number, number], n
         outlineWidth={0.05}
         outlineColor="#000000"
         fillOpacity={1}
-        font="/fonts/Lora-Regular.ttf" // Using the main font of the project
       >
         {name}
       </Text>
@@ -265,7 +263,7 @@ const PlanetLabel = ({ position, name }: { position: [number, number, number], n
   )
 }
 
-// Enhanced planet texture for more realistic appearance
+// Texture for planets to create porous surface effect
 const PlanetTexture = ({ skill }: { skill: Skill }) => {
   const normalTexture = useRef<THREE.DataTexture>()
   
@@ -275,31 +273,12 @@ const PlanetTexture = ({ skill }: { skill: Skill }) => {
     const data = new Uint8Array(size * size * 4)
     
     for (let i = 0; i < size * size * 4; i += 4) {
-      // Enhanced noise for more realistic surface texture
-      const angle = Math.random() * Math.PI * 2
-      const radius = Math.random() * 0.2 + 0.3
-      
-      // Create craters and surface irregularities
-      const craterChance = Math.random()
-      let noise
-      
-      if (craterChance > 0.995) {
-        // Deep crater
-        noise = 0.1
-      } else if (craterChance > 0.97) {
-        // Medium crater
-        noise = 0.3
-      } else if (craterChance > 0.85) {
-        // Small crater or bump
-        noise = Math.random() * 0.3 + 0.3
-      } else {
-        // Regular surface
-        noise = Math.random() * 0.5 + 0.25
-      }
+      // Create noise for bumpy surface
+      const noise = Math.random() * 0.5 + 0.25
       
       // Normal map RGB values - midpoint is 127,127,255
-      data[i] = 127 + Math.cos(angle) * 127 * radius * noise
-      data[i + 1] = 127 + Math.sin(angle) * 127 * radius * noise
+      data[i] = 127 + (Math.random() - 0.5) * 127 * noise
+      data[i + 1] = 127 + (Math.random() - 0.5) * 127 * noise
       data[i + 2] = 255 * noise
       data[i + 3] = 255 // Alpha
     }
@@ -320,7 +299,6 @@ const SkillPlanet = ({
   setActiveSkill: (skill: Skill | null) => void
 }) => {
   const ref = useRef<THREE.Mesh>(null)
-  const glowRef = useRef<THREE.Mesh>(null)
   const [hovered, setHovered] = useState(false)
   const [position, setPosition] = useState<[number, number, number]>([0, 0, 0])
   const { size } = useThree()
@@ -329,28 +307,12 @@ const SkillPlanet = ({
 
   useFrame(({ clock }) => {
     if (ref.current) {
-      // Planet rotation
-      ref.current.rotation.y = clock.getElapsedTime() * 0.2
-      
-      // Planet orbit
       const angle = clock.getElapsedTime() * skill.orbitSpeed
       const x = Math.cos(angle) * skill.orbitRadius
       const z = Math.sin(angle) * skill.orbitRadius
       ref.current.position.x = x
       ref.current.position.z = z
       setPosition([x, 0, z])
-      
-      // Glow effect
-      if (glowRef.current) {
-        glowRef.current.position.x = x
-        glowRef.current.position.z = z
-        
-        // FIX: Type-safe approach for opacity
-        const glowMaterial = glowRef.current.material as THREE.Material;
-        if (glowMaterial && 'opacity' in glowMaterial) {
-          glowMaterial.opacity = hovered ? 0.4 : 0.2;
-        }
-      }
     }
   })
 
@@ -384,22 +346,6 @@ const SkillPlanet = ({
 
   return (
     <group>
-      {/* Planet glow effect */}
-      <mesh
-        ref={glowRef}
-        position={[0, 0, 0]}
-        scale={skill.size * 1.2}
-      >
-        <sphereGeometry args={[1.05, 32, 32]} />
-        <meshBasicMaterial
-          color={skill.color}
-          transparent
-          opacity={0.2}
-          side={THREE.BackSide}
-        />
-      </mesh>
-      
-      {/* Planet body */}
       <mesh
         ref={ref}
         onPointerOver={() => {
@@ -418,17 +364,6 @@ const SkillPlanet = ({
           {...textureProps}
         />
         
-        {/* Atmosphere rim lighting */}
-        <mesh>
-          <sphereGeometry args={[1.02, 32, 32]} />
-          <meshBasicMaterial
-            color={skill.color}
-            transparent
-            opacity={0.1}
-            side={THREE.BackSide}
-          />
-        </mesh>
-        
         {hovered && (
           <Html
             position={[0, -1.5, 0]}
@@ -443,7 +378,6 @@ const SkillPlanet = ({
               textAlign: "center",
               fontSize: isMobile ? "10px" : "12px",
               pointerEvents: "none",
-              fontFamily: "Lora, serif", // Using main font
             }}
           >
             <div className="font-bold mb-1">{skill.name}</div>
@@ -461,57 +395,23 @@ const SkillPlanet = ({
 
 const Sun = () => {
   const ref = useRef<THREE.Mesh>(null)
-  const glowRef = useRef<THREE.Mesh>(null)
 
   useFrame(({ clock }) => {
     if (ref.current) {
       ref.current.rotation.y = clock.getElapsedTime() * 0.2
     }
-    
-    if (glowRef.current) {
-      glowRef.current.rotation.y = -clock.getElapsedTime() * 0.1
-      glowRef.current.rotation.z = clock.getElapsedTime() * 0.15
-    }
   })
 
   return (
-    <group>
-      {/* Sun core */}
-      <mesh ref={ref}>
-        <sphereGeometry args={[1.5, 32, 32]} />
-        <meshStandardMaterial 
-          attach="material"
-          color="#FDB813" 
-          emissive="#FDB813" 
-          emissiveIntensity={1}
-          roughness={0.4}
-          metalness={0.3}
-        />
-        <pointLight color="#FDB813" intensity={1} distance={50} />
-      </mesh>
-      
-      {/* Sun atmosphere/corona */}
-      <mesh ref={glowRef}>
-        <sphereGeometry args={[1.8, 32, 32]} />
-        <meshBasicMaterial
-          color="#FDB813"
-          transparent
-          opacity={0.2}
-          side={THREE.BackSide}
-        />
-      </mesh>
-      
-      {/* Sun surface details */}
-      <mesh>
-        <sphereGeometry args={[1.55, 32, 32]} />
-        <meshBasicMaterial
-          color="#FF6B00"
-          transparent
-          opacity={0.1}
-          wireframe
-        />
-      </mesh>
-      
+    <mesh ref={ref}>
+      <sphereGeometry args={[1.5, 32, 32]} />
+      <meshStandardMaterial 
+        attach="material"
+        color="#FDB813" 
+        emissive="#FDB813" 
+        emissiveIntensity={1} 
+      />
+      <pointLight color="#FDB813" intensity={1} distance={50} />
       <Billboard
         position={[0, 2, 0]}
         follow={true}
@@ -523,12 +423,11 @@ const Sun = () => {
           anchorY="middle"
           outlineWidth={0.05}
           outlineColor="#000000"
-          font="/fonts/Lora-Regular.ttf" // Using the main font of the project
         >
           Skills
         </Text>
       </Billboard>
-    </group>
+    </mesh>
   )
 }
 
@@ -596,7 +495,7 @@ const SkillsMatrix: React.FC = () => {
         </div>
       </div>
 
-      {/* Full-screen Canvas with explicit size */}
+      {/* Full-screen Canvas */}
       <Canvas
         camera={{ position: isMobile ? [0, 15, 25] : [0, 10, 30], fov: 60 }}
         dpr={[1, 2]}
