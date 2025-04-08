@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useRef, useState, useEffect } from "react"
+import type React from "react"
+import { useRef, useState, useEffect } from "react"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { OrbitControls, Text, Stars, Html, Billboard } from "@react-three/drei"
 import { Progress } from "@/components/ui/progress"
@@ -159,18 +160,12 @@ const OrbitPath = ({ radius }: { radius: number }) => {
   return (
     <mesh rotation={[Math.PI / 2, 0, 0]}>
       <ringGeometry args={[radius, radius + 0.05, 128]} />
-      <meshBasicMaterial 
-        attach="material" 
-        color="#C19A6B" 
-        opacity={0.4} 
-        transparent 
-        side={THREE.DoubleSide}
-      />
+      <meshBasicMaterial attach="material" color="#C19A6B" opacity={0.4} transparent side={THREE.DoubleSide} />
     </mesh>
   )
 }
 
-const PlanetLabel = ({ position, name }: { position: [number, number, number], name: string }) => {
+const PlanetLabel = ({ position, name }: { position: [number, number, number]; name: string }) => {
   return (
     <Billboard
       position={[position[0], position[1] + 1.2, position[2]]}
@@ -180,6 +175,7 @@ const PlanetLabel = ({ position, name }: { position: [number, number, number], n
       lockZ={false}
     >
       <Text
+        font="/fonts/Cormorant-Bold.woff"
         fontSize={0.4}
         color="#FFFFFF"
         anchorX="center"
@@ -253,11 +249,8 @@ const SkillPlanet = ({
         scale={hovered ? skill.size * 1.2 : skill.size}
       >
         <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial
-          attach="material"
-          {...textureProps}
-        />
-        
+        <meshStandardMaterial attach="material" {...textureProps} />
+
         {hovered && (
           <Html
             position={[0, -1.5, 0]}
@@ -274,13 +267,13 @@ const SkillPlanet = ({
               pointerEvents: "none",
             }}
           >
-            <div className="font-bold mb-1">{skill.name}</div>
-            <Progress value={parseInt(skill.description)} className="w-full h-2" />
+            <div className="font-extrabold mb-1">{skill.name}</div>
+            <Progress value={Number.parseInt(skill.description)} className="w-full h-2" />
             <div className="mt-1">{skill.description}</div>
           </Html>
         )}
       </mesh>
-      
+
       {/* Add a permanent label that follows the planet */}
       <PlanetLabel position={position} name={skill.name} />
     </group>
@@ -299,18 +292,11 @@ const Sun = () => {
   return (
     <mesh ref={ref}>
       <sphereGeometry args={[1.5, 32, 32]} />
-      <meshStandardMaterial 
-        attach="material"
-        color="#FDB813" 
-        emissive="#FDB813" 
-        emissiveIntensity={1} 
-      />
+      <meshStandardMaterial attach="material" color="#FDB813" emissive="#FDB813" emissiveIntensity={1} />
       <pointLight color="#FDB813" intensity={1} distance={50} />
-      <Billboard
-        position={[0, 2, 0]}
-        follow={true}
-      >
+      <Billboard position={[0, 2, 0]} follow={true}>
         <Text
+          font="/fonts/Cormorant-Bold.woff"
           fontSize={0.5}
           color="#FFFFFF"
           anchorX="center"
@@ -366,22 +352,20 @@ const SkillsMatrix: React.FC = () => {
   const isMobile = useIsMobile()
 
   return (
-    <section 
-      id="skills" 
+    <section
+      id="skills"
       className="relative w-full"
       style={{
         margin: 0,
         padding: 0,
-        height: '100vh'
+        height: "100vh",
       }}
     >
       {/* Optional header that overlays the canvas */}
       <div className="absolute top-0 left-0 z-10 w-full pt-8 px-4 md:px-8">
         <div className="max-w-6xl mx-auto">
-          <span className="inline-block text-xs uppercase tracking-wider text-white/70 mb-2">
-            Capabilities
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Skills</h2>
+          <span className="inline-block text-xs uppercase tracking-wider text-white/70 mb-2">Capabilities</span>
+          <h2 className="text-4xl md:text-5xl font-cormorant font-bold text-white mb-4">Skills</h2>
           <p className="text-lg text-white/80 max-w-2xl">
             I have been learning programming since 2022. The main area of my expertise is Multi-Platform Development.
           </p>
@@ -393,8 +377,8 @@ const SkillsMatrix: React.FC = () => {
         camera={{ position: isMobile ? [0, 15, 25] : [0, 10, 30], fov: 60 }}
         dpr={[1, 2]}
         style={{
-          width: '100%',
-          height: '100%',
+          width: "100%",
+          height: "100%",
           background: "linear-gradient(to bottom, #000000, #111111)",
         }}
       >
