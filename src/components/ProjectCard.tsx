@@ -96,7 +96,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
     >
       <div className="h-full w-full relative">
         <AspectRatio ratio={16/9} className="h-full">
-          <div className="relative w-full h-full">
+          <div className="relative w-full h-full bg-void-black/30">
             {/* Images for carousel */}
             {images.map((imgSrc, index) => (
               <img 
@@ -104,7 +104,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
                 src={imgSrc}
                 alt={`${project.title} - ${index + 1}`}
                 className={cn(
-                  "absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500",
+                  "absolute top-0 left-0 w-full h-full object-contain transition-opacity duration-500",
                   index === currentImageIndex ? "opacity-100" : "opacity-0"
                 )}
               />
@@ -189,11 +189,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
                         </AspectRatio>
                       ) : (
                         <AspectRatio ratio={16/9}>
-                          <img 
-                            src={images[currentImageIndex]} 
-                            alt={project.title}
-                            className="w-full h-full object-cover" 
-                          />
+                          <div className="bg-void-black/30 w-full h-full flex items-center justify-center">
+                            <img 
+                              src={images[currentImageIndex]} 
+                              alt={project.title}
+                              className="w-full h-full object-contain" 
+                            />
+                          </div>
                         </AspectRatio>
                       )}
                     </div>
