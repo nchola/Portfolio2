@@ -77,7 +77,7 @@ export const projects: Project[] = [
     title: 'codeScale',
     description: 'Transforming ideas into high-performance web applications with modern design and clean code.',
     category: 'Web Application',
-    technologies: ['React', 'Typescript', 'Tailwind CSS','Shadcn UI','Supabase'],
+    technologies: ['React', 'Typescript', 'Tailwind CSS','Shadcn UI','Supabase','Midtrans'],
     thumbnailSrc: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1170&auto=format&fit=crop',  
     mediaType: 'website',
     viewUrl: 'https://codescale.vercel.app/',
