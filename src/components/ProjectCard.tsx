@@ -90,7 +90,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
     <div 
       ref={cardRef}
       className={cn(
-        "project-card group h-[350px] overflow-hidden shadow-md",
+        "project-card group h-[350px] md:h-[350px] overflow-hidden shadow-md",
         className
       )}
     >
@@ -104,9 +104,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
                 src={imgSrc}
                 alt={`${project.title} - ${index + 1}`}
                 className={cn(
-                  "absolute top-0 left-0 w-full h-full object-contain transition-opacity duration-500",
+                  "absolute top-0 left-0 w-full h-full object-contain md:object-contain transition-opacity duration-500",
                   index === currentImageIndex ? "opacity-100" : "opacity-0"
                 )}
+                style={{
+                  minHeight: '250px',
+                  maxHeight: '100%',
+                  width: '100%'
+                }}
               />
             ))}
           </div>
@@ -114,25 +119,25 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
         
         <div className="absolute inset-0 bg-gradient-to-t from-void-black to-transparent opacity-70"></div>
         
-        <div className="project-overlay p-6 flex flex-col justify-between">
+        <div className="project-overlay p-4 md:p-6 flex flex-col justify-between">
           <div>
             <span className="text-xs uppercase tracking-wider bg-void-black/80 text-static-white px-3 py-1 rounded-full">
               {project.category}
             </span>
-            <h3 className="mt-4 text-2xl font-bold text-static-white">
+            <h3 className="mt-3 md:mt-4 text-xl md:text-2xl font-bold text-static-white">
               {project.title}
             </h3>
-            <p className="mt-2 text-sm text-static-white/90">
+            <p className="mt-2 text-sm text-static-white/90 line-clamp-2 md:line-clamp-none">
               {project.description}
             </p>
           </div>
           
           <div className="mt-auto">
-            <div className="flex flex-wrap gap-2 mt-4">
+            <div className="flex flex-wrap gap-2 mt-3 md:mt-4">
               {project.technologies.map((tech, index) => (
                 <span 
                   key={index}
-                  className="text-xs bg-void-black/70 text-static-white px-2 py-1 rounded"
+                  className="text-[10px] md:text-xs bg-void-black/70 text-static-white px-2 py-1 rounded"
                 >
                   {tech}
                 </span>
@@ -141,13 +146,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
             
             {/* Image carousel indicators */}
             {images.length > 1 && (
-              <div className="flex gap-1 mt-3 justify-center">
+              <div className="flex gap-1 mt-2 md:mt-3 justify-center">
                 {images.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
                     className={cn(
-                      "w-2 h-2 rounded-full transition-all",
+                      "w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all",
                       index === currentImageIndex 
                         ? "bg-gilded-parchment" 
                         : "bg-static-white/40"
@@ -160,51 +165,25 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
             
             {/* Media link/preview */}
             {(project.viewUrl || project.mediaType === 'image') && (
-              <div className="mt-4">
-                <HoverCard>
-                  <HoverCardTrigger asChild>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      className="bg-gilded-parchment/20 border-gilded-parchment/40 hover:bg-gilded-parchment/30 text-static-white"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        if (project.viewUrl) {
-                          window.open(project.viewUrl, '_blank');
-                        }
-                      }}
-                    >
-                      {getMediaIcon()}
-                      {getMediaActionText()}
-                    </Button>
-                  </HoverCardTrigger>
-                  <HoverCardContent side="top" className="w-80 p-0">
-                    <div className="rounded-md overflow-hidden">
-                      {project.mediaType === 'youtube' ? (
-                        <AspectRatio ratio={16/9}>
-                          <div className="bg-void-black/20 w-full h-full flex items-center justify-center">
-                            <Youtube className="text-gilded-parchment" size={40} />
-                            <span className="ml-2 text-sm text-static-white">YouTube Preview</span>
-                          </div>
-                        </AspectRatio>
-                      ) : (
-                        <AspectRatio ratio={16/9}>
-                          <div className="bg-void-black/30 w-full h-full flex items-center justify-center">
-                            <img 
-                              src={images[currentImageIndex]} 
-                              alt={project.title}
-                              className="w-full h-full object-contain" 
-                            />
-                          </div>
-                        </AspectRatio>
-                      )}
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
+              <div className="mt-3 md:mt-4">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="w-full md:w-auto bg-gilded-parchment/20 border-gilded-parchment/40 hover:bg-gilded-parchment/30 text-static-white text-sm md:text-base py-2 md:py-2.5"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (project.viewUrl) {
+                      window.open(project.viewUrl, '_blank');
+                    }
+                  }}
+                >
+                  {getMediaIcon()}
+                  {getMediaActionText()}
+                </Button>
               </div>
             )}
             
-            <div className="mt-4 text-xs text-static-white/80 flex items-center space-x-4">
+            <div className="mt-3 md:mt-4 text-[10px] md:text-xs text-static-white/80 flex items-center space-x-4">
               <span>
                 {project.gitMetadata.commits} commits
               </span>

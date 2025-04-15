@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   Carousel,
@@ -100,6 +99,94 @@ const certificates: Certificate[] = [
     date: 'July 2024',
     description: 'It covers topics like Problem solving and SQL.',
     link: 'https://www.hackerrank.com/certificates/9928225c8a33'
+  },
+  {
+    id: 'cert11',
+    title: 'JavaScript (Basic)',
+    issuer: 'Dicoding',
+    date: 'July 2024',
+    description: 'Covers fundamental concepts of JavaScript including variables, functions, objects, and basic problem solving.',
+    link: 'https://www.dicoding.com/certificates/MRZME896LPYQ'
+  },
+  {
+    id: 'cert12',
+    title: 'Problem Solving (Basic)',
+    issuer: 'HackerRank',
+    date: 'July 2024',
+    description: 'It covers topics of Data Structures (such as HashMaps, Stacks and Queues) and Algorithms (such as Optimal Solutions).',
+    link: 'https://www.hackerrank.com/certificates/77d5ee7ca622'
+  },
+  {
+    id: 'cert13',
+    title: 'React (Basic)',
+    issuer: 'HackerRank',
+    date: 'July 2024',
+    description: 'React (Basic) It covers topics like Basic Routing, Rendering Elements,State Management (Internal Component State), Handling Events, ES6 and JavaScript and Form Validation.',
+    link: 'https://www.hackerrank.com/certificates/2c8f08620d46'
+  },
+  {
+    id: 'cert14',
+    title: 'AWS Cloud Practitioner Essentials',
+    issuer: 'Dicoding',
+    date: 'July 2024',
+    description: 'Fundamental understanding of AWS Cloud services, architecture, security, and pricing models.',
+    link: 'https://www.dicoding.com/certificates/JMZV3DV2OPN9'
+  },
+  {
+    id: 'cert15',
+    title: 'Personal Development - IDCamp',
+    issuer: 'Dicoding',
+    date: 'July 2024',
+    description: 'Focused on professional growth and soft skills development in tech industry.',
+    link: ''
+  },
+  {
+    id: 'cert16',
+    title: 'Product Management with Trello',
+    issuer: 'Dicoding',
+    date: 'July 2024',
+    description: 'Mastery of Trello for project and product management workflows.',
+    link: 'https://coursera.org/verify/9ZXFD6PHL88P'
+  },
+  {
+    id: 'cert17',
+    title: 'Python Basic',
+    issuer: 'Dicoding',
+    date: 'July 2024',
+    description: 'Fundamental concepts of Python programming including syntax, data types, and basic algorithms.',
+    link: 'https://www.dicoding.com/certificates/N9ZO72736ZG5'
+  },
+  {
+    id: 'cert18',
+    title: 'Data Visualization',
+    issuer: 'Dicoding',
+    date: 'July 2024',
+    description: 'Creating effective data visualizations using modern tools and best practices.',
+    link: 'https://www.dicoding.com/certificates/07Z6RJRRRPQR'
+  },
+  {
+    id: 'cert19',
+    title: 'Dart Programming Basics',
+    issuer: 'Dicoding',
+    date: 'July 2024',
+    description: 'Fundamental concepts of Dart programming language including syntax and object-oriented programming.',
+    link: 'https://www.dicoding.com/certificates/0LZ0RG3O0P65'
+  },
+  {
+    id: 'cert20',
+    title: 'Project Management Fundamentals',
+    issuer: 'Dicoding',
+    date: 'July 2024',
+    description: 'Basic principles of project management including planning, execution, and monitoring.',
+    link: 'https://www.dicoding.com/certificates/GRX539ODKZ0M'
+  },
+  {
+    id: 'cert21',
+    title: 'Javascript Basic',
+    issuer: 'HackerRank',
+    date: 'July 2024',
+    description: 'It covers topics like, Functions, Currying, Hoisting, Scope, Inheritance, Events and Error Handling.',
+    link: 'https://www.hackerrank.com/certificates/fdbc584fe558'
   }
 ].filter(cert => cert.title !== '');
 
@@ -190,13 +277,7 @@ const Certificates: React.FC = () => {
             </div>
           </Carousel>
 
-          <div className="flex justify-center mt-12">
-            <ScrollArea className="max-h-36 border border-gilded-parchment/10 rounded-md p-4 w-full max-w-lg bg-quantum-gray/5 dark:bg-static-white/5 backdrop-blur-sm">
-              <p className="text-sm italic text-center text-quantum-gray dark:text-static-white/80">
-                "Continuous learning has been key to my professional growth. These certificates represent my commitment to staying current with technologies and methodologies in the ever-evolving tech landscape."
-              </p>
-            </ScrollArea>
-          </div>
+          
         </div>
       </div>
     </section>

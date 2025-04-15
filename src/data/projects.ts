@@ -94,4 +94,30 @@ export const projects: Project[] = [
     },
 
   },
+  {
+    id: 'project-4',
+    title: 'codeScale',
+    description: 'Transforming ideas into high-performance web applications with modern design and clean code.',
+    category: 'Web Application',
+    technologies: ['React', 'Typescript', 'Tailwind CSS','Radix UI','Supabase','NextJs'],
+    thumbnailSrc: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1170&auto=format&fit=crop',  
+    mediaType: 'website',
+    viewUrl: 'https://jengjangkarir.vercel.app/',
+    images: [
+      "/projects/jengjangkarir/image.png",
+      "/projects/jengjangkarir/image1.png",
+      "/projects/jengjangkarir/image2.png",
+      "/projects/jengjangkarir/image3.png",
+      "/projects/jengjangkarir/image4.png",
+      "/projects/jengjangkarir/image5.png",
+      "/projects/jengjangkarir/image6.png",
+      "/projects/jengjangkarir/image7.png"
+
+    ],
+    gitMetadata: {
+      commits: 112,
+      lastUpdated: '2025-04-15',
+      contributors: 1,
+    },
+  },
 ];
