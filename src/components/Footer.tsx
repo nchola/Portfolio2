@@ -34,7 +34,7 @@ const contactItems = [
     icon: Phone,
     label: "Phone",
     value: "(+62)85382581084",
-    link: "tel:+6285382581084"
+    link: "https://api.whatsapp.com/send?phone=6285382581084"
   },
   {
     icon: MapPin,
