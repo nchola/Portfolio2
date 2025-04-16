@@ -21,6 +21,15 @@ interface Certificate {
 // Filter out empty certificates
 const certificates: Certificate[] = [
   {
+    id: 'cert0',
+    title: 'TOEIC',
+    issuer: 'TOEIC',
+    date: 'Maret 2024',
+    description: 'TOEIC with actual score 705.',
+    link: 'https://drive.google.com/file/d/1gzUnYfz7Si-XNBOnZutAgSKE9Wcr-KLy/view?usp=sharing'
+  },
+  
+  {
     id: 'cert1',
     title: 'Building Web Applications in PHP',
     issuer: 'University of Michigan',
