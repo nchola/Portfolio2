@@ -209,7 +209,7 @@ const certificates: Certificate[] = [
     id: "cert21",
     title: "Javascript Basic",
     issuer: "HackerRank",
-    date: "July 2024",
+    date: "July 2025",
     description:
       "It covers topics like, Functions, Currying, Hoisting, Scope, Inheritance, Events and Error Handling.",
     link: "https://www.hackerrank.com/certificates/fdbc584fe558",
