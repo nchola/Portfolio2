@@ -25,7 +25,7 @@ const certificates: Certificate[] = [
     title: "TOEIC",
     issuer: "TOEIC",
     date: "Maret 2024",
-    description: "TOEIC with actual score 705.",
+    description: "TOEIC With Actual Score 705.",
     link: "https://drive.google.com/file/d/1gzUnYfz7Si-XNBOnZutAgSKE9Wcr-KLy/view?usp=sharing",
   },
 
@@ -219,7 +219,7 @@ const certificates: Certificate[] = [
     title: "TOEFL",
     issuer: "Englishvit",
     date: "Maret 2025",
-    description: "Actual Score TOEFL 573.",
+    description: "TOEFL With Actual Score 573.",
     link: "https://drive.google.com/file/d/12jgo40WmASYK-0shdsLohOeEcxR-2Efd/view?usp=sharing",
   },
 ].filter((cert) => cert.title !== "");
