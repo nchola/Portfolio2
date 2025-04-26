@@ -141,5 +141,36 @@ export const projects: Project[] = [
       lastUpdated: '2025-04-124',
       contributors: 1
     }
+  },
+  {
+    id: 'project-6',
+    title: 'Pixel Bistro',
+    description: 'A modern and stylish restaurant website that showcases the best of local cuisine.',
+    category: 'Web Application',
+    technologies: ['React', 'Typescript', 'Tailwind CSS','Lottie'],
+    thumbnailSrc: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1170&auto=format&fit=crop',  
+    mediaType: 'website',
+    viewUrl: 'https://pixel-bistro.vercel.app/',
+    images: [
+      "/projects/pixel-bistro/image.png",
+      "/projects/pixel-bistro/image1.png",
+      "/projects/pixel-bistro/image2.png",
+      "/projects/pixel-bistro/image3.png",
+      "/projects/pixel-bistro/image4.png",
+      "/projects/pixel-bistro/image5.png",
+      "/projects/pixel-bistro/image6.png",
+      "/projects/pixel-bistro/image7.png",
+      "/projects/pixel-bistro/image8.png",
+      "/projects/pixel-bistro/image9.png",
+      "/projects/pixel-bistro/image10.png",
+      "/projects/pixel-bistro/image11.png",
+      "/projects/pixel-bistro/image12.png",
+      
+    ],
+    gitMetadata: {
+      commits: 200,
+      lastUpdated: '2025-04-11',
+      contributors: 1,
+    },
   }
 ];
