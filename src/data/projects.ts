@@ -125,7 +125,7 @@ export const projects: Project[] = [
     title: 'shadowarchetype',
     description: ' IMMERSIVE 3D EXPERIENCES AND VISUAL STORYTELLING',
     category: 'Web Application',
-    technologies: ['React', 'Typescript', 'Tailwind CSS','Vite','Framer Motion','Sketchfab','React Virutal + Custom Optimization Strategies'],
+    technologies: ['React', 'Typescript', 'Tailwind CSS','Vite','Framer Motion','Sketchfab','React Virtual + Custom Optimization Strategies'],
     thumbnailSrc: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1170&auto=format&fit=crop',  
     mediaType: 'website',
     viewUrl: 'https://shadowarchetype.vercel.app/',
