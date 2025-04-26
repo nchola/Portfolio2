@@ -152,7 +152,6 @@ export const projects: Project[] = [
     mediaType: 'website',
     viewUrl: 'https://pixel-bistro.vercel.app/',
     images: [
-      "/projects/pixel-bistro/image.png",
       "/projects/pixel-bistro/image1.png",
       "/projects/pixel-bistro/image2.png",
       "/projects/pixel-bistro/image3.png",
