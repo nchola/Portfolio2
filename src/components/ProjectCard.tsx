@@ -95,7 +95,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
       )}
     >
       <div className="h-full w-full relative">
-        <AspectRatio ratio={16/9} className="h-full">
+        <AspectRatio ratio={16/9} className="w-full h-[220px] md:h-[260px] lg:h-[300px] bg-gray-100 dark:bg-void-black/30 rounded-t-md overflow-hidden">
           <div className="relative w-full h-full bg-void-black/30">
             {/* Images for carousel */}
             {images.map((imgSrc, index) => (
@@ -110,7 +110,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
                 style={{
                   minHeight: '250px',
                   maxHeight: '100%',
-                  width: '100%'
+                  width: '100%',
+                  background: '#222'
                 }}
               />
             ))}
@@ -183,14 +184,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
               </div>
             )}
             
-            <div className="mt-3 md:mt-4 text-[10px] md:text-xs text-static-white/80 flex items-center space-x-4">
-              <span>
-                {project.gitMetadata.commits} commits
-              </span>
-              <span>
-                Updated: {project.gitMetadata.lastUpdated}
-              </span>
-            </div>
+            
           </div>
         </div>
       </div>
