@@ -117,7 +117,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
           </div>
         </AspectRatio>
         
-        <div className="absolute inset-0 bg-gradient-to-t from-void-black to-transparent opacity-70"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60 dark:from-void-black dark:opacity-70"></div>
         
         <div className="project-overlay p-4 md:p-6 flex flex-col justify-between">
           <div>

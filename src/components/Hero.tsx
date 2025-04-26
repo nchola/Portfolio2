@@ -1,6 +1,5 @@
-
 import React, { useEffect, useState } from 'react';
-import { Atom, BrainCircuit, Code, CircuitBoard, Infinity, Zap, Hexagon } from 'lucide-react';
+import { Atom, BrainCircuit, Code, CircuitBoard, Infinity as InfinityIcon, Zap, Hexagon } from 'lucide-react';
 
 interface HeroProps {
   title: string;
@@ -75,7 +74,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
         />
         
         {/* Void/Black Hole Animation */}
-        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
           <div className="w-64 h-64 md:w-96 md:h-96 rounded-full bg-transparent border-2 border-gilded-parchment/30 animate-[spin_30s_linear_infinite] opacity-40"></div>
           <div className="absolute left-1/2 top-1/2 w-40 h-40 md:w-64 md:h-64 rounded-full bg-transparent border-2 border-gilded-parchment/20 animate-[spin_20s_linear_infinite_reverse] -translate-x-1/2 -translate-y-1/2 opacity-30"></div>
           <div className="absolute left-1/2 top-1/2 w-20 h-20 md:w-40 md:h-40 rounded-full bg-void-black/60 border border-gilded-parchment/10 animate-[spin_15s_linear_infinite] -translate-x-1/2 -translate-y-1/2"></div>
@@ -83,7 +82,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
         
         {/* Abstract Logo: Infinity Loop */}
         <div className="absolute top-1/4 left-1/4 transform -translate-x-1/2 -translate-y-1/2 opacity-40 z-10">
-          <Infinity 
+          <InfinityIcon 
             size={80} 
             className="text-gilded-parchment animate-[spin_20s_linear_infinite]" 
             strokeWidth={1} 
@@ -173,16 +172,20 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
       </div>
       
       {/* Content - No Container Div */}
-      <div className="container mx-auto px-6 z-10 relative">
-        <h1 className="text-5xl md:text-7xl font-bold text-static-white dark:text-static-white mb-6 tracking-tighter text-shadow-lg text-center">
+      <div className="container mx-auto px-6 z-10 relative flex flex-col items-center">
+        <h1 className="text-5xl md:text-7xl font-bold text-void-black dark:text-static-white mb-6 tracking-tighter text-shadow-lg text-center z-10">
           {title}
         </h1>
         
-        <div className="text-xl md:text-2xl text-static-white dark:text-static-white mb-12 min-h-16 text-center backdrop-blur-sm p-4">
-          <p>{subtitle} <span className="text-gilded-parchment dark:text-gilded-parchment">{typedText}</span><span className="animate-pulse text-static-white dark:text-static-white">|</span></p>
+        <div className="text-xl md:text-2xl mb-12 min-h-16 text-center backdrop-blur-sm p-4 z-10">
+          <p>
+            <span className="text-void-black dark:text-static-white font-semibold">{subtitle} </span>
+            <span className="text-gilded-parchment dark:text-gilded-parchment font-semibold">{typedText}</span>
+            <span className="animate-pulse text-void-black dark:text-static-white">|</span>
+          </p>
         </div>
         
-        <div className="flex justify-center space-x-6">
+        <div className="flex justify-center space-x-6 z-10">
           <a 
             href="https://www.linkedin.com/in/mhmmdnanda/" 
             target="_blank" 

@@ -4,6 +4,7 @@ import type React from "react"
 import { useRef, useState, useEffect } from "react"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { OrbitControls, Text, Stars, Html, Billboard } from "@react-three/drei"
+import { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import { Progress } from "@/components/ui/progress"
 import { useIsMobile } from "@/hooks/use-mobile"
 import * as THREE from "three" // Changed from 'import type' to a proper import
@@ -56,24 +57,13 @@ const skills: Skill[] = [
     color: "#0099CC", // Blue - like Earth
   },
   {
-    id: "mysql",
-    name: "MySQL",
-    type: "technical",
-    description: "75%",
-    level: 4,
-    orbitRadius: 8.5,
-    orbitSpeed: 0.16,
-    size: 0.7,
-    color: "#FF6347", // Tomato - like Mars
-  },
-  {
     id: "expressjs",
     name: "ExpressJS",
     type: "technical",
     description: "80%",
     level: 4,
-    orbitRadius: 10,
-    orbitSpeed: 0.14,
+    orbitRadius: 8.5,
+    orbitSpeed: 0.16,
     size: 0.7,
     color: "#DAA520", // Goldenrod - like Jupiter
   },
@@ -83,8 +73,8 @@ const skills: Skill[] = [
     type: "technical",
     description: "75%",
     level: 4,
-    orbitRadius: 11.5,
-    orbitSpeed: 0.12,
+    orbitRadius: 10,
+    orbitSpeed: 0.14,
     size: 0.8,
     color: "#F4A460", // Sandy Brown - like Saturn
   },
@@ -94,8 +84,8 @@ const skills: Skill[] = [
     type: "technical",
     description: "65%",
     level: 3,
-    orbitRadius: 13,
-    orbitSpeed: 0.1,
+    orbitRadius: 11.5,
+    orbitSpeed: 0.12,
     size: 0.8,
     color: "#00CED1", // Dark Turquoise - like Uranus
   },
@@ -105,8 +95,8 @@ const skills: Skill[] = [
     type: "conceptual",
     description: "70%",
     level: 3,
-    orbitRadius: 14.5,
-    orbitSpeed: 0.08,
+    orbitRadius: 13,
+    orbitSpeed: 0.1,
     size: 0.8,
     color: "#1E90FF", // Dodger Blue - like Neptune
   },
@@ -116,8 +106,8 @@ const skills: Skill[] = [
     type: "conceptual",
     description: "70%",
     level: 3,
-    orbitRadius: 16,
-    orbitSpeed: 0.06,
+    orbitRadius: 14.5,
+    orbitSpeed: 0.08,
     size: 0.75,
     color: "#800080", // Purple - like Pluto
   },
@@ -127,8 +117,8 @@ const skills: Skill[] = [
     type: "conceptual",
     description: "55%",
     level: 3,
-    orbitRadius: 17.5,
-    orbitSpeed: 0.04,
+    orbitRadius: 16,
+    orbitSpeed: 0.06,
     size: 0.75,
     color: "#8B4513", // Saddle Brown - like an exoplanet
   },
@@ -138,8 +128,8 @@ const skills: Skill[] = [
     type: "conceptual",
     description: "60%",
     level: 3,
-    orbitRadius: 19,
-    orbitSpeed: 0.02,
+    orbitRadius: 17.5,
+    orbitSpeed: 0.04,
     size: 0.75,
     color: "#556B2F", // Dark Olive Green - like an exoplanet
   },
@@ -149,12 +139,34 @@ const skills: Skill[] = [
     type: "conceptual",
     description: "70%",
     level: 3,
-    orbitRadius: 20.5,
-    orbitSpeed: 0.018,
+    orbitRadius: 19,
+    orbitSpeed: 0.02,
     size: 0.6,
     color: "#4682B4", // Steel Blue - like an exoplanet
   },
-]
+  {
+    id: "typescript",
+    name: "TypeScript",
+    type: "technical",
+    description: "75%",
+    level: 4,
+    orbitRadius: 21,
+    orbitSpeed: 0.015,
+    size: 0.65,
+    color: "#007ACC", // TypeScript Blue
+  },
+  {
+    id: "reactjs",
+    name: "React.js",
+    type: "technical",
+    description: "80%",
+    level: 4,
+    orbitRadius: 23,
+    orbitSpeed: 0.01,
+    size: 0.7,
+    color: "#61DAFB", // React Blue
+  }
+].filter(skill => skill.name !== "NextJs"); // Remove the old NextJs entry
 
 const OrbitPath = ({ radius }: { radius: number }) => {
   return (
@@ -323,7 +335,7 @@ const Sun = () => {
 
 const Scene = () => {
   const [activeSkill, setActiveSkill] = useState<Skill | null>(null)
-  const controlsRef = useRef<any>(null)
+  const controlsRef = useRef<OrbitControlsImpl>(null)
   const isMobile = useIsMobile()
 
   useEffect(() => {

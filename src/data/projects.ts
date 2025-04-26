@@ -120,4 +120,26 @@ export const projects: Project[] = [
       contributors: 1,
     },
   },
+  {
+    id: 'project-5',
+    title: 'shadowarchetype',
+    description: ' IMMERSIVE 3D EXPERIENCES AND VISUAL STORYTELLING',
+    category: 'Web Application',
+    technologies: ['React', 'Typescript', 'Tailwind CSS','Vite','Framer Motion','Sketchfab','React Virutal + Custom Optimization Strategies'],
+    thumbnailSrc: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1170&auto=format&fit=crop',  
+    mediaType: 'website',
+    viewUrl: 'https://shadowarchetype.vercel.app/',
+    images: [
+      "/projects/shadow-archetype/image.png",
+      "/projects/shadow-archetype/image1.png",
+      "/projects/shadow-archetype/image2.png",
+      "/projects/shadow-archetype/image3.png",
+      "/projects/shadow-archetype/image4.png",
+    ],
+    gitMetadata: {
+      commits: 35,
+      lastUpdated: '2025-04-124',
+      contributors: 1
+    }
+  }
 ];
