@@ -16,10 +16,20 @@ interface Certificate {
   date: string;
   description: string;
   link?: string;
+  image?: string;
 }
 
 // Filter out empty certificates
 const certificates: Certificate[] = [
+  {
+    id: "cert0",
+    title: "monkeytype",
+    issuer: "monkeytype",
+    date: "2025",
+    description: "Monkeytype Typing test with 84-115 WPM.",
+    image: "/projects/monkeytype.png",
+    link: "/projects/monkeytype.png",
+  },
   {
     id: "cert0",
     title: "TOEIC",
@@ -256,7 +266,7 @@ const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
             rel="noopener noreferrer"
             className="text-sm text-gilded-parchment hover:underline"
           >
-            View Certificate
+            {/\.(png|jpe?g|webp|gif)$/i.test(certificate.link) ? "View Image" : "View Certificate"}
           </a>
         )}
       </div>

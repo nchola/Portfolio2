@@ -68,7 +68,7 @@ const experiences: WorkExperience[] = [
   {
     id: "exp4",
     position: "Archive Application Developer",
-    company: "Kantor Kelurahan Dua Puluh Ilir Tiga Palembang",
+    company: "Dinas Perumahan dan Permukiman,  Kota Palembang.",
     duration: "February - June 2022",
     description: [
       "Developed an archive management system to streamline document storage and retrieval.",
