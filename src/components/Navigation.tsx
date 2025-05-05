@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { ChevronLeft, ChevronRight, Menu, X } from 'lucide-react';
@@ -70,19 +69,44 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
     )}>
       <div className="container mx-auto px-4 py-4">
         {isMobile ? (
-          <div className="flex justify-between items-center">
-            <button 
+          <>
+            {/* Hamburger Bar: Always visible, z-50 */}
+            <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-quantum-gray dark:text-static-white"
-              aria-label="Toggle navigation menu"
+              className="fixed top-4 left-4 z-50 p-2 text-quantum-gray dark:text-static-white bg-transparent"
+              aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
-            
-            <span className="text-lg font-medium text-quantum-gray dark:text-static-white">
+            {/* Centered section label */}
+            <span className="text-lg font-medium text-quantum-gray dark:text-static-white block text-center">
               {sections.find(s => s.id === activeSection)?.label}
             </span>
-          </div>
+            {/* Mobile full-screen menu */}
+            {mobileMenuOpen && (
+              <div className="fixed inset-0 bg-static-white dark:bg-void-black z-40 pt-20">
+                <div className="container mx-auto px-6">
+                  <ul className="flex flex-col space-y-4">
+                    {sections.map((section) => (
+                      <li key={section.id} className="border-b border-quantum-gray/10 dark:border-static-white/10 pb-2">
+                        <button
+                          onClick={() => scrollToSection(section.id)}
+                          className={cn(
+                            "w-full text-left py-3 px-4 rounded-md text-lg font-medium transition-all",
+                            activeSection === section.id
+                              ? "bg-gilded-parchment/20 text-gilded-parchment"
+                              : "text-quantum-gray dark:text-static-white"
+                          )}
+                        >
+                          {section.label}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
+          </>
         ) : (
           <div className="flex justify-center items-center">
             <div className="relative">
@@ -106,31 +130,6 @@ const Navigation: React.FC<NavigationProps> = ({ sections }) => {
                   </React.Fragment>
                 ))}
               </div>
-            </div>
-          </div>
-        )}
-        
-        {/* Mobile full-screen menu */}
-        {isMobile && mobileMenuOpen && (
-          <div className="fixed inset-0 bg-static-white dark:bg-void-black z-50 pt-20">
-            <div className="container mx-auto px-6">
-              <ul className="flex flex-col space-y-4">
-                {sections.map((section) => (
-                  <li key={section.id} className="border-b border-quantum-gray/10 dark:border-static-white/10 pb-2">
-                    <button
-                      onClick={() => scrollToSection(section.id)}
-                      className={cn(
-                        "w-full text-left py-3 px-4 rounded-md text-lg font-medium transition-all",
-                        activeSection === section.id
-                          ? "bg-gilded-parchment/20 text-gilded-parchment"
-                          : "text-quantum-gray dark:text-static-white"
-                      )}
-                    >
-                      {section.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         )}

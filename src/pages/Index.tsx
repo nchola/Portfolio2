@@ -49,7 +49,7 @@ const Index: React.FC = () => {
         <Hero 
           title="Muhammad Nanda" 
           subtitle="I'm"
-          typedItems={["A Software Developer", "A Computer Science Graduate", "A Technologies Enthusiast"]}
+          typedItems={["Muhammad Nanda","a Full-Stack Developer", "a Computer Science Graduate", "a Technologies Enthusiast"]}
         />
         <About />
         <Experience />
