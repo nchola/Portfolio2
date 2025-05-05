@@ -7,176 +7,68 @@ interface HeroProps {
   typedItems?: string[];
 }
 
+// SplineViewer component
+const SplineViewer = () => {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.src = 'https://unpkg.com/@splinetool/viewer@1.9.89/build/spline-viewer.js';
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  return React.createElement('spline-viewer', {
+    url: 'https://prod.spline.design/fwa-MxP4g-yP3psn/scene.splinecode',
+    className: 'w-full h-full',
+    'loading-anim-type': 'spinner-small-dark',
+  });
+};
+
 const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
   const [typedText, setTypedText] = useState('');
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(150);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  
+
   useEffect(() => {
     if (typedItems.length === 0) return;
-    
     const currentItem = typedItems[currentItemIndex];
-    
     const type = () => {
       if (isDeleting) {
-        // Deleting text
         setTypedText(prev => prev.substring(0, prev.length - 1));
-        setTypingSpeed(50); // Faster when deleting
-        
+        setTypingSpeed(50);
         if (typedText === '') {
           setIsDeleting(false);
           setCurrentItemIndex((prev) => (prev + 1) % typedItems.length);
-          setTypingSpeed(500); // Pause before typing next word
+          setTypingSpeed(500);
         }
       } else {
-        // Typing text
         setTypedText(prev => currentItem.substring(0, prev.length + 1));
-        setTypingSpeed(150); // Normal typing speed
-        
+        setTypingSpeed(150);
         if (typedText === currentItem) {
-          setTypingSpeed(2000); // Pause at the end of word
+          setTypingSpeed(2000);
           setIsDeleting(true);
         }
       }
     };
-    
     const timer = setTimeout(type, typingSpeed);
     return () => clearTimeout(timer);
   }, [typedText, currentItemIndex, isDeleting, typingSpeed, typedItems]);
-  
-  // Handle mouse movement for parallax effect
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e;
-      const x = (clientX / window.innerWidth - 0.5) * 20; // -10 to 10
-      const y = (clientY / window.innerHeight - 0.5) * 20; // -10 to 10
-      
-      setMousePosition({ x, y });
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-  
+
   return (
-    <section id="hero" className="h-screen flex flex-col justify-center items-center relative overflow-hidden">
-      {/* Cosmic Background with Parallax Effect */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden">
-        <div 
-          className="absolute inset-0 w-full h-full bg-cover bg-center transform transition-transform duration-100 ease-out z-0"
-          style={{ 
-            backgroundImage: 'url(/lovable-uploads/aba76126-7f32-41b2-93f1-c9cf917452ae.png)',
-            transform: `scale(1.1) translate(${mousePosition.x * 0.01}px, ${mousePosition.y * 0.01}px)`,
-            filter: 'brightness(0.7)'
-          }}
-        />
-        
-        {/* Void/Black Hole Animation */}
-        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
-          <div className="w-64 h-64 md:w-96 md:h-96 rounded-full bg-transparent border-2 border-gilded-parchment/30 animate-[spin_30s_linear_infinite] opacity-40"></div>
-          <div className="absolute left-1/2 top-1/2 w-40 h-40 md:w-64 md:h-64 rounded-full bg-transparent border-2 border-gilded-parchment/20 animate-[spin_20s_linear_infinite_reverse] -translate-x-1/2 -translate-y-1/2 opacity-30"></div>
-          <div className="absolute left-1/2 top-1/2 w-20 h-20 md:w-40 md:h-40 rounded-full bg-void-black/60 border border-gilded-parchment/10 animate-[spin_15s_linear_infinite] -translate-x-1/2 -translate-y-1/2"></div>
-        </div>
-        
-        {/* Abstract Logo: Infinity Loop */}
-        <div className="absolute top-1/4 left-1/4 transform -translate-x-1/2 -translate-y-1/2 opacity-40 z-10">
-          <InfinityIcon 
-            size={80} 
-            className="text-gilded-parchment animate-[spin_20s_linear_infinite]" 
-            strokeWidth={1} 
-          />
-        </div>
-        
-        {/* Abstract Logo: Void Collapse (Atom) */}
-        <div className="absolute top-3/4 left-1/5 transform -translate-x-1/2 -translate-y-1/2 opacity-30 z-10">
-          <Atom 
-            size={70} 
-            className="text-static-white animate-pulse" 
-            strokeWidth={1} 
-          />
-        </div>
-        
-        {/* Abstract Logo: Cyberpunk Circuit */}
-        <div className="absolute top-2/3 right-1/4 transform translate-x-1/2 -translate-y-1/2 opacity-30 z-10">
-          <CircuitBoard 
-            size={60} 
-            className="text-gilded-parchment/70" 
-            strokeWidth={1}
-          />
-        </div>
-        
-        {/* Abstract Logo: To The Infinity (Brain) */}
-        <div className="absolute top-1/3 right-1/5 transform translate-x-1/2 -translate-y-1/2 opacity-40 z-10">
-          <BrainCircuit 
-            size={65} 
-            className="text-static-white/60 animate-float" 
-            strokeWidth={1} 
-          />
-        </div>
-        
-        {/* Abstract Logo: Cyberpunk Code Symbol */}
-        <div className="absolute top-1/2 right-1/3 transform translate-x-1/2 -translate-y-1/2 opacity-30 z-10">
-          <Code 
-            size={55} 
-            className="text-gilded-parchment/80" 
-            strokeWidth={1} 
-          />
-        </div>
-        
-        {/* Abstract Logo: Cyberpunk Hexagon */}
-        <div className="absolute bottom-1/4 right-1/4 transform translate-x-1/2 translate-y-1/2 opacity-35 z-10">
-          <Hexagon 
-            size={75} 
-            className="text-static-white/70" 
-            strokeWidth={1} 
-          />
-        </div>
-        
-        {/* Abstract Logo: Electric Symbol */}
-        <div className="absolute top-2/5 left-1/3 transform -translate-x-1/2 -translate-y-1/2 opacity-40 z-10">
-          <Zap 
-            size={65} 
-            className="text-gilded-parchment animate-pulse" 
-            strokeWidth={1}
-          />
-        </div>
-        
-        {/* Animated Stars */}
-        <div className="absolute inset-0">
-          {Array.from({ length: 50 }).map((_, i) => (
-            <div 
-              key={`cosmic-star-${i}`}
-              className="absolute rounded-full bg-static-white animate-pulse"
-              style={{
-                width: `${Math.random() * 3 + 1}px`,
-                height: `${Math.random() * 3 + 1}px`,
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                opacity: Math.random() * 0.9 + 0.1,
-                animationDuration: `${Math.random() * 5 + 2}s`,
-                animationDelay: `${Math.random() * 5}s`,
-              }}
-            />
-          ))}
-        </div>
-        
-        {/* Infinity Symbol Animation */}
-        <div 
-          className="absolute left-1/2 top-3/4 transform -translate-x-1/2 -translate-y-1/2 opacity-20 text-gilded-parchment dark:text-gilded-parchment/70 text-8xl animate-float"
-          style={{ fontSize: '200px' }}
-        >
-          ∞
-        </div>
+    <section className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden">
+      {/* Spline 3D Background */}
+      <div className="absolute inset-0 z-0">
+        <SplineViewer />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 pointer-events-none" />
       </div>
-      
-      {/* Content - No Container Div */}
-      <div className="container mx-auto px-6 z-10 relative flex flex-col items-center">
-        <h1 className="text-5xl md:text-7xl font-bold text-void-black dark:text-static-white mb-6 tracking-tighter text-shadow-lg text-center z-10">
-          {title}
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center px-6 py-24">
+        <h1 className="text-4xl md:text-6xl font-bold text-white text-center drop-shadow-lg">
+          Muhammad Nanda
         </h1>
-        
         <div className="text-xl md:text-2xl mb-12 min-h-16 text-center backdrop-blur-sm p-4 z-10">
           <p>
             <span className="text-void-black dark:text-static-white font-semibold">{subtitle} </span>
@@ -184,7 +76,6 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
             <span className="animate-pulse text-void-black dark:text-static-white">|</span>
           </p>
         </div>
-        
         <div className="flex justify-center space-x-6 z-10">
           <a 
             href="https://www.linkedin.com/in/mhmmdnanda/" 
@@ -232,8 +123,6 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
             </svg>
           </a>
         </div>
-        
-        
       </div>
     </section>
   );
