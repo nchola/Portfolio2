@@ -126,7 +126,7 @@ const education: Education[] = [
 
 const Resume: React.FC = () => {
   return (
-    <section id="resume" className="section bg-static-white dark:bg-void-black">
+    <section id="experience" className="section bg-static-white dark:bg-void-black">
       <div className="container">
         <div className="mb-12">
           <span className="inline-block text-xs uppercase tracking-wider text-void-black/70 dark:text-static-white/70 mb-2">

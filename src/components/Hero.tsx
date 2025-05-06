@@ -56,7 +56,7 @@ const Hero: React.FC<HeroProps> = ({ title, subtitle, typedItems = [] }) => {
   }, [typedText, currentItemIndex, isDeleting, typingSpeed, typedItems]);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden bg-black">
+    <section id='hero' className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden bg-black">
       {/* Spline 3D Background */}
       <div className="absolute inset-0 z-0">
         <SplineViewer />
