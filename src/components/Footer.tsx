@@ -14,8 +14,8 @@ const contactItems = [
   {
     icon: Linkedin,
     label: "LinkedIn",
-    value: "mhmmdnanda",
-    link: "https://www.linkedin.com/in/mhmmdnanda/",
+    value: "muhammad-nanda",
+    link: "https://www.linkedin.com/in/muhammad-nanda/",
     color: "#0A66C2"
   },
   {
