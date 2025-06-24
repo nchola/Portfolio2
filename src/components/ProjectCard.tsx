@@ -9,9 +9,10 @@ import { ExternalLink, Youtube, Image as ImageIcon } from 'lucide-react';
 interface ProjectCardProps {
   project: Project;
   className?: string;
+  onClick?: () => void;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, className, onClick }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   // State for current image index in carousel
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -90,9 +91,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
     <div 
       ref={cardRef}
       className={cn(
-        "project-card group h-[350px] md:h-[350px] overflow-hidden shadow-md",
+        "project-card group h-[350px] md:h-[350px] overflow-hidden shadow-md cursor-pointer",
         className
       )}
+      onClick={onClick}
     >
       <div className="h-full w-full relative">
         <AspectRatio ratio={16/9} className="w-full h-[220px] md:h-[260px] lg:h-[300px] bg-gray-100 dark:bg-void-black/30 rounded-t-md overflow-hidden">
@@ -151,7 +153,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
                 {images.map((_, index) => (
                   <button
                     key={index}
-                    onClick={() => setCurrentImageIndex(index)}
+                    onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(index); }}
                     className={cn(
                       "w-1.5 h-1.5 md:w-2 md:h-2 rounded-full transition-all",
                       index === currentImageIndex 
@@ -173,6 +175,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className }) => {
                   className="w-full md:w-auto bg-gilded-parchment/20 border-gilded-parchment/40 hover:bg-gilded-parchment/30 text-static-white text-sm md:text-base py-2 md:py-2.5"
                   onClick={(e) => {
                     e.preventDefault();
+                    e.stopPropagation();
                     if (project.viewUrl) {
                       window.open(project.viewUrl, '_blank');
                     }

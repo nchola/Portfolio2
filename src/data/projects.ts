@@ -72,28 +72,35 @@ export const projects: Project[] = [
       contributors: 2,
     },
   },
-  // {
-  //   id: 'project-3',
-  //   title: 'codeScale',
-  //   description: 'Transforming ideas into high-performance web applications with modern design and clean code.',
-  //   category: 'Web Application',
-  //   technologies: ['React', 'Typescript', 'Tailwind CSS','Shadcn UI','Supabase','Midtrans'],
-  //   thumbnailSrc: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1170&auto=format&fit=crop',  
-  //   mediaType: 'website',
-  //   viewUrl: 'https://codescale.vercel.app/',
-  //   images: [
-  //     "/projects/codeScale/topsection.png",
-  //     "/projects/codeScale/projectshwcs.png",
-  //     "/projects/codeScale/brief.png",
-  //     "/projects/codeScale/prjctcl.png",
-  //   ],
-  //   gitMetadata: {
-  //     commits: 100,
-  //     lastUpdated: '2025-04-11',
-  //     contributors: 2,
-  //   },
+  {
+    id: 'project-3',
+    title: 'SIMPegawai',
+    description: 'A web application for managing employee data and payroll.',
+    category: 'Web Application',
+    technologies: ['Laravel 12', 'Bootstrap', 'MySQL', 'JQuery'],
+    thumbnailSrc: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1170&auto=format&fit=crop',  
+    mediaType: 'website',
+   
+    images: [
+      "/projects/simpegawai/ss1.png",
+      "/projects/simpegawai/ss2.png",
+      "/projects/simpegawai/ss3.png",
+      "/projects/simpegawai/ss4.png",
+      "/projects/simpegawai/ss5.png",
+      "/projects/simpegawai/ss6.png",
+      "/projects/simpegawai/ss7.png",
+      "/projects/simpegawai/ss8.png",
+      "/projects/simpegawai/ss9.png",
+      "/projects/simpegawai/ss10.png",
+      "/projects/simpegawai/ss11.png"
+    ],
+    gitMetadata: {
+      commits: 100,
+      lastUpdated: '2025-04-11',
+      contributors: 2,
+    },
 
-  // },
+  },
   {
     id: 'project-4',
     title: 'jengjangKarir',
@@ -168,6 +175,28 @@ export const projects: Project[] = [
     ],
     gitMetadata: {
       commits: 200,
+      lastUpdated: '2025-04-11',
+      contributors: 1,
+    },
+  },
+
+  {
+    id: 'project-7',
+    title: 'Sistem Pendukung Keputusan Topsis',
+    description: ' A decision support system for the TOPSIS method.',
+    category: 'Web Application',
+    technologies: ['Laravel 12', 'Bootstrap', 'MySQL', 'JQuery'],
+    thumbnailSrc: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1170&auto=format&fit=crop',  
+    mediaType: 'website',
+    images: [
+      "/projects/spk/SS1.png",
+      "/projects/spk/SS2.png",
+      "/projects/spk/SS3.png",
+      "/projects/spk/SS4.png",
+      "/projects/spk/SS5.png"
+    ],
+    gitMetadata: {
+      commits: 100,
       lastUpdated: '2025-04-11',
       contributors: 1,
     },

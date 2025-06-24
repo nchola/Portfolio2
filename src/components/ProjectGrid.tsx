@@ -2,6 +2,7 @@ import React from 'react';
 import { projects } from '@/data/projects';
 import ProjectCard from './ProjectCard';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import ProjectImageModal from './ProjectImageModal';
 
 const ProjectGrid: React.FC = () => {
   // Separate projects by media type for potential filtering
@@ -9,6 +10,17 @@ const ProjectGrid: React.FC = () => {
   const websiteProjects = projects.filter(p => p.mediaType === 'website');
   const imageProjects = projects.filter(p => p.mediaType === 'image');
   
+  // Modal state
+  const [modalProject, setModalProject] = React.useState<null | typeof projects[0]>(null);
+
+  // Handler for card click
+  const handleCardClick = (project: typeof projects[0]) => {
+    setModalProject(project);
+  };
+
+  // Handler for closing modal
+  const handleCloseModal = () => setModalProject(null);
+
   return (
     <section id="projects" className="section bg-static-white dark:bg-void-black">
       <div className="container">
@@ -27,7 +39,7 @@ const ProjectGrid: React.FC = () => {
             <CarouselContent>
               {projects.map((project) => (
                 <CarouselItem key={project.id}>
-                  <ProjectCard project={project} />
+                  <ProjectCard project={project} onClick={() => handleCardClick(project)} />
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -44,10 +56,20 @@ const ProjectGrid: React.FC = () => {
             <ProjectCard 
               key={project.id} 
               project={project} 
+              onClick={() => handleCardClick(project)}
             />
           ))}
         </div>
       </div>
+      {/* Project Image Modal */}
+      {modalProject && (
+        <ProjectImageModal
+          open={!!modalProject}
+          onClose={handleCloseModal}
+          images={modalProject.images || [modalProject.thumbnailSrc]}
+          title={modalProject.title}
+        />
+      )}
     </section>
   );
 };
