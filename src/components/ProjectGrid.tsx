@@ -39,7 +39,10 @@ const ProjectGrid: React.FC = () => {
             <CarouselContent>
               {projects.map((project) => (
                 <CarouselItem key={project.id}>
-                  <ProjectCard project={project} onClick={() => handleCardClick(project)} />
+                  <ProjectCard 
+                    project={project} 
+                    onImageClick={() => handleCardClick(project)}
+                  />
                 </CarouselItem>
               ))}
             </CarouselContent>

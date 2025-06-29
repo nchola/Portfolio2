@@ -10,9 +10,10 @@ interface ProjectCardProps {
   project: Project;
   className?: string;
   onClick?: () => void;
+  onImageClick?: () => void;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, className, onClick }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, className, onClick, onImageClick }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   // State for current image index in carousel
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -87,6 +88,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className, onClick }
     }
   };
 
+  // Helper to determine if mobile
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <div 
       ref={cardRef}
@@ -94,7 +98,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className, onClick }
         "project-card group h-[350px] md:h-[350px] overflow-hidden shadow-md cursor-pointer",
         className
       )}
-      onClick={onClick}
+      onClick={!isMobile ? onClick : undefined}
     >
       <div className="h-full w-full relative">
         <AspectRatio ratio={16/9} className="w-full h-[220px] md:h-[260px] lg:h-[300px] bg-gray-100 dark:bg-void-black/30 rounded-t-md overflow-hidden">
@@ -113,8 +117,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className, onClick }
                   minHeight: '250px',
                   maxHeight: '100%',
                   width: '100%',
-                  background: '#222'
+                  background: '#222',
+                  cursor: isMobile ? 'pointer' : undefined
                 }}
+                onClick={isMobile ? (e) => { e.stopPropagation(); onImageClick && onImageClick(); } : undefined}
               />
             ))}
           </div>
