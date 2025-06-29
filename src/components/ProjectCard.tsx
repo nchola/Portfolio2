@@ -9,11 +9,10 @@ import { ExternalLink, Youtube, Image as ImageIcon } from 'lucide-react';
 interface ProjectCardProps {
   project: Project;
   className?: string;
-  onClick?: () => void;
-  onImageClick?: () => void;
+  onViewImages?: () => void;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, className, onClick, onImageClick }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, className, onViewImages }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   // State for current image index in carousel
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -88,9 +87,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className, onClick, 
     }
   };
 
-  // Helper to determine if mobile
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-
   return (
     <div 
       ref={cardRef}
@@ -98,7 +94,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className, onClick, 
         "project-card group h-[350px] md:h-[350px] overflow-hidden shadow-md cursor-pointer",
         className
       )}
-      onClick={!isMobile ? onClick : undefined}
     >
       <div className="h-full w-full relative">
         <AspectRatio ratio={16/9} className="w-full h-[220px] md:h-[260px] lg:h-[300px] bg-gray-100 dark:bg-void-black/30 rounded-t-md overflow-hidden">
@@ -117,10 +112,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className, onClick, 
                   minHeight: '250px',
                   maxHeight: '100%',
                   width: '100%',
-                  background: '#222',
-                  cursor: isMobile ? 'pointer' : undefined
+                  background: '#222'
                 }}
-                onClick={isMobile ? (e) => { e.stopPropagation(); onImageClick && onImageClick(); } : undefined}
               />
             ))}
           </div>
@@ -172,13 +165,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className, onClick, 
               </div>
             )}
             
-            {/* Media link/preview */}
-            {(project.viewUrl || project.mediaType === 'image') && (
-              <div className="mt-3 md:mt-4">
+            {/* Media link/preview & View Images button */}
+            <div className="mt-3 md:mt-4 flex gap-2">
+              {(project.viewUrl || project.mediaType === 'image') && (
                 <Button 
                   variant="outline" 
                   size="sm"
-                  className="w-full md:w-auto bg-gilded-parchment/20 border-gilded-parchment/40 hover:bg-gilded-parchment/30 text-static-white text-sm md:text-base py-2 md:py-2.5"
+                  className="bg-gilded-parchment/20 border-gilded-parchment/40 hover:bg-gilded-parchment/30 text-static-white text-sm md:text-base py-2 md:py-2.5"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -190,10 +183,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, className, onClick, 
                   {getMediaIcon()}
                   {getMediaActionText()}
                 </Button>
-              </div>
-            )}
-            
-            
+              )}
+              <Button
+                variant="outline"
+                size="sm"
+                className="bg-gilded-parchment/20 border-gilded-parchment/40 hover:bg-gilded-parchment/30 text-static-white text-sm md:text-base py-2 md:py-2.5"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (onViewImages) onViewImages();
+                }}
+              >
+                View Image{images.length > 1 ? 's' : ''}
+              </Button>
+            </div>
           </div>
         </div>
       </div>
