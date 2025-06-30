@@ -36,7 +36,8 @@ const About: React.FC = () => {
               Muhammad Nanda
             </h3>
             <p className="text-quantum-gray/90 dark:text-static-white/80 italic mb-6">
-            Full-Stack Developer who lives for untangling technical knots. Over the past two years, I’ve built a reputation for dissecting messy problems—whether it’s a cryptic error buried in production logs or a performance bottleneck everyone else avoids. My coding isn’t just about writing features; it’s about asking “why” until the system reveals its secrets.
+            Clean, DRY and Solid<br></br>
+            Backend Developer who lives for untangling technical knots. Over the past two years, I’ve built a reputation for dissecting messy problems—whether it’s a cryptic error buried in production logs or a performance bottleneck everyone else avoids. My coding isn’t just about writing features; it’s about asking “why” until the system reveals its secrets.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
