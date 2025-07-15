@@ -90,7 +90,6 @@ const Experience: React.FC = () => {
                   key={index}
                   className="relative pl-12 transition-all duration-300 hover:scale-[1.02]"
                   spotlightColor="rgba(193, 154, 107, 0.3)"
-                  spotlightSize={200}
                 >
                   <div className="absolute left-0 top-6 w-12 h-12 bg-gilded-parchment/20 rounded-full flex items-center justify-center">
                     <div className="w-6 h-6 bg-gilded-parchment rounded-full"></div>
@@ -157,7 +156,6 @@ const Experience: React.FC = () => {
                   key={index}
                   className="relative pl-12 transition-all duration-300 hover:scale-[1.02]"
                   spotlightColor="rgba(193, 154, 107, 0.3)"
-                  spotlightSize={200}
                 >
                   <div className="absolute left-0 top-6 w-12 h-12 bg-gilded-parchment/20 rounded-full flex items-center justify-center">
                     <div className="w-6 h-6 bg-gilded-parchment rounded-full"></div>
