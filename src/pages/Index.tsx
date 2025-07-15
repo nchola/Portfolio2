@@ -10,7 +10,6 @@ import About from '@/components/About';
 import Certificates from '@/components/Certificates';
 import Experience from '@/components/Experience';
 import Footer from '@/components/Footer';
-import GlitchText from '@/Animations/GlitchText/GlitchText';
 
 const sections = [
   { id: 'hero', label: 'Home' },
@@ -53,84 +52,11 @@ const Index: React.FC = () => {
           typedItems={["Muhammad Nanda","a Full-Stack Developer", "a Computer Science Graduate", "a Technologies Enthusiast"]}
         />
         
-        <section id="about" className="section bg-static-white dark:bg-void-black">
-          <div className="container">
-            <div className="mb-12 text-center">
-              <span className="inline-block text-xs uppercase tracking-wider text-void-black/70 dark:text-static-white/70 mb-2">
-                About
-              </span>
-              <GlitchText
-                speed={0.3}
-                enableShadows={true}
-                enableOnHover={false}
-                className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
-              >
-                About Me
-              </GlitchText>
-            </div>
-            <About />
-          </div>
-        </section>
-
+        <About />
         <Experience />
-        
-        <section id="certificates" className="section bg-static-white dark:bg-void-black">
-          <div className="container">
-            <div className="mb-12 text-center">
-              <span className="inline-block text-xs uppercase tracking-wider text-void-black/70 dark:text-static-white/70 mb-2">
-                Achievements
-              </span>
-              <GlitchText
-                speed={0.3}
-                enableShadows={true}
-                enableOnHover={false}
-                className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
-              >
-                Certificates
-              </GlitchText>
-            </div>
-            <Certificates />
-          </div>
-        </section>
-        
-        <section id="projects" className="section bg-static-white dark:bg-void-black">
-          <div className="container">
-            <div className="mb-12 text-center">
-              <span className="inline-block text-xs uppercase tracking-wider text-void-black/70 dark:text-static-white/70 mb-2">
-                Portfolio
-              </span>
-              <GlitchText
-                speed={0.3}
-                enableShadows={true}
-                enableOnHover={false}
-                className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
-              >
-                Projects
-              </GlitchText>
-            </div>
-            <ProjectGrid />
-          </div>
-        </section>
-        
-        <section id="skills" className="section bg-static-white dark:bg-void-black">
-          <div className="container">
-            <div className="mb-12 text-center">
-              <span className="inline-block text-xs uppercase tracking-wider text-void-black/70 dark:text-static-white/70 mb-2">
-                Expertise
-              </span>
-              <GlitchText
-                speed={0.3}
-                enableShadows={true}
-                enableOnHover={false}
-                className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
-              >
-                Skills
-              </GlitchText>
-            </div>
-            <SkillsMatrix />
-          </div>
-        </section>
-        
+        <Certificates />
+        <ProjectGrid />
+        <SkillsMatrix />
         <Footer />
       </main>
       

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Calendar, MapPin, ExternalLink } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';

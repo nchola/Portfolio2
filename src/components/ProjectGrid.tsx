@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { projects } from '@/data/projects';
 import ProjectCard from './ProjectCard';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import ProjectImageModal from './ProjectImageModal';
+import GlitchText from '@/Animations/GlitchText/GlitchText';
 
 const ProjectGrid: React.FC = () => {
   // Separate projects by media type for potential filtering
@@ -28,9 +30,14 @@ const ProjectGrid: React.FC = () => {
           <span className="inline-block text-xs uppercase tracking-wider text-quantum-gray dark:text-static-white/70 mb-2">
             Selected Work
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-void-black dark:text-static-white">
+          <GlitchText
+            speed={0.3}
+            enableShadows={true}
+            enableOnHover={false}
+            className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
+          >
             Projects
-          </h2>
+          </GlitchText>
         </div>
         
         {/* Mobile Carousel View */}
