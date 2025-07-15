@@ -1,4 +1,3 @@
-
 "use client"
 
 import type React from "react"
@@ -8,6 +7,7 @@ import { OrbitControls, Text, Stars, Html, Billboard } from "@react-three/drei"
 import { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import { Progress } from "@/components/ui/progress"
 import { useIsMobile } from "@/hooks/use-mobile"
+import GlitchText from "@/Animations/GlitchText/GlitchText"
 import * as THREE from "three" // Changed from 'import type' to a proper import
 
 interface Skill {
@@ -388,7 +388,14 @@ const SkillsMatrix: React.FC = () => {
       <div className="absolute top-0 left-0 z-10 w-full pt-8 px-4 md:px-8">
         <div className="max-w-6xl mx-auto">
           <span className="inline-block text-xs uppercase tracking-wider text-white/70 mb-2">Capabilities</span>
-          <h2 className="text-4xl md:text-5xl font-cormorant font-bold text-white mb-4">Skills</h2>
+          <GlitchText
+            speed={0.3}
+            enableShadows={true}
+            enableOnHover={false}
+            className="text-4xl md:text-5xl font-cormorant font-bold text-white mb-4"
+          >
+            Skills
+          </GlitchText>
           <p className="text-lg text-white/80 max-w-2xl">
             I have been learning programming since 2022. The main area of my expertise is Multi-Platform Development.
           </p>

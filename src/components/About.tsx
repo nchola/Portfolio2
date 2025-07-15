@@ -1,5 +1,7 @@
+
 import React from "react";
 import DecryptedText from "../Animations/DecryptedText/DecryptedText";
+import GlitchText from "../Animations/GlitchText/GlitchText";
 import Balatro from "../Animations/Balatro/Balatro";
 
 const About: React.FC = () => {
@@ -13,9 +15,14 @@ const About: React.FC = () => {
           <span className="inline-block text-xs uppercase tracking-wider text-quantum-gray dark:text-static-white/70 mb-2">
             <DecryptedText text="Introduction" animateOn="view" className="inline-block" />
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-quantum-gray dark:text-static-white">
-            <DecryptedText text="About Me" animateOn="view" className="inline-block" />
-          </h2>
+          <GlitchText
+            speed={0.3}
+            enableShadows={true}
+            enableOnHover={false}
+            className="text-4xl md:text-5xl font-cormorant font-bold text-quantum-gray dark:text-static-white"
+          >
+            About Me
+          </GlitchText>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -47,7 +54,7 @@ const About: React.FC = () => {
             <p className="text-quantum-gray/90 dark:text-static-white/80 italic mb-6">
               <DecryptedText text="I Have strong attention to detail, consept and structure." animateOn="view" className="inline-block" />
               <br />
-              <DecryptedText text="Backend Developer who lives for untangling technical knots. Over the past three years, I’ve built a reputation for dissecting messy problems—whether it’s a cryptic error buried in production logs or a performance bottleneck everyone else avoids. My coding isn’t just about writing features; it’s about asking 'why' until the system reveals its secrets." animateOn="view" speed={70} className="inline-block" />
+              <DecryptedText text="Backend Developer who lives for untangling technical knots. Over the past three years, I've built a reputation for dissecting messy problems—whether it's a cryptic error buried in production logs or a performance bottleneck everyone else avoids. My coding isn't just about writing features; it's about asking 'why' until the system reveals its secrets." animateOn="view" speed={70} className="inline-block" />
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

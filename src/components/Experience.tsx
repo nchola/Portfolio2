@@ -27,36 +27,69 @@ interface EducationItem {
 
 const experienceData: ExperienceItem[] = [
   {
-    title: 'Software Engineer Intern',
-    company: 'PT. Mitra Integrasi Informatika',
-    location: 'Jakarta, Indonesia',
-    period: 'Feb 2023 - Aug 2023',
+    title: 'Work Experience Transmitter Division',
+    company: 'Pertamina RU III - Palembang',
+    location: 'Palembang, Indonesia',
+    period: 'December 2024 - February 2025',
     description:
-      'Developed and maintained web applications using React.js and Node.js. Collaborated with cross-functional teams to deliver high-quality software products. Implemented RESTful APIs and integrated them with front-end components.',
-    technologies: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Git'],
-    link: 'https://www.mii.co.id/',
+      'Assisted with maintenance and basic troubleshooting of transmitter systems in production facilities. Provided technical support for transmitter hardware under supervision. Conducted routine inspections and participated in calibration processes. Maintained technical documentation and inspection reports. Supported senior technicians in system optimization activities.',
+    technologies: ['Transmitter Systems', 'Technical Documentation', 'Calibration'],
   },
   {
-    title: 'Freelance Web Developer',
-    company: 'Self-Employed',
-    location: 'Remote',
-    period: 'Jan 2022 - Present',
+    title: 'Flutter Developer Apprenticeship',
+    company: 'Mobile Programming MDP',
+    location: 'Palembang, Indonesia',
+    period: 'February - July 2024',
     description:
-      'Designed and developed responsive websites for various clients using modern web technologies. Managed projects from conception to deployment, ensuring client satisfaction and timely delivery. Provided ongoing maintenance and support for existing websites.',
-    technologies: ['HTML', 'CSS', 'JavaScript', 'React.js', 'Tailwind CSS'],
+      'Developed the PolyglotPath app using Flutter, Firebase & Google Cloud Console, designed to make language learning engaging and accessible. Features include a community forum, language course options (English, Japanese, Korean, and Russian), interactive chat with Gemini AI, and quick, secure Google Sign-In. Designed and implemented an intuitive and responsive user interface. Managing internal applications and information systems. Provided training sessions for staff to effectively use the new system.',
+    technologies: ['Flutter', 'Firebase', 'Google Cloud Console', 'Gemini AI', 'UI/UX Design'],
+  },
+  {
+    title: 'Decision Support System Developer',
+    company: 'PT. Pan Pacific Insurance',
+    location: 'Palembang, Indonesia',
+    period: 'April 2023 - January 2024',
+    description:
+      'Developed a Decision Support System for Determining Insurance Priority Customers Using the TOPSIS Method. Utilized the TOPSIS (Technique for Order of Preference by Similarity to Ideal Solution) method for multi-criteria decision-making. Managed customer data with CRUD (Create, Read, Update, Delete) operations. Provided training sessions for staff to effectively use the new system.',
+    technologies: ['Web Development', 'TOPSIS Method', 'Decision Support System', 'CRUD Operations'],
+  },
+  {
+    title: 'Archive Application Developer',
+    company: 'Dinas Perumahan dan Permukiman, Kota Palembang',
+    location: 'Palembang, Indonesia',
+    period: 'February - June 2022',
+    description:
+      'Developed an archive management system to streamline document storage and retrieval. Implemented features to enhance data security and user accessibility. Collaborated with local government staff to ensure the system met their requirements. Managing internal applications and information systems. Provided training sessions for staff to effectively use the new system.',
+    technologies: ['Web Development', 'Archive Management', 'Data Security', 'User Training'],
+  },
+  {
+    title: 'IT Help Desk',
+    company: 'Dinas Perumahan dan Permukiman Sumatera Selatan',
+    location: 'Palembang, Indonesia',
+    period: 'February - June 2021',
+    description:
+      'Installation, maintenance, and troubleshooting of computers and other devices. Technical support for hardware or software issues. Maintaining and updating the website. Managing internal applications and information systems. Optimizing and ensuring data integrity. Basic training for new systems.',
+    technologies: ['Technical Support', 'Hardware Maintenance', 'Website Management', 'System Administration'],
   },
 ];
 
 const educationData: EducationItem[] = [
   {
-    institution: 'Universitas Indonesia',
-    location: 'Depok, Indonesia',
-    degree: 'Bachelor of Computer Science',
-    period: 'Aug 2019 - Aug 2023',
+    institution: 'Universitas Multi Data Palembang',
+    location: 'Palembang, Indonesia',
+    degree: 'Bachelor of Computer Science | Informatics',
+    period: '2018 - 2024',
     description:
-      'Completed a comprehensive curriculum in computer science, covering data structures, algorithms, software engineering, and database management. Participated in various programming competitions and hackathons.',
-    gpa: '3.75/4.0',
-    link: 'https://www.ui.ac.id/',
+      'Thesis: Perancangan Sistem Pendukung Keputusan Penentuan Pelanggan Prioritas pada PT. Pan Pacific Insurance dengan Metode TOPSIS Berbasis Web',
+    link: 'https://www.mdp.ac.id/',
+  },
+  {
+    institution: 'Senior High School 3 Palembang',
+    location: 'Palembang, Indonesia',
+    degree: 'Senior High School',
+    period: '2015 - 2018',
+    description:
+      'Completed senior high school education with focus on science and mathematics.',
   },
 ];
 

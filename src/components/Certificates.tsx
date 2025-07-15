@@ -9,8 +9,8 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Award, ChevronLeft, ChevronRight } from "lucide-react";
 import { ParticleCard, BentoCardGrid, GlobalSpotlight } from "@/Animations/MagicBento/MagicBento";
+import GlitchText from "@/Animations/GlitchText/GlitchText";
 import Masonry from 'react-masonry-css';
-// ParticleCard is not exported, so we need to export it from MagicBento.tsx if we want to use it directly.
 
 export interface Certificate {
   id: string;
@@ -22,7 +22,6 @@ export interface Certificate {
   image?: string;
 }
 
-// Filter out empty certificates
 const certificates: Certificate[] = [
   {
     id: "cert0",
@@ -344,9 +343,14 @@ const Certificates: React.FC = () => {
           <span className="inline-block text-xs uppercase tracking-wider text-quantum-gray/70 dark:text-static-white/70 mb-2">
             Achievements
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-void-black dark:text-static-white">
+          <GlitchText
+            speed={0.3}
+            enableShadows={true}
+            enableOnHover={false}
+            className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
+          >
             Certificates
-          </h2>
+          </GlitchText>
           <p className="mt-4 text-quantum-gray/80 dark:text-static-white/80 max-w-2xl mx-auto">
             Explore all my professional certificates in a modern interactive grid.
           </p>
