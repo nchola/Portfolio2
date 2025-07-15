@@ -365,7 +365,6 @@ const Certificates: React.FC = () => {
                 breakpointCols={breakpointColumnsObj}
                 className="my-masonry-grid"
                 columnClassName="my-masonry-grid_column"
-                animateFrom="random"
               >
                 {certificates.map(cert => (
                   <ParticleCard

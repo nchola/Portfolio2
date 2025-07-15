@@ -1,3 +1,4 @@
+
 "use client"
 
 import type React from "react"
@@ -26,7 +27,7 @@ const skills: Skill[] = [
   {
     id: "flutter",
     name: "Flutter",
-    type: "technical",
+    type: "technical" as const,
     description: "80%",
     level: 4,
     orbitRadius: 4,
@@ -37,7 +38,7 @@ const skills: Skill[] = [
   {
     id: "dart",
     name: "Dart",
-    type: "technical",
+    type: "technical" as const,
     description: "75%",
     level: 4,
     orbitRadius: 5.5,
@@ -48,7 +49,7 @@ const skills: Skill[] = [
   {
     id: "mongodb",
     name: "MongoDB",
-    type: "technical",
+    type: "technical" as const,
     description: "70%",
     level: 3,
     orbitRadius: 7,
@@ -59,7 +60,7 @@ const skills: Skill[] = [
   {
     id: "expressjs",
     name: "ExpressJS",
-    type: "technical",
+    type: "technical" as const,
     description: "80%",
     level: 4,
     orbitRadius: 8.5,
@@ -70,7 +71,7 @@ const skills: Skill[] = [
   {
     id: "html",
     name: "HTML",
-    type: "technical",
+    type: "technical" as const,
     description: "75%",
     level: 4,
     orbitRadius: 10,
@@ -81,7 +82,7 @@ const skills: Skill[] = [
   {
     id: "css",
     name: "CSS",
-    type: "technical",
+    type: "technical" as const,
     description: "65%",
     level: 3,
     orbitRadius: 11.5,
@@ -92,7 +93,7 @@ const skills: Skill[] = [
   {
     id: "javascript",
     name: "JavaScript",
-    type: "conceptual",
+    type: "conceptual" as const,
     description: "70%",
     level: 3,
     orbitRadius: 13,
@@ -103,7 +104,7 @@ const skills: Skill[] = [
   {
     id: "laravel",
     name: "Laravel",
-    type: "conceptual",
+    type: "conceptual" as const,
     description: "70%",
     level: 3,
     orbitRadius: 14.5,
@@ -114,7 +115,7 @@ const skills: Skill[] = [
   {
     id: "nodejs",
     name: "NodeJS",
-    type: "conceptual",
+    type: "conceptual" as const,
     description: "55%",
     level: 3,
     orbitRadius: 16,
@@ -125,7 +126,7 @@ const skills: Skill[] = [
   {
     id: "php",
     name: "PHP",
-    type: "conceptual",
+    type: "conceptual" as const,
     description: "60%",
     level: 3,
     orbitRadius: 17.5,
@@ -136,7 +137,7 @@ const skills: Skill[] = [
   {
     id: "python",
     name: "Python",
-    type: "conceptual",
+    type: "conceptual" as const,
     description: "70%",
     level: 3,
     orbitRadius: 19,
@@ -147,7 +148,7 @@ const skills: Skill[] = [
   {
     id: "typescript",
     name: "TypeScript",
-    type: "technical",
+    type: "technical" as const,
     description: "75%",
     level: 4,
     orbitRadius: 21,
@@ -158,7 +159,7 @@ const skills: Skill[] = [
   {
     id: "reactjs",
     name: "React.js",
-    type: "technical",
+    type: "technical" as const,
     description: "80%",
     level: 4,
     orbitRadius: 23,
