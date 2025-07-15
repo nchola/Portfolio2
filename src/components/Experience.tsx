@@ -25,71 +25,105 @@ interface EducationItem {
   link?: string;
 }
 
-const experienceData: ExperienceItem[] = [
+const experiences = [
   {
-    title: 'Work Experience Transmitter Division',
-    company: 'Pertamina RU III - Palembang',
-    location: 'Palembang, Indonesia',
-    period: 'December 2024 - February 2025',
-    description:
-      'Assisted with maintenance and basic troubleshooting of transmitter systems in production facilities. Provided technical support for transmitter hardware under supervision. Conducted routine inspections and participated in calibration processes. Maintained technical documentation and inspection reports. Supported senior technicians in system optimization activities.',
-    technologies: ['Transmitter Systems', 'Technical Documentation', 'Calibration'],
+    id: "exp1",
+    position: "Transmitter Division",
+    company: "Pertamina RU III - Palembang",
+    duration: "December 2024 - February 2025",
+    description: [
+      "Assisted with maintenance and basic troubleshooting of transmitter systems in production facilities.",
+      "Provided technical support for transmitter hardware under supervision.",
+      "Conducted routine inspections and participated in calibration processes.",
+      "Maintained technical documentation and inspection reports.",
+      "Supported senior technicians in system optimization activities.",
+    ],
+    technologies: ["Transmitter Systems", "Technical Documentation", "Calibration"],
   },
   {
-    title: 'Flutter Developer Apprenticeship',
-    company: 'Mobile Programming MDP',
-    location: 'Palembang, Indonesia',
-    period: 'February - July 2024',
-    description:
-      'Developed the PolyglotPath app using Flutter, Firebase & Google Cloud Console, designed to make language learning engaging and accessible. Features include a community forum, language course options (English, Japanese, Korean, and Russian), interactive chat with Gemini AI, and quick, secure Google Sign-In. Designed and implemented an intuitive and responsive user interface. Managing internal applications and information systems. Provided training sessions for staff to effectively use the new system.',
-    technologies: ['Flutter', 'Firebase', 'Google Cloud Console', 'Gemini AI', 'UI/UX Design'],
+    id: "exp2",
+    position: "Flutter Developer Apprenticeship",
+    company: "Mobile Programming MDP",
+    duration: "February - July 2024",
+    description: [
+      "Developed the PolyglotPath app using Flutter, Firebase & Google Cloud Console, designed to make language learning engaging and accessible.",
+      "Features include a community forum, language course options (English, Japanese, Korean, and Russian), interactive chat with Gemini AI, and quick, secure Google Sign-In.",
+      "Designed and implemented an intuitive and responsive user interface.",
+      "Managing internal applications and information systems.",
+      "Provided training sessions for staff to effectively use the new system.",
+    ],
+    technologies: ["Flutter", "Firebase", "Google Cloud Console", "Gemini AI", "UI/UX Design"],
   },
   {
-    title: 'Decision Support System Developer',
-    company: 'PT. Pan Pacific Insurance',
-    location: 'Palembang, Indonesia',
-    period: 'April 2023 - January 2024',
-    description:
-      'Developed a Decision Support System for Determining Insurance Priority Customers Using the TOPSIS Method. Utilized the TOPSIS (Technique for Order of Preference by Similarity to Ideal Solution) method for multi-criteria decision-making. Managed customer data with CRUD (Create, Read, Update, Delete) operations. Provided training sessions for staff to effectively use the new system.',
-    technologies: ['Web Development', 'TOPSIS Method', 'Decision Support System', 'CRUD Operations'],
+    id: "exp3",
+    position: "Decision Support System Developer",
+    company: "PT. Pan Pacific Insurance",
+    companyUrl: "https://www.panfic.com/",
+    duration: "April 2023 - January 2024",
+    description: [
+      "Developed a Decision Support System for Determining Insurance Priority Customers Using the TOPSIS Method.",
+      "Utilized the TOPSIS (Technique for Order of Preference by Similarity to Ideal Solution) method for multi-criteria decision-making.",
+      "Managed customer data with CRUD (Create, Read, Update, Delete) operations.",
+      "Provided training sessions for staff to effectively use the new system.",
+    ],
+    technologies: ["Web Development", "TOPSIS Method", "Decision Support System", "CRUD Operations"],
   },
   {
-    title: 'Archive Application Developer',
-    company: 'Dinas Perumahan dan Permukiman, Kota Palembang',
-    location: 'Palembang, Indonesia',
-    period: 'February - June 2022',
-    description:
-      'Developed an archive management system to streamline document storage and retrieval. Implemented features to enhance data security and user accessibility. Collaborated with local government staff to ensure the system met their requirements. Managing internal applications and information systems. Provided training sessions for staff to effectively use the new system.',
-    technologies: ['Web Development', 'Archive Management', 'Data Security', 'User Training'],
+    id: "exp4",
+    position: "Archive Application Developer",
+    company: "Dinas Perumahan dan Permukiman,  Kota Palembang.",
+    duration: "February - June 2022",
+    description: [
+      "Developed an archive management system to streamline document storage and retrieval.",
+      "Implemented features to enhance data security and user accessibility.",
+      "Collaborated with local government staff to ensure the system met their requirements.",
+      "Managing internal applications and information systems.",
+      "Provided training sessions for staff to effectively use the new system.",
+    ],
+    technologies: ["Web Development", "Archive Management", "Data Security", "User Training"],
   },
   {
-    title: 'IT Help Desk',
-    company: 'Dinas Perumahan dan Permukiman Sumatera Selatan',
-    location: 'Palembang, Indonesia',
-    period: 'February - June 2021',
-    description:
-      'Installation, maintenance, and troubleshooting of computers and other devices. Technical support for hardware or software issues. Maintaining and updating the website. Managing internal applications and information systems. Optimizing and ensuring data integrity. Basic training for new systems.',
-    technologies: ['Technical Support', 'Hardware Maintenance', 'Website Management', 'System Administration'],
+    id: "exp5",
+    position: "IT Help Desk",
+    company: "Dinas Perumahan dan Permukiman Sumatera Selatan",
+    companyUrl: "https://disperkim.sumselprov.go.id/",
+    duration: "February - June 2021",
+    description: [
+      "Installation, maintenance, and troubleshooting of computers and other devices.",
+      "Technical support for hardware or software issues.",
+      "Maintaining and updating the website.",
+      "Managing internal applications and information systems.",
+      "Optimizing and ensuring data integrity.",
+      "Basic training for new systems.",
+    ],
+    technologies: ["Technical Support", "Hardware Maintenance", "Website Management", "System Administration"],
   },
 ];
 
-const educationData: EducationItem[] = [
+const education = [
   {
-    institution: 'Universitas Multi Data Palembang',
-    location: 'Palembang, Indonesia',
-    degree: 'Bachelor of Computer Science | Informatics',
-    period: '2018 - 2024',
-    description:
-      'Thesis: Perancangan Sistem Pendukung Keputusan Penentuan Pelanggan Prioritas pada PT. Pan Pacific Insurance dengan Metode TOPSIS Berbasis Web',
-    link: 'https://www.mdp.ac.id/',
+    id: "edu1",
+    degree: "Bachelor of Computer Science | Informatics",
+    institution: "Universitas Multi Data Palembang",
+    institutionUrl: "https://mdp.ac.id/en/",
+    duration: "2018 - 2024",
+    thesis: {
+      title:
+        "Perancangan Sistem Pendukung Keputusan Penentuan Pelanggan Prioritas pada PT. Pan Pacific Insurance dengan Metode TOPSIS Berbasis Web",
+      url: "https://jurnal.itscience.org/index.php/digitech/article/view/5361",
+    },
   },
   {
-    institution: 'Senior High School 3 Palembang',
-    location: 'Palembang, Indonesia',
-    degree: 'Senior High School',
-    period: '2015 - 2018',
-    description:
-      'Completed senior high school education with focus on science and mathematics.',
+    id: "edu2",
+    degree: "Senior High School",
+    institution: "Senior High School 3 Palembang, Indonesia",
+    duration: "2015 - 2018",
+  },
+  {
+    id: "edu3",
+    degree: "Junior High School",
+    institution: "Junior High School 4 Palembang, Indonesia",
+    duration: "2012 - 2015",
   },
 ];
 
@@ -98,9 +132,9 @@ const Experience: React.FC = () => {
     <section id="experience" className="section bg-static-white dark:bg-void-black">
       <div className="container">
         <div className="mb-12 text-center">
-          <span className="inline-block text-xs uppercase tracking-wider text-void-black/70 dark:text-static-white/70 mb-2">
+          <div className="inline-block text-xs uppercase tracking-wider text-quantum-gray/70 dark:text-static-white/70 mb-2">
             Journey
-          </span>
+          </div>
           <GlitchText
             speed={0.3}
             enableShadows={true}
@@ -119,9 +153,9 @@ const Experience: React.FC = () => {
               <h3 className="text-2xl font-cormorant font-bold text-void-black dark:text-static-white mb-6">
                 Experience
               </h3>
-              {experienceData.map((item, index) => (
+              {experiences.map((item, index) => (
                 <SpotlightCard
-                  key={index}
+                  key={item.id}
                   className="relative pl-12 transition-all duration-300 hover:scale-[1.02]"
                   spotlightColor="rgba(193, 154, 107, 0.3)"
                 >
@@ -132,11 +166,11 @@ const Experience: React.FC = () => {
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between mb-3">
                         <h4 className="text-lg font-cormorant font-bold text-void-black dark:text-static-white">
-                          {item.title}
+                          {item.position}
                         </h4>
-                        {item.link && (
+                        {item.companyUrl && (
                           <a
-                            href={item.link}
+                            href={item.companyUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-gilded-parchment hover:text-gilded-parchment/80 transition-colors"
@@ -151,16 +185,18 @@ const Experience: React.FC = () => {
                       <div className="flex flex-wrap gap-4 text-sm text-quantum-gray/80 dark:text-static-white/80 mb-3">
                         <div className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
-                          {item.period}
+                          {item.duration}
                         </div>
                         <div className="flex items-center gap-1">
                           <MapPin className="w-4 h-4" />
-                          {item.location}
+                          {item.company}
                         </div>
                       </div>
-                      <p className="text-quantum-gray dark:text-static-white/90 text-sm leading-relaxed mb-4">
-                        {item.description}
-                      </p>
+                      <ul className="list-disc pl-5 text-quantum-gray dark:text-static-white/90 text-sm leading-relaxed mb-4">
+                        {item.description.map((desc, descIndex) => (
+                          <li key={descIndex}>{desc}</li>
+                        ))}
+                      </ul>
                       <div className="flex flex-wrap gap-2">
                         {item.technologies.map((tech, techIndex) => (
                           <span
@@ -185,9 +221,9 @@ const Experience: React.FC = () => {
               <h3 className="text-2xl font-cormorant font-bold text-void-black dark:text-static-white mb-6">
                 Education
               </h3>
-              {educationData.map((item, index) => (
+              {education.map((item, index) => (
                 <SpotlightCard
-                  key={index}
+                  key={item.id}
                   className="relative pl-12 transition-all duration-300 hover:scale-[1.02]"
                   spotlightColor="rgba(193, 154, 107, 0.3)"
                 >
@@ -200,9 +236,9 @@ const Experience: React.FC = () => {
                         <h4 className="text-lg font-cormorant font-bold text-void-black dark:text-static-white">
                           {item.degree}
                         </h4>
-                        {item.link && (
+                        {item.institutionUrl && (
                           <a
-                            href={item.link}
+                            href={item.institutionUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-gilded-parchment hover:text-gilded-parchment/80 transition-colors"
@@ -217,21 +253,26 @@ const Experience: React.FC = () => {
                       <div className="flex flex-wrap gap-4 text-sm text-quantum-gray/80 dark:text-static-white/80 mb-3">
                         <div className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
-                          {item.period}
+                          {item.duration}
                         </div>
                         <div className="flex items-center gap-1">
                           <MapPin className="w-4 h-4" />
-                          {item.location}
+                          {item.institution}
                         </div>
                       </div>
-                      {item.gpa && (
+                      {item.thesis && (
                         <div className="text-sm text-quantum-gray dark:text-static-white/90 mb-3">
-                          <strong>GPA:</strong> {item.gpa}
+                          <strong>Thesis:</strong>{" "}
+                          <a
+                            href={item.thesis.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gilded-parchment hover:text-gilded-parchment/80 transition-colors"
+                          >
+                            {item.thesis.title}
+                          </a>
                         </div>
                       )}
-                      <p className="text-quantum-gray dark:text-static-white/90 text-sm leading-relaxed">
-                        {item.description}
-                      </p>
                     </CardContent>
                   </Card>
                 </SpotlightCard>
