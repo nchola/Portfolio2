@@ -1,4 +1,3 @@
-
 import type React from "react"
 import SpotlightCard from "@/Animations/SpotlightCard/SpotlightCard"
 import GlitchText from "@/Animations/GlitchText/GlitchText"
@@ -135,16 +134,14 @@ const Resume: React.FC = () => {
           <span className="inline-block text-xs uppercase tracking-wider text-void-black/70 dark:text-static-white/70 mb-2">
             Resume
           </span>
-          <div className="flex justify-center">
-            <GlitchText
-              className="text-4xl md:text-5xl font-bold text-void-black dark:text-static-white"
-              speed={0.3}
-              enableShadows={true}
-              enableOnHover={true}
-            >
-              Experience & Education
-            </GlitchText>
-          </div>
+          <GlitchText
+            speed={0.5}
+            enableShadows={true}
+            enableOnHover={false}
+            className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
+          >
+            Experience & Education
+          </GlitchText>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

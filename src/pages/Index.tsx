@@ -59,16 +59,14 @@ const Index: React.FC = () => {
               <span className="inline-block text-xs uppercase tracking-wider text-void-black/70 dark:text-static-white/70 mb-2">
                 About
               </span>
-              <div className="flex justify-center">
-                <GlitchText
-                  className="text-4xl md:text-5xl font-bold text-void-black dark:text-static-white"
-                  speed={0.3}
-                  enableShadows={true}
-                  enableOnHover={true}
-                >
-                  About Me
-                </GlitchText>
-              </div>
+              <GlitchText
+                speed={0.5}
+                enableShadows={true}
+                enableOnHover={false}
+                className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
+              >
+                About Me
+              </GlitchText>
             </div>
             <About />
           </div>
@@ -82,16 +80,14 @@ const Index: React.FC = () => {
               <span className="inline-block text-xs uppercase tracking-wider text-void-black/70 dark:text-static-white/70 mb-2">
                 Achievements
               </span>
-              <div className="flex justify-center">
-                <GlitchText
-                  className="text-4xl md:text-5xl font-bold text-void-black dark:text-static-white"
-                  speed={0.3}
-                  enableShadows={true}
-                  enableOnHover={true}
-                >
-                  Certificates
-                </GlitchText>
-              </div>
+              <GlitchText
+                speed={0.5}
+                enableShadows={true}
+                enableOnHover={false}
+                className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
+              >
+                Certificates
+              </GlitchText>
             </div>
             <Certificates />
           </div>
@@ -103,16 +99,14 @@ const Index: React.FC = () => {
               <span className="inline-block text-xs uppercase tracking-wider text-void-black/70 dark:text-static-white/70 mb-2">
                 Portfolio
               </span>
-              <div className="flex justify-center">
-                <GlitchText
-                  className="text-4xl md:text-5xl font-bold text-void-black dark:text-static-white"
-                  speed={0.3}
-                  enableShadows={true}
-                  enableOnHover={true}
-                >
-                  Projects
-                </GlitchText>
-              </div>
+              <GlitchText
+                speed={0.5}
+                enableShadows={true}
+                enableOnHover={false}
+                className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
+              >
+                Projects
+              </GlitchText>
             </div>
             <ProjectGrid />
           </div>
@@ -124,16 +118,14 @@ const Index: React.FC = () => {
               <span className="inline-block text-xs uppercase tracking-wider text-void-black/70 dark:text-static-white/70 mb-2">
                 Expertise
               </span>
-              <div className="flex justify-center">
-                <GlitchText
-                  className="text-4xl md:text-5xl font-bold text-void-black dark:text-static-white"
-                  speed={0.3}
-                  enableShadows={true}
-                  enableOnHover={true}
-                >
-                  Skills
-                </GlitchText>
-              </div>
+              <GlitchText
+                speed={0.5}
+                enableShadows={true}
+                enableOnHover={false}
+                className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
+              >
+                Skills
+              </GlitchText>
             </div>
             <SkillsMatrix />
           </div>
