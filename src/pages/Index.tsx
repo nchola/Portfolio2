@@ -60,7 +60,7 @@ const Index: React.FC = () => {
                 About
               </span>
               <GlitchText
-                speed={0.5}
+                speed={0.3}
                 enableShadows={true}
                 enableOnHover={false}
                 className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
@@ -81,7 +81,7 @@ const Index: React.FC = () => {
                 Achievements
               </span>
               <GlitchText
-                speed={0.5}
+                speed={0.3}
                 enableShadows={true}
                 enableOnHover={false}
                 className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
@@ -100,7 +100,7 @@ const Index: React.FC = () => {
                 Portfolio
               </span>
               <GlitchText
-                speed={0.5}
+                speed={0.3}
                 enableShadows={true}
                 enableOnHover={false}
                 className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
@@ -119,7 +119,7 @@ const Index: React.FC = () => {
                 Expertise
               </span>
               <GlitchText
-                speed={0.5}
+                speed={0.3}
                 enableShadows={true}
                 enableOnHover={false}
                 className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
