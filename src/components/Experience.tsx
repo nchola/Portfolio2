@@ -1,4 +1,7 @@
+
 import type React from "react"
+import SpotlightCard from "@/Animations/SpotlightCard/SpotlightCard"
+import GlitchText from "@/Animations/GlitchText/GlitchText"
 
 interface WorkExperience {
   id: string
@@ -128,13 +131,20 @@ const Resume: React.FC = () => {
   return (
     <section id="experience" className="section bg-static-white dark:bg-void-black">
       <div className="container">
-        <div className="mb-12">
+        <div className="mb-12 text-center">
           <span className="inline-block text-xs uppercase tracking-wider text-void-black/70 dark:text-static-white/70 mb-2">
             Resume
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-void-black dark:text-static-white">
-            Experience & Education
-          </h2>
+          <div className="flex justify-center">
+            <GlitchText
+              className="text-4xl md:text-5xl font-bold text-void-black dark:text-static-white"
+              speed={0.3}
+              enableShadows={true}
+              enableOnHover={true}
+            >
+              Experience & Education
+            </GlitchText>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -149,7 +159,10 @@ const Resume: React.FC = () => {
                     <div className="w-3 h-3 rounded-full bg-gilded-parchment"></div>
                   </div>
 
-                  <div className="bg-static-white dark:bg-void-black border border-gilded-parchment/20 p-6 rounded-md">
+                  <SpotlightCard
+                    className="border border-gilded-parchment/20 p-6 rounded-md bg-static-white dark:bg-void-black"
+                    spotlightColor="rgba(193, 154, 107, 0.15)"
+                  >
                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                       <div>
                         <h3 className="text-xl font-bold text-void-black dark:text-static-white">{exp.position}</h3>
@@ -186,7 +199,7 @@ const Resume: React.FC = () => {
                         ))}
                       </div>
                     )}
-                  </div>
+                  </SpotlightCard>
                 </div>
               ))}
             </div>
@@ -203,7 +216,10 @@ const Resume: React.FC = () => {
                     <div className="w-3 h-3 rounded-full bg-gilded-parchment"></div>
                   </div>
 
-                  <div className="bg-static-white dark:bg-void-black border border-gilded-parchment/20 p-6 rounded-md">
+                  <SpotlightCard
+                    className="border border-gilded-parchment/20 p-6 rounded-md bg-static-white dark:bg-void-black"
+                    spotlightColor="rgba(193, 154, 107, 0.15)"
+                  >
                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                       <div>
                         <h3 className="text-xl font-bold text-void-black dark:text-static-white">{edu.degree}</h3>
@@ -244,7 +260,7 @@ const Resume: React.FC = () => {
                         </p>
                       </div>
                     )}
-                  </div>
+                  </SpotlightCard>
                 </div>
               ))}
             </div>

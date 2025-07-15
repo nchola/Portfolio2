@@ -1,6 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { Instagram, Linkedin, AtSign, Phone, MapPin, Github } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import Dock from '@/Animations/Dock/Dock';
+import type { DockItemData } from '@/Animations/Dock/Dock';
 
 // Contact item data array for cleaner code
 const contactItems = [
@@ -78,6 +81,14 @@ const Footer = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Create dock items from contact items
+  const dockItems: DockItemData[] = contactItems.map(item => ({
+    icon: <item.icon className="w-6 h-6 text-static-white" />,
+    label: item.label,
+    onClick: () => window.open(item.link, '_blank'),
+    className: "hover:bg-gilded-parchment/20"
+  }));
+
   return (
     <footer id="footer" className="pt-12 pb-8 relative z-20">
       <div className="container mx-auto px-4 md:px-6">
@@ -87,18 +98,34 @@ const Footer = () => {
               Let's connect!
             </h2>
             
-            {/* Always 2 rows of 3 items on all screen sizes */}
-            <div className="grid grid-cols-3 gap-2 md:gap-3">
-              {contactItems.map((item, index) => (
-                <ContactItem 
-                  key={index}
-                  icon={item.icon}
-                  label={item.label}
-                  value={item.value}
-                  link={item.link}
-                  color={item.color}
+            {/* Desktop: Original grid layout */}
+            <div className="hidden md:block">
+              <div className="grid grid-cols-3 gap-2 md:gap-3">
+                {contactItems.map((item, index) => (
+                  <ContactItem 
+                    key={index}
+                    icon={item.icon}
+                    label={item.label}
+                    value={item.value}
+                    link={item.link}
+                    color={item.color}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile: Dock layout */}
+            <div className="md:hidden">
+              <div className="h-20 relative">
+                <Dock 
+                  items={dockItems}
+                  className="bg-void-black/80 backdrop-blur-sm"
+                  distance={150}
+                  magnification={60}
+                  baseItemSize={40}
+                  panelHeight={60}
                 />
-              ))}
+              </div>
             </div>
           </div>
 
@@ -116,17 +143,6 @@ const Footer = () => {
           </div>
         </Card>
       </div>
-      
-      {/* Mobile Floating Action Button - only show on mobile */}
-      {isMobile && (
-        <a
-          href="mailto:nchola@mhs.mdp.ac.id"
-          className="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-gilded-parchment flex items-center justify-center shadow-lg z-30"
-        >
-          <AtSign className="text-void-black w-5 h-5" />
-          <span className="absolute inset-0 rounded-full bg-gilded-parchment animate-ping opacity-30"></span>
-        </a>
-      )}
     </footer>
   );
 };
