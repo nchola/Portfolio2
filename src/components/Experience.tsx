@@ -1,7 +1,7 @@
 import React from 'react';
 import { Calendar, MapPin, ExternalLink } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { SpotlightCard } from '@/Animations/SpotlightCard/SpotlightCard';
+import SpotlightCard from '@/Animations/SpotlightCard/SpotlightCard';
 import GlitchText from '@/Animations/GlitchText/GlitchText';
 
 interface ExperienceItem {
