@@ -1,8 +1,8 @@
+
 import React, { useState, useEffect } from "react";
 import { Award } from "lucide-react";
 import GlitchText from "@/Animations/GlitchText/GlitchText";
 import SpotlightCard from "@/Animations/SpotlightCard/SpotlightCard";
-import ScrollReveal from "@/Animations/ScrollReveal/ScrollReveal";
 
 export interface Certificate {
   id: string;
@@ -249,39 +249,35 @@ function chunkArray<T>(array: T[], size: number): T[][] {
   return result;
 }
 
-// CertificateCard: Optimized for mobile with 30% smaller text
-const CertificateCard = ({ certificate, isMobile }: { certificate: Certificate; isMobile: boolean }) => {
-  const textSizeClass = isMobile ? "text-[0.7rem]" : "text-sm"; // 30% smaller
-  const titleSizeClass = isMobile ? "text-sm" : "text-lg"; // 30% smaller
-  const issuerSizeClass = isMobile ? "text-[0.6rem]" : "text-xs"; // 30% smaller
-  
+// CertificateCard: Optimized for light/dark mode
+const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
   return (
     <div className="flex flex-col justify-between h-full w-full">
       {/* Header dengan issuer */}
-      <div className="flex items-center gap-2 mb-2">
-        <div className={`${isMobile ? 'w-6 h-6' : 'w-8 h-8'} bg-accent/20 rounded-full flex items-center justify-center text-accent`}>
-          <Award className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
+      <div className="flex items-center gap-2 mb-3">
+        <div className="w-8 h-8 bg-accent/20 rounded-full flex items-center justify-center text-accent">
+          <Award className="w-4 h-4" />
         </div>
-        <span className={`${issuerSizeClass} font-semibold text-accent tracking-wide uppercase break-words`}>
+        <span className="text-xs font-semibold text-accent tracking-wide uppercase break-words">
           {certificate.issuer}
         </span>
       </div>
       
       {/* Title */}
-      <h3 className={`${titleSizeClass} font-bold text-foreground mb-2 leading-tight break-words`}>
+      <h3 className="text-lg font-bold text-foreground mb-3 leading-tight break-words">
         {certificate.title}
       </h3>
       
       {/* Description */}
       <div className="flex-grow">
-        <p className={`${textSizeClass} text-foreground/90 leading-relaxed break-words`}>
+        <p className="text-sm text-foreground/80 leading-relaxed break-words">
           {certificate.description}
         </p>
       </div>
       
       {/* Footer */}
-      <div className={`flex flex-col gap-2 ${isMobile ? 'mt-2' : 'mt-4'}`}>
-        <div className={`flex justify-between items-center ${issuerSizeClass} text-muted-foreground`}>
+      <div className="flex flex-col gap-2 mt-4">
+        <div className="flex justify-between items-center text-xs text-muted-foreground">
           <span>{certificate.date}</span>
         </div>
         <div className="flex justify-end">
@@ -290,13 +286,13 @@ const CertificateCard = ({ certificate, isMobile }: { certificate: Certificate; 
               href={certificate.link}
               target="_blank"
               rel="noopener noreferrer"
-              className={`px-2 py-1 rounded-full bg-accent/20 text-accent ${issuerSizeClass} font-medium hover:bg-accent/30 transition-colors`}
+              className="px-3 py-1 rounded-full bg-accent/20 text-accent text-xs font-medium hover:bg-accent/30 transition-colors"
             >
               {/\.(png|jpe?g|webp|gif)$/i.test(certificate.link) ? "View Image" : "View Certificate"}
             </a>
           ) : (
             <button
-              className={`px-2 py-1 rounded-full bg-muted/20 text-muted-foreground ${issuerSizeClass} font-medium cursor-not-allowed`}
+              className="px-3 py-1 rounded-full bg-muted/20 text-muted-foreground text-xs font-medium cursor-not-allowed"
               disabled
             >
               No Link
@@ -332,21 +328,17 @@ const Certificates: React.FC = () => {
           <span className="inline-block text-xs uppercase tracking-wider text-muted-foreground mb-2">
             Achievements
           </span>
-          <ScrollReveal>
-            <GlitchText
-              speed={0.3}
-              enableShadows={true}
-              enableOnHover={false}
-              className="text-4xl md:text-5xl font-cormorant font-bold text-foreground"
-            >
-              Certificates
-            </GlitchText>
-          </ScrollReveal>
-          <div className="opacity-0 animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
-            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-              Explore all my professional certificates in a modern interactive grid.
-            </p>
-          </div>
+          <GlitchText
+            speed={0.3}
+            enableShadows={true}
+            enableOnHover={false}
+            className="text-4xl md:text-5xl font-cormorant font-bold text-foreground"
+          >
+            Certificates
+          </GlitchText>
+          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+            Explore all my professional certificates in a modern interactive grid.
+          </p>
         </div>
         
         <div className="relative px-4 py-8">
@@ -356,14 +348,16 @@ const Certificates: React.FC = () => {
               {certificates.map((cert, index) => (
                 <div 
                   key={cert.id + cert.title}
-                  className="opacity-0 animate-fade-in break-inside-avoid mb-6"
-                  style={{ animationDelay: `${index * 0.05}s`, animationFillMode: 'forwards' }}
+                  className="break-inside-avoid mb-6"
+                  style={{
+                    animationDelay: `${index * 0.1}s`
+                  }}
                 >
                   <SpotlightCard
-                    className="h-auto min-h-[280px] w-full"
+                    className="h-auto min-h-[280px] w-full animate-fade-in"
                     spotlightColor="rgba(229, 192, 123, 0.25)"
                   >
-                    <CertificateCard certificate={cert} isMobile={isMobile} />
+                    <CertificateCard certificate={cert} />
                   </SpotlightCard>
                 </div>
               ))}
@@ -400,18 +394,14 @@ const Certificates: React.FC = () => {
                 </button>
               </div>
               
-              <div className="grid grid-cols-2 gap-3 max-h-[70vh] overflow-hidden">
+              <div className="grid grid-cols-2 gap-3 max-h-[80vh] overflow-hidden">
                 {certificateChunks[slide]?.map((cert, index) => (
-                  <div 
-                    key={cert.id + cert.title}
-                    className="opacity-0 animate-fade-in h-full"
-                    style={{ animationDelay: `${index * 0.05}s`, animationFillMode: 'forwards' }}
-                  >
+                  <div key={cert.id + cert.title} className="h-full">
                     <SpotlightCard
-                      className="h-full min-h-[180px] w-full"
+                      className="h-full min-h-[200px] w-full text-xs"
                       spotlightColor="rgba(229, 192, 123, 0.25)"
                     >
-                      <CertificateCard certificate={cert} isMobile={isMobile} />
+                      <CertificateCard certificate={cert} />
                     </SpotlightCard>
                   </div>
                 ))}
