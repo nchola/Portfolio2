@@ -1,9 +1,9 @@
-
 import React from 'react';
 import { Calendar, MapPin, ExternalLink } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import SpotlightCard from '@/Animations/SpotlightCard/SpotlightCard';
 import GlitchText from '@/Animations/GlitchText/GlitchText';
+import ScrollReveal from '@/Animations/ScrollReveal/ScrollReveal';
 
 interface ExperienceItem {
   title: string;
@@ -129,153 +129,170 @@ const education = [
 
 const Experience: React.FC = () => {
   return (
-    <section id="experience" className="section bg-static-white dark:bg-void-black">
+    <section id="experience" className="section bg-background">
       <div className="container">
         <div className="mb-12 text-center">
-          <div className="inline-block text-xs uppercase tracking-wider text-quantum-gray/70 dark:text-static-white/70 mb-2">
+          <div className="inline-block text-xs uppercase tracking-wider text-muted-foreground mb-2">
             Journey
           </div>
-          <GlitchText
-            speed={0.3}
-            enableShadows={true}
-            enableOnHover={false}
-            className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
-          >
-            Experience & Education
-          </GlitchText>
+          <ScrollReveal>
+            <GlitchText
+              speed={0.3}
+              enableShadows={true}
+              enableOnHover={false}
+              className="text-4xl md:text-5xl font-cormorant font-bold text-foreground"
+            >
+              Experience & Education
+            </GlitchText>
+          </ScrollReveal>
         </div>
         
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Experience Column */}
           <div className="relative">
-            <div className="absolute left-6 top-0 bottom-0 w-px bg-gilded-parchment/30"></div>
-            <div className="space-y-8">
-              <h3 className="text-2xl font-cormorant font-bold text-void-black dark:text-static-white mb-6">
+            <div className="absolute left-4 lg:left-6 top-0 bottom-0 w-px bg-accent/30"></div>
+            <div className="space-y-6 lg:space-y-8">
+              <h3 className="text-xl lg:text-2xl font-cormorant font-bold text-foreground mb-4 lg:mb-6">
                 Experience
               </h3>
               {experiences.map((item, index) => (
-                <SpotlightCard
-                  key={item.id}
-                  className="relative pl-12 transition-all duration-300 hover:scale-[1.02]"
-                  spotlightColor="rgba(193, 154, 107, 0.3)"
-                >
-                  <div className="absolute left-0 top-6 w-12 h-12 bg-gilded-parchment/20 rounded-full flex items-center justify-center">
-                    <div className="w-6 h-6 bg-gilded-parchment rounded-full"></div>
-                  </div>
-                  <Card className="bg-static-white/80 dark:bg-void-black/80 border-quantum-gray/20 shadow-lg">
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between mb-3">
-                        <h4 className="text-lg font-cormorant font-bold text-void-black dark:text-static-white">
-                          {item.position}
-                        </h4>
-                        {item.companyUrl && (
-                          <a
-                            href={item.companyUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-gilded-parchment hover:text-gilded-parchment/80 transition-colors"
-                          >
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
-                        )}
-                      </div>
-                      <div className="text-gilded-parchment font-medium mb-2">
-                        {item.company}
-                      </div>
-                      <div className="flex flex-wrap gap-4 text-sm text-quantum-gray/80 dark:text-static-white/80 mb-3">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="w-4 h-4" />
-                          {item.duration}
+                <ScrollReveal key={item.id}>
+                  <SpotlightCard
+                    className="relative pl-8 lg:pl-12 transition-all duration-300 hover:scale-[1.02]"
+                    spotlightColor="rgba(193, 154, 107, 0.3)"
+                  >
+                    <div className="absolute left-0 top-4 lg:top-6 w-8 h-8 lg:w-12 lg:h-12 bg-accent/20 rounded-full flex items-center justify-center">
+                      <div className="w-4 h-4 lg:w-6 lg:h-6 bg-accent rounded-full"></div>
+                    </div>
+                    <Card className="bg-card/80 border-border shadow-lg">
+                      <CardContent className="p-4 lg:p-6">
+                        <div className="flex items-start justify-between mb-2 lg:mb-3">
+                          <h4 className="text-base lg:text-lg font-cormorant font-bold text-foreground leading-tight">
+                            {item.position}
+                          </h4>
+                          {item.companyUrl && (
+                            <a
+                              href={item.companyUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-accent hover:text-accent/80 transition-colors"
+                            >
+                              <ExternalLink className="w-4 h-4" />
+                            </a>
+                          )}
                         </div>
-                        <div className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4" />
+                        <div className="text-accent font-medium mb-2 text-sm lg:text-base">
                           {item.company}
                         </div>
-                      </div>
-                      <ul className="list-disc pl-5 text-quantum-gray dark:text-static-white/90 text-sm leading-relaxed mb-4">
-                        {item.description.map((desc, descIndex) => (
-                          <li key={descIndex}>{desc}</li>
-                        ))}
-                      </ul>
-                      <div className="flex flex-wrap gap-2">
-                        {item.technologies.map((tech, techIndex) => (
-                          <span
-                            key={techIndex}
-                            className="px-2 py-1 bg-gilded-parchment/10 text-gilded-parchment text-xs rounded-full"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </SpotlightCard>
+                        <div className="flex flex-col sm:flex-row sm:gap-4 text-xs lg:text-sm text-muted-foreground mb-3 gap-1">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="w-3 h-3 lg:w-4 lg:h-4" />
+                            {item.duration}
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <MapPin className="w-3 h-3 lg:w-4 lg:h-4" />
+                            {item.company}
+                          </div>
+                        </div>
+                        <ul className="list-disc pl-4 lg:pl-5 text-foreground/90 text-xs lg:text-sm leading-relaxed mb-3 lg:mb-4 space-y-1">
+                          {item.description.slice(0, 3).map((desc, descIndex) => (
+                            <li key={descIndex}>{desc}</li>
+                          ))}
+                          {item.description.length > 3 && (
+                            <li className="text-muted-foreground">
+                              +{item.description.length - 3} more responsibilities...
+                            </li>
+                          )}
+                        </ul>
+                        <div className="flex flex-wrap gap-1 lg:gap-2">
+                          {item.technologies.slice(0, 3).map((tech, techIndex) => (
+                            <span
+                              key={techIndex}
+                              className="px-2 py-1 bg-accent/10 text-accent text-xs rounded-full"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                          {item.technologies.length > 3 && (
+                            <span className="px-2 py-1 bg-muted/10 text-muted-foreground text-xs rounded-full">
+                              +{item.technologies.length - 3}
+                            </span>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </SpotlightCard>
+                </ScrollReveal>
               ))}
             </div>
           </div>
 
           {/* Education Column */}
           <div className="relative">
-            <div className="absolute left-6 top-0 bottom-0 w-px bg-gilded-parchment/30"></div>
-            <div className="space-y-8">
-              <h3 className="text-2xl font-cormorant font-bold text-void-black dark:text-static-white mb-6">
+            <div className="absolute left-4 lg:left-6 top-0 bottom-0 w-px bg-accent/30"></div>
+            <div className="space-y-6 lg:space-y-8">
+              <h3 className="text-xl lg:text-2xl font-cormorant font-bold text-foreground mb-4 lg:mb-6">
                 Education
               </h3>
               {education.map((item, index) => (
-                <SpotlightCard
-                  key={item.id}
-                  className="relative pl-12 transition-all duration-300 hover:scale-[1.02]"
-                  spotlightColor="rgba(193, 154, 107, 0.3)"
-                >
-                  <div className="absolute left-0 top-6 w-12 h-12 bg-gilded-parchment/20 rounded-full flex items-center justify-center">
-                    <div className="w-6 h-6 bg-gilded-parchment rounded-full"></div>
-                  </div>
-                  <Card className="bg-static-white/80 dark:bg-void-black/80 border-quantum-gray/20 shadow-lg">
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between mb-3">
-                        <h4 className="text-lg font-cormorant font-bold text-void-black dark:text-static-white">
-                          {item.degree}
-                        </h4>
-                        {item.institutionUrl && (
-                          <a
-                            href={item.institutionUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-gilded-parchment hover:text-gilded-parchment/80 transition-colors"
-                          >
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
-                        )}
-                      </div>
-                      <div className="text-gilded-parchment font-medium mb-2">
-                        {item.institution}
-                      </div>
-                      <div className="flex flex-wrap gap-4 text-sm text-quantum-gray/80 dark:text-static-white/80 mb-3">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="w-4 h-4" />
-                          {item.duration}
+                <ScrollReveal key={item.id}>
+                  <SpotlightCard
+                    className="relative pl-8 lg:pl-12 transition-all duration-300 hover:scale-[1.02]"
+                    spotlightColor="rgba(193, 154, 107, 0.3)"
+                  >
+                    <div className="absolute left-0 top-4 lg:top-6 w-8 h-8 lg:w-12 lg:h-12 bg-accent/20 rounded-full flex items-center justify-center">
+                      <div className="w-4 h-4 lg:w-6 lg:h-6 bg-accent rounded-full"></div>
+                    </div>
+                    <Card className="bg-card/80 border-border shadow-lg">
+                      <CardContent className="p-4 lg:p-6">
+                        <div className="flex items-start justify-between mb-2 lg:mb-3">
+                          <h4 className="text-base lg:text-lg font-cormorant font-bold text-foreground leading-tight">
+                            {item.degree}
+                          </h4>
+                          {item.institutionUrl && (
+                            <a
+                              href={item.institutionUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-accent hover:text-accent/80 transition-colors"
+                            >
+                              <ExternalLink className="w-4 h-4" />
+                            </a>
+                          )}
                         </div>
-                        <div className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4" />
+                        <div className="text-accent font-medium mb-2 text-sm lg:text-base">
                           {item.institution}
                         </div>
-                      </div>
-                      {item.thesis && (
-                        <div className="text-sm text-quantum-gray dark:text-static-white/90 mb-3">
-                          <strong>Thesis:</strong>{" "}
-                          <a
-                            href={item.thesis.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-gilded-parchment hover:text-gilded-parchment/80 transition-colors"
-                          >
-                            {item.thesis.title}
-                          </a>
+                        <div className="flex flex-col sm:flex-row sm:gap-4 text-xs lg:text-sm text-muted-foreground mb-3 gap-1">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="w-3 h-3 lg:w-4 lg:h-4" />
+                            {item.duration}
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <MapPin className="w-3 h-3 lg:w-4 lg:h-4" />
+                            {item.institution}
+                          </div>
                         </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                </SpotlightCard>
+                        {item.thesis && (
+                          <div className="text-xs lg:text-sm text-foreground/90 mb-3">
+                            <strong>Thesis:</strong>{" "}
+                            <a
+                              href={item.thesis.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-accent hover:text-accent/80 transition-colors"
+                            >
+                              {item.thesis.title.length > 60 
+                                ? `${item.thesis.title.substring(0, 60)}...`
+                                : item.thesis.title
+                              }
+                            </a>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </SpotlightCard>
+                </ScrollReveal>
               ))}
             </div>
           </div>
