@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Award } from "lucide-react";
 import GlitchText from "@/Animations/GlitchText/GlitchText";
 import SpotlightCard from "@/Animations/SpotlightCard/SpotlightCard";
+import DecryptedText from "@/Animations/DecryptedText/DecryptedText";
 
 export interface Certificate {
   id: string;
@@ -251,10 +252,14 @@ function chunkArray<T>(array: T[], size: number): T[][] {
 
 // CertificateCard: Optimized for light/dark mode
 const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
+  const [expanded, setExpanded] = useState(false);
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+  const words = certificate.description.split(/\s+/);
+  const showExpand = isMobile && words.length > 10;
   return (
     <div className="flex flex-col justify-between h-full w-full">
       {/* Header dengan issuer */}
-      <div className="flex items-center gap-2 mb-3">
+      <div className="flex items-center gap-2 mb-2 md:mb-3">
         <div className="w-8 h-8 bg-accent/20 rounded-full flex items-center justify-center text-accent">
           <Award className="w-4 h-4" />
         </div>
@@ -262,21 +267,28 @@ const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
           {certificate.issuer}
         </span>
       </div>
-      
       {/* Title */}
-      <h3 className="text-lg font-bold text-foreground mb-3 leading-tight break-words">
-        {certificate.title}
+      <h3 className="text-lg font-bold text-foreground mb-2 md:mb-3 leading-tight break-words">
+        <DecryptedText text={certificate.title} animateOn="view" className="inline-block" />
       </h3>
-      
       {/* Description */}
       <div className="flex-grow">
         <p className="text-sm text-foreground/80 leading-relaxed break-words">
-          {certificate.description}
+          {showExpand && !expanded
+            ? words.slice(0, 10).join(' ') + '...'
+            : <DecryptedText text={certificate.description} animateOn="view" className="inline-block" />}
         </p>
+        {showExpand && (
+          <button
+            className="text-accent text-xs font-semibold focus:outline-none mb-2"
+            onClick={() => setExpanded((v) => !v)}
+          >
+            {expanded ? 'Hide details' : 'Show details'}
+          </button>
+        )}
       </div>
-      
       {/* Footer */}
-      <div className="flex flex-col gap-2 mt-4">
+      <div className="flex flex-col gap-2 mt-2 md:mt-4">
         <div className="flex justify-between items-center text-xs text-muted-foreground">
           <span>{certificate.date}</span>
         </div>
@@ -307,102 +319,46 @@ const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
 const Certificates: React.FC = () => {
   const width = useWindowWidth();
   const isMobile = width <= 768;
-  
-  // Mobile: 4x4 grid chunks
-  const certificateChunks = chunkArray(certificates, 16);
-  
+  // Mobile: 2x4 grid chunks (8 per slide)
+  const certificateChunks = chunkArray(certificates, 8);
   // Slider state
   const [slide, setSlide] = useState(0);
-  
-  useEffect(() => { 
-    setSlide(0); 
-  }, [isMobile]);
-
+  useEffect(() => { setSlide(0); }, [isMobile]);
   return (
-    <section
-      id="certificates"
-      className="section bg-background text-foreground"
-    >
+    <section id="certificates" className="section bg-background text-foreground">
       <div className="container">
-        <div className="mb-12">
-          <span className="inline-block text-xs uppercase tracking-wider text-muted-foreground mb-2">
-            Achievements
-          </span>
-          <GlitchText
-            speed={0.3}
-            enableShadows={true}
-            enableOnHover={false}
-            className="text-4xl md:text-5xl font-cormorant font-bold text-foreground"
-          >
-            Certificates
-          </GlitchText>
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-            Explore all my professional certificates in a modern interactive grid.
-          </p>
+        <div className="mb-8 md:mb-12">
+          <span className="inline-block text-xs uppercase tracking-wider text-muted-foreground mb-2">Achievements</span>
+          <GlitchText speed={0.3} enableShadows={true} enableOnHover={false} className="text-4xl md:text-5xl font-cormorant font-bold text-foreground">Certificates</GlitchText>
+          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">Explore all my professional certificates in a modern interactive grid.</p>
         </div>
-        
-        <div className="relative px-4 py-8">
+        <div className="relative px-2 py-4 md:px-4 md:py-8">
           {/* Desktop: Masonry grid */}
           {!isMobile && (
             <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
               {certificates.map((cert, index) => (
-                <div 
-                  key={cert.id + cert.title}
-                  className="break-inside-avoid mb-6"
-                  style={{
-                    animationDelay: `${index * 0.1}s`
-                  }}
-                >
-                  <SpotlightCard
-                    className="h-auto min-h-[280px] w-full animate-fade-in"
-                    spotlightColor="rgba(229, 192, 123, 0.25)"
-                  >
-                    <CertificateCard certificate={cert} />
-                  </SpotlightCard>
+                <div key={cert.id + cert.title} className="break-inside-avoid mb-6" style={{animationDelay: `${index * 0.1}s`}}>
+                  <SpotlightCard className="h-auto min-h-[280px] w-full animate-fade-in" spotlightColor="rgba(229, 192, 123, 0.25)"><CertificateCard certificate={cert} /></SpotlightCard>
                 </div>
               ))}
             </div>
           )}
-          
-          {/* Mobile: 4x4 grid slider */}
+          {/* Mobile: 2x4 grid slider */}
           {isMobile && (
             <div>
-              <div className="flex justify-between items-center mb-6">
-                <button 
-                  onClick={() => setSlide(s => Math.max(0, s - 1))} 
-                  disabled={slide === 0}
-                  className="px-4 py-2 rounded-lg bg-accent/20 text-accent disabled:opacity-40 text-sm font-medium transition-colors"
-                >
-                  Previous
-                </button>
+              <div className="flex justify-between items-center mb-4">
+                <button onClick={() => setSlide(s => Math.max(0, s - 1))} disabled={slide === 0} className="px-4 py-2 rounded-lg bg-accent/20 text-accent disabled:opacity-40 text-sm font-medium transition-colors">Previous</button>
                 <div className="flex gap-2">
                   {certificateChunks.map((_, idx) => (
-                    <span 
-                      key={idx} 
-                      className={`w-2 h-2 rounded-full transition-colors ${
-                        slide === idx ? 'bg-accent' : 'bg-accent/30'
-                      }`}
-                    />
+                    <span key={idx} className={`w-2 h-2 rounded-full transition-colors ${slide === idx ? 'bg-accent' : 'bg-accent/30'}`} />
                   ))}
                 </div>
-                <button 
-                  onClick={() => setSlide(s => Math.min(certificateChunks.length - 1, s + 1))} 
-                  disabled={slide === certificateChunks.length - 1}
-                  className="px-4 py-2 rounded-lg bg-accent/20 text-accent disabled:opacity-40 text-sm font-medium transition-colors"
-                >
-                  Next
-                </button>
+                <button onClick={() => setSlide(s => Math.min(certificateChunks.length - 1, s + 1))} disabled={slide === certificateChunks.length - 1} className="px-4 py-2 rounded-lg bg-accent/20 text-accent disabled:opacity-40 text-sm font-medium transition-colors">Next</button>
               </div>
-              
-              <div className="grid grid-cols-2 gap-3 max-h-[80vh] overflow-hidden">
+              <div className="grid grid-cols-2 gap-1 md:gap-3">
                 {certificateChunks[slide]?.map((cert, index) => (
-                  <div key={cert.id + cert.title} className="h-full">
-                    <SpotlightCard
-                      className="h-full min-h-[200px] w-full text-xs"
-                      spotlightColor="rgba(229, 192, 123, 0.25)"
-                    >
-                      <CertificateCard certificate={cert} />
-                    </SpotlightCard>
+                  <div key={cert.id + cert.title} className="flex justify-center">
+                    <SpotlightCard className="h-full w-full min-w-0 p-2 md:p-4 animate-fade-in" spotlightColor="rgba(229, 192, 123, 0.25)"><CertificateCard certificate={cert} /></SpotlightCard>
                   </div>
                 ))}
               </div>
