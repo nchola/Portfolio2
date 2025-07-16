@@ -156,9 +156,13 @@ const Experience: React.FC = () => {
                 Experience
               </h3>
               {experiences.map((item, index) => (
-                <ScrollReveal key={item.id}>
+                <div 
+                  key={item.id}
+                  className="opacity-0 animate-fade-in relative pl-8 lg:pl-12 transition-all duration-300 hover:scale-[1.02]"
+                  style={{ animationDelay: `${index * 0.1}s`, animationFillMode: 'forwards' }}
+                >
                   <SpotlightCard
-                    className="relative pl-8 lg:pl-12 transition-all duration-300 hover:scale-[1.02]"
+                    className="w-full"
                     spotlightColor="rgba(193, 154, 107, 0.3)"
                   >
                     <div className="absolute left-0 top-4 lg:top-6 w-8 h-8 lg:w-12 lg:h-12 bg-accent/20 rounded-full flex items-center justify-center">
@@ -222,7 +226,7 @@ const Experience: React.FC = () => {
                       </CardContent>
                     </Card>
                   </SpotlightCard>
-                </ScrollReveal>
+                </div>
               ))}
             </div>
           </div>
@@ -235,9 +239,13 @@ const Experience: React.FC = () => {
                 Education
               </h3>
               {education.map((item, index) => (
-                <ScrollReveal key={item.id}>
+                <div 
+                  key={item.id}
+                  className="opacity-0 animate-fade-in relative pl-8 lg:pl-12 transition-all duration-300 hover:scale-[1.02]"
+                  style={{ animationDelay: `${(index + experiences.length) * 0.1}s`, animationFillMode: 'forwards' }}
+                >
                   <SpotlightCard
-                    className="relative pl-8 lg:pl-12 transition-all duration-300 hover:scale-[1.02]"
+                    className="w-full"
                     spotlightColor="rgba(193, 154, 107, 0.3)"
                   >
                     <div className="absolute left-0 top-4 lg:top-6 w-8 h-8 lg:w-12 lg:h-12 bg-accent/20 rounded-full flex items-center justify-center">
@@ -292,7 +300,7 @@ const Experience: React.FC = () => {
                       </CardContent>
                     </Card>
                   </SpotlightCard>
-                </ScrollReveal>
+                </div>
               ))}
             </div>
           </div>

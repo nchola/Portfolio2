@@ -274,7 +274,7 @@ const CertificateCard = ({ certificate, isMobile }: { certificate: Certificate; 
       
       {/* Description */}
       <div className="flex-grow">
-        <p className={`${textSizeClass} text-foreground/80 leading-relaxed break-words`}>
+        <p className={`${textSizeClass} text-foreground/90 leading-relaxed break-words`}>
           {certificate.description}
         </p>
       </div>
@@ -342,11 +342,11 @@ const Certificates: React.FC = () => {
               Certificates
             </GlitchText>
           </ScrollReveal>
-          <ScrollReveal>
+          <div className="opacity-0 animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
             <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
               Explore all my professional certificates in a modern interactive grid.
             </p>
-          </ScrollReveal>
+          </div>
         </div>
         
         <div className="relative px-4 py-8">
@@ -354,21 +354,18 @@ const Certificates: React.FC = () => {
           {!isMobile && (
             <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
               {certificates.map((cert, index) => (
-                <ScrollReveal key={cert.id + cert.title}>
-                  <div 
-                    className="break-inside-avoid mb-6"
-                    style={{
-                      animationDelay: `${index * 0.1}s`
-                    }}
+                <div 
+                  key={cert.id + cert.title}
+                  className="opacity-0 animate-fade-in break-inside-avoid mb-6"
+                  style={{ animationDelay: `${index * 0.05}s`, animationFillMode: 'forwards' }}
+                >
+                  <SpotlightCard
+                    className="h-auto min-h-[280px] w-full"
+                    spotlightColor="rgba(229, 192, 123, 0.25)"
                   >
-                    <SpotlightCard
-                      className="h-auto min-h-[280px] w-full animate-fade-in"
-                      spotlightColor="rgba(229, 192, 123, 0.25)"
-                    >
-                      <CertificateCard certificate={cert} isMobile={isMobile} />
-                    </SpotlightCard>
-                  </div>
-                </ScrollReveal>
+                    <CertificateCard certificate={cert} isMobile={isMobile} />
+                  </SpotlightCard>
+                </div>
               ))}
             </div>
           )}
@@ -405,16 +402,18 @@ const Certificates: React.FC = () => {
               
               <div className="grid grid-cols-2 gap-3 max-h-[70vh] overflow-hidden">
                 {certificateChunks[slide]?.map((cert, index) => (
-                  <ScrollReveal key={cert.id + cert.title}>
-                    <div className="h-full">
-                      <SpotlightCard
-                        className="h-full min-h-[180px] w-full"
-                        spotlightColor="rgba(229, 192, 123, 0.25)"
-                      >
-                        <CertificateCard certificate={cert} isMobile={isMobile} />
-                      </SpotlightCard>
-                    </div>
-                  </ScrollReveal>
+                  <div 
+                    key={cert.id + cert.title}
+                    className="opacity-0 animate-fade-in h-full"
+                    style={{ animationDelay: `${index * 0.05}s`, animationFillMode: 'forwards' }}
+                  >
+                    <SpotlightCard
+                      className="h-full min-h-[180px] w-full"
+                      spotlightColor="rgba(229, 192, 123, 0.25)"
+                    >
+                      <CertificateCard certificate={cert} isMobile={isMobile} />
+                    </SpotlightCard>
+                  </div>
                 ))}
               </div>
             </div>

@@ -37,35 +37,39 @@ const About: React.FC = () => {
             </div>
             
             <div className="space-y-4 text-foreground/90 leading-relaxed">
-              <ScrollReveal>
+              <div className="opacity-0 animate-fade-in" style={{ animationDelay: '0.1s', animationFillMode: 'forwards' }}>
                 <p>
                   I'm a passionate full-stack developer with expertise in modern web technologies. 
                   My journey in software development has been driven by curiosity and a desire to 
                   create meaningful digital experiences.
                 </p>
-              </ScrollReveal>
+              </div>
               
-              <ScrollReveal>
+              <div className="opacity-0 animate-fade-in" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
                 <p>
                   With a strong foundation in both frontend and backend development, I enjoy 
                   working with technologies like React, Node.js, TypeScript, and various databases. 
                   I'm always eager to learn new technologies and tackle challenging problems.
                 </p>
-              </ScrollReveal>
+              </div>
               
-              <ScrollReveal>
+              <div className="opacity-0 animate-fade-in" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
                 <p>
                   When I'm not coding, you can find me exploring new technologies, contributing 
                   to open-source projects, or sharing knowledge with the developer community.
                 </p>
-              </ScrollReveal>
+              </div>
             </div>
           </div>
 
           {/* Stats Grid */}
           <div className="grid grid-cols-2 gap-4">
             {stats.map((stat, index) => (
-              <ScrollReveal key={index}>
+              <div 
+                key={index} 
+                className="opacity-0 animate-fade-in" 
+                style={{ animationDelay: `${0.4 + index * 0.1}s`, animationFillMode: 'forwards' }}
+              >
                 <SpotlightCard
                   className="text-center p-6 transition-all duration-300 hover:scale-105"
                   spotlightColor="rgba(193, 154, 107, 0.3)"
@@ -80,7 +84,7 @@ const About: React.FC = () => {
                     {stat.label}
                   </div>
                 </SpotlightCard>
-              </ScrollReveal>
+              </div>
             ))}
           </div>
         </div>
