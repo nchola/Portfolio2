@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import GlitchText from "@/Animations/GlitchText/GlitchText";
 import CertificateCard from "./CertificateCard";
-import Masonry from 'react-masonry-css';
+import Masonry from '@/Animations/Masonry/Masonry';
 
 export interface Certificate {
   id: string;
@@ -24,52 +24,47 @@ const certificates: Certificate[] = [
     link: "/projects/monkeytype.png",
   },
   {
-    id: "cert0",
+    id: "cert1",
     title: "TOEIC",
     issuer: "TOEIC",
     date: "Maret 2024",
     description: "TOEIC With Actual Score 705.",
     link: "https://drive.google.com/file/d/1gzUnYfz7Si-XNBOnZutAgSKE9Wcr-KLy/view?usp=sharing",
   },
-
   {
-    id: "cert1",
+    id: "cert2",
     title: "Building Web Applications in PHP",
     issuer: "University of Michigan",
     date: "April 2024",
-    description:
-      "Mastered PHP fundamentals including syntax, arrays, error handling, and MySQL integration using XAMPP/MAMP development environments.",
+    description: "Mastered PHP fundamentals including syntax, arrays, error handling, and MySQL integration using XAMPP/MAMP development environments.",
     link: "https://coursera.org/verify/NXD6B8CYRVND",
   },
   {
-    id: "cert2",
+    id: "cert3",
     title: "Back End Development and APIs",
     issuer: "FreeCodeCamp",
     date: "March 2025",
-    description:
-      "Certified in Node.js, Express, MongoDB, and REST API development with JWT/OAuth security and five real-world projects.",
+    description: "Certified in Node.js, Express, MongoDB, and REST API development with JWT/OAuth security and five real-world projects.",
     link: "https://freecodecamp.org/certification/MuhammadNanda/back-end-development-and-apis",
   },
   {
-    id: "cert3",
+    id: "cert4",
     title: "Introduction to Back-End Development",
     issuer: "Meta",
     date: "April 2024",
-    description:
-      "Distinguished between front-end, back-end, and full-stack development.",
+    description: "Distinguished between front-end, back-end, and full-stack development.",
     link: "https://coursera.org/verify/9Y6UNTUQXPBY",
   },
   {
-    id: "cert4",
+    id: "cert5",
     title: "Problem Solving (Intermediate)",
     issuer: "HackerRank",
     date: "August 2024",
-    description:
-      "It covers topics of Data Structures (such as HashMaps, Stacks and Queues) and Algorithms (such as Optimal Solutions).",
+    description: "It covers topics of Data Structures (such as HashMaps, Stacks and Queues) and Algorithms (such as Optimal Solutions).",
     link: "https://www.hackerrank.com/certificates/ae6941f35c0b",
   },
   {
-    id: "cert5",
+    id: "cert6",
     title: "Frontend Developer (React)",
     issuer: "HackerRank",
     date: "July 2024",
@@ -77,25 +72,23 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/82fecaefa3c4",
   },
   {
-    id: "cert6",
+    id: "cert7",
     title: "Rest API (Intermediate)",
     issuer: "HackerRank",
     date: "July 2024",
-    description:
-      "It covers topics like getting data from an API and process using parameters or paging.",
+    description: "It covers topics like getting data from an API and process using parameters or paging.",
     link: "https://www.hackerrank.com/certificates/ea574087a548",
   },
   {
-    id: "cert7",
+    id: "cert8",
     title: "SQL (Advanced)",
     issuer: "HackerRank",
     date: "July 2024",
-    description:
-      "It covers topics like query optimization, data modeling, Indexing, window functions, and pivots in SQL.",
+    description: "It covers topics like query optimization, data modeling, Indexing, window functions, and pivots in SQL.",
     link: "https://www.hackerrank.com/certificates/d5e1611ab888",
   },
   {
-    id: "cert8",
+    id: "cert9",
     title: "Software Engineer",
     issuer: "HackerRank",
     date: "July 2024",
@@ -103,7 +96,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/296d3826c94f",
   },
   {
-    id: "cert9",
+    id: "cert10",
     title: "SQL (Intermediate)",
     issuer: "HackerRank",
     date: "July 2024",
@@ -111,7 +104,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/5b9112e28389",
   },
   {
-    id: "cert10",
+    id: "cert11",
     title: "Software Engineer Intern",
     issuer: "HackerRank",
     date: "July 2024",
@@ -119,7 +112,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/9928225c8a33",
   },
   {
-    id: "cert11",
+    id: "cert12",
     title: "JavaScript (Basic)",
     issuer: "Dicoding",
     date: "July 2024",
@@ -128,7 +121,7 @@ const certificates: Certificate[] = [
     link: "https://www.dicoding.com/certificates/MRZME896LPYQ",
   },
   {
-    id: "cert12",
+    id: "cert13",
     title: "Problem Solving (Basic)",
     issuer: "HackerRank",
     date: "July 2024",
@@ -137,7 +130,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/77d5ee7ca622",
   },
   {
-    id: "cert13",
+    id: "cert14",
     title: "React (Basic)",
     issuer: "HackerRank",
     date: "July 2024",
@@ -146,7 +139,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/2c8f08620d46",
   },
   {
-    id: "cert14",
+    id: "cert15",
     title: "AWS Cloud Practitioner Essentials",
     issuer: "Dicoding",
     date: "July 2024",
@@ -155,7 +148,7 @@ const certificates: Certificate[] = [
     link: "https://www.dicoding.com/certificates/JMZV3DV2OPN9",
   },
   {
-    id: "cert15",
+    id: "cert16",
     title: "Personal Development - IDCamp",
     issuer: "Dicoding",
     date: "July 2024",
@@ -164,7 +157,7 @@ const certificates: Certificate[] = [
     link: "",
   },
   {
-    id: "cert16",
+    id: "cert17",
     title: "Product Management with Trello",
     issuer: "Dicoding",
     date: "July 2024",
@@ -173,7 +166,7 @@ const certificates: Certificate[] = [
     link: "https://coursera.org/verify/9ZXFD6PHL88P",
   },
   {
-    id: "cert17",
+    id: "cert18",
     title: "Python Basic",
     issuer: "Dicoding",
     date: "July 2024",
@@ -182,7 +175,7 @@ const certificates: Certificate[] = [
     link: "https://www.dicoding.com/certificates/N9ZO72736ZG5",
   },
   {
-    id: "cert18",
+    id: "cert19",
     title: "Data Visualization",
     issuer: "Dicoding",
     date: "July 2024",
@@ -191,7 +184,7 @@ const certificates: Certificate[] = [
     link: "https://www.dicoding.com/certificates/07Z6RJRRRPQR",
   },
   {
-    id: "cert19",
+    id: "cert20",
     title: "Dart Programming Basics",
     issuer: "Dicoding",
     date: "July 2024",
@@ -200,7 +193,7 @@ const certificates: Certificate[] = [
     link: "https://www.dicoding.com/certificates/0LZ0RG3O0P65",
   },
   {
-    id: "cert20",
+    id: "cert21",
     title: "Project Management Fundamentals",
     issuer: "Dicoding",
     date: "July 2024",
@@ -209,7 +202,7 @@ const certificates: Certificate[] = [
     link: "https://www.dicoding.com/certificates/GRX539ODKZ0M",
   },
   {
-    id: "cert21",
+    id: "cert22",
     title: "Javascript Basic",
     issuer: "HackerRank",
     date: "July 2025",
@@ -218,7 +211,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/fdbc584fe558",
   },
   {
-    id: "cert22",
+    id: "cert23",
     title: "TOEFL",
     issuer: "Englishvit",
     date: "Maret 2025",
@@ -227,7 +220,6 @@ const certificates: Certificate[] = [
   },
 ].filter((cert) => cert.title !== "");
 
-// Hook untuk deteksi lebar layar
 function useWindowWidth() {
   const [width, setWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 1200
@@ -240,33 +232,19 @@ function useWindowWidth() {
   return width;
 }
 
-// Fungsi untuk chunk array
-function chunkArray(array: Certificate[], size: number): Certificate[][] {
-  const result = [];
-  for (let i = 0; i < array.length; i += size) {
-    result.push(array.slice(i, i + size));
-  }
-  return result;
-}
-
 const Certificates: React.FC = () => {
   const width = useWindowWidth();
-  const isMobile = width <= 768;
   
-  // Breakpoint untuk masonry responsif
-  const breakpointColumnsObj = {
-    default: 4,
-    1100: 3,
-    700: 2,
-    500: 1
-  };
-
-  // Untuk mobile: chunk 4 (2x2)
-  const certificateChunks = chunkArray(certificates, 4);
-  
-  // Slider state
-  const [slide, setSlide] = useState(0);
-  useEffect(() => { setSlide(0); }, [isMobile]);
+  // Convert certificates to masonry items
+  const masonryItems = useMemo(() => {
+    return certificates.map((cert, index) => ({
+      id: cert.id + cert.title,
+      img: cert.image || '/placeholder.svg',
+      url: cert.link || '#',
+      height: 280 + (index % 3) * 40, // Variable heights for masonry effect
+      cert: cert
+    }));
+  }, []);
 
   return (
     <section
@@ -292,53 +270,24 @@ const Certificates: React.FC = () => {
         </div>
 
         <div className="relative">
-          {/* Desktop: Masonry Grid */}
-          {!isMobile && (
-            <Masonry
-              breakpointCols={breakpointColumnsObj}
-              className="my-masonry-grid"
-              columnClassName="my-masonry-grid_column"
-            >
-              {certificates.map(cert => (
-                <CertificateCard key={cert.id + cert.title} certificate={cert} />
-              ))}
-            </Masonry>
-          )}
-
-          {/* Mobile: Slider 2x2 grid */}
-          {isMobile && (
-            <div>
-              <div className="flex justify-between items-center mb-4">
-                <button 
-                  onClick={() => setSlide(s => Math.max(0, s - 1))} 
-                  disabled={slide === 0} 
-                  className="px-3 py-1 rounded bg-gilded-parchment/20 text-gilded-parchment disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300"
-                >
-                  Prev
-                </button>
-                <div className="flex gap-1">
-                  {certificateChunks.map((_, idx) => (
-                    <span 
-                      key={idx} 
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${slide === idx ? 'bg-gilded-parchment' : 'bg-gilded-parchment/30'}`}
-                    />
-                  ))}
-                </div>
-                <button 
-                  onClick={() => setSlide(s => Math.min(certificateChunks.length - 1, s + 1))} 
-                  disabled={slide === certificateChunks.length - 1} 
-                  className="px-3 py-1 rounded bg-gilded-parchment/20 text-gilded-parchment disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300"
-                >
-                  Next
-                </button>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                {certificateChunks[slide]?.map(cert => (
-                  <CertificateCard key={cert.id + cert.title} certificate={cert} />
-                ))}
-              </div>
-            </div>
-          )}
+          <Masonry
+            items={masonryItems}
+            ease="power3.out"
+            duration={0.8}
+            stagger={0.1}
+            animateFrom="random"
+            scaleOnHover={true}
+            hoverScale={1.05}
+            blurToFocus={true}
+            colorShiftOnHover={false}
+          >
+            {(item) => (
+              <CertificateCard 
+                key={item.id} 
+                certificate={item.cert!} 
+              />
+            )}
+          </Masonry>
         </div>
       </div>
     </section>

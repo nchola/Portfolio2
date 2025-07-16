@@ -1,8 +1,6 @@
-
 import React from 'react';
 import { User, Code, Globe, Coffee, Users, Target, Award, Lightbulb } from 'lucide-react';
 import SpotlightCard from '@/Animations/SpotlightCard/SpotlightCard';
-import GlitchText from '@/Animations/GlitchText/GlitchText';
 import DecryptedText from '@/Animations/DecryptedText/DecryptedText';
 
 const About: React.FC = () => {
@@ -13,14 +11,9 @@ const About: React.FC = () => {
           <span className="inline-block text-xs uppercase tracking-wider text-quantum-gray/70 dark:text-static-white/70 mb-2">
             Introduction
           </span>
-          <GlitchText
-            speed={0.3}
-            enableShadows={true}
-            enableOnHover={false}
-            className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
-          >
+          <h2 className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white">
             About Me
-          </GlitchText>
+          </h2>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
