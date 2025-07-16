@@ -1,16 +1,8 @@
+
 import React, { useState, useEffect } from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Award, ChevronLeft, ChevronRight } from "lucide-react";
-import { ParticleCard, BentoCardGrid, GlobalSpotlight } from "@/Animations/MagicBento/MagicBento";
+import { Award } from "lucide-react";
 import GlitchText from "@/Animations/GlitchText/GlitchText";
-import Masonry from 'react-masonry-css';
+import SpotlightCard from "@/Animations/SpotlightCard/SpotlightCard";
 
 export interface Certificate {
   id: string;
@@ -33,16 +25,15 @@ const certificates: Certificate[] = [
     link: "/projects/monkeytype.png",
   },
   {
-    id: "cert0",
+    id: "cert1",
     title: "TOEIC",
     issuer: "TOEIC",
     date: "Maret 2024",
     description: "TOEIC With Actual Score 705.",
     link: "https://drive.google.com/file/d/1gzUnYfz7Si-XNBOnZutAgSKE9Wcr-KLy/view?usp=sharing",
   },
-
   {
-    id: "cert1",
+    id: "cert2",
     title: "Building Web Applications in PHP",
     issuer: "University of Michigan",
     date: "April 2024",
@@ -51,7 +42,7 @@ const certificates: Certificate[] = [
     link: "https://coursera.org/verify/NXD6B8CYRVND",
   },
   {
-    id: "cert2",
+    id: "cert3",
     title: "Back End Development and APIs",
     issuer: "FreeCodeCamp",
     date: "March 2025",
@@ -60,7 +51,7 @@ const certificates: Certificate[] = [
     link: "https://freecodecamp.org/certification/MuhammadNanda/back-end-development-and-apis",
   },
   {
-    id: "cert3",
+    id: "cert4",
     title: "Introduction to Back-End Development",
     issuer: "Meta",
     date: "April 2024",
@@ -69,7 +60,7 @@ const certificates: Certificate[] = [
     link: "https://coursera.org/verify/9Y6UNTUQXPBY",
   },
   {
-    id: "cert4",
+    id: "cert5",
     title: "Problem Solving (Intermediate)",
     issuer: "HackerRank",
     date: "August 2024",
@@ -78,7 +69,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/ae6941f35c0b",
   },
   {
-    id: "cert5",
+    id: "cert6",
     title: "Frontend Developer (React)",
     issuer: "HackerRank",
     date: "July 2024",
@@ -86,7 +77,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/82fecaefa3c4",
   },
   {
-    id: "cert6",
+    id: "cert7",
     title: "Rest API (Intermediate)",
     issuer: "HackerRank",
     date: "July 2024",
@@ -95,7 +86,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/ea574087a548",
   },
   {
-    id: "cert7",
+    id: "cert8",
     title: "SQL (Advanced)",
     issuer: "HackerRank",
     date: "July 2024",
@@ -104,7 +95,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/d5e1611ab888",
   },
   {
-    id: "cert8",
+    id: "cert9",
     title: "Software Engineer",
     issuer: "HackerRank",
     date: "July 2024",
@@ -112,7 +103,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/296d3826c94f",
   },
   {
-    id: "cert9",
+    id: "cert10",
     title: "SQL (Intermediate)",
     issuer: "HackerRank",
     date: "July 2024",
@@ -120,7 +111,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/5b9112e28389",
   },
   {
-    id: "cert10",
+    id: "cert11",
     title: "Software Engineer Intern",
     issuer: "HackerRank",
     date: "July 2024",
@@ -128,7 +119,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/9928225c8a33",
   },
   {
-    id: "cert11",
+    id: "cert12",
     title: "JavaScript (Basic)",
     issuer: "Dicoding",
     date: "July 2024",
@@ -137,7 +128,7 @@ const certificates: Certificate[] = [
     link: "https://www.dicoding.com/certificates/MRZME896LPYQ",
   },
   {
-    id: "cert12",
+    id: "cert13",
     title: "Problem Solving (Basic)",
     issuer: "HackerRank",
     date: "July 2024",
@@ -146,7 +137,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/77d5ee7ca622",
   },
   {
-    id: "cert13",
+    id: "cert14",
     title: "React (Basic)",
     issuer: "HackerRank",
     date: "July 2024",
@@ -155,7 +146,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/2c8f08620d46",
   },
   {
-    id: "cert14",
+    id: "cert15",
     title: "AWS Cloud Practitioner Essentials",
     issuer: "Dicoding",
     date: "July 2024",
@@ -164,7 +155,7 @@ const certificates: Certificate[] = [
     link: "https://www.dicoding.com/certificates/JMZV3DV2OPN9",
   },
   {
-    id: "cert15",
+    id: "cert16",
     title: "Personal Development - IDCamp",
     issuer: "Dicoding",
     date: "July 2024",
@@ -173,7 +164,7 @@ const certificates: Certificate[] = [
     link: "",
   },
   {
-    id: "cert16",
+    id: "cert17",
     title: "Product Management with Trello",
     issuer: "Dicoding",
     date: "July 2024",
@@ -182,7 +173,7 @@ const certificates: Certificate[] = [
     link: "https://coursera.org/verify/9ZXFD6PHL88P",
   },
   {
-    id: "cert17",
+    id: "cert18",
     title: "Python Basic",
     issuer: "Dicoding",
     date: "July 2024",
@@ -191,7 +182,7 @@ const certificates: Certificate[] = [
     link: "https://www.dicoding.com/certificates/N9ZO72736ZG5",
   },
   {
-    id: "cert18",
+    id: "cert19",
     title: "Data Visualization",
     issuer: "Dicoding",
     date: "July 2024",
@@ -200,7 +191,7 @@ const certificates: Certificate[] = [
     link: "https://www.dicoding.com/certificates/07Z6RJRRRPQR",
   },
   {
-    id: "cert19",
+    id: "cert20",
     title: "Dart Programming Basics",
     issuer: "Dicoding",
     date: "July 2024",
@@ -209,7 +200,7 @@ const certificates: Certificate[] = [
     link: "https://www.dicoding.com/certificates/0LZ0RG3O0P65",
   },
   {
-    id: "cert20",
+    id: "cert21",
     title: "Project Management Fundamentals",
     issuer: "Dicoding",
     date: "July 2024",
@@ -218,7 +209,7 @@ const certificates: Certificate[] = [
     link: "https://www.dicoding.com/certificates/GRX539ODKZ0M",
   },
   {
-    id: "cert21",
+    id: "cert22",
     title: "Javascript Basic",
     issuer: "HackerRank",
     date: "July 2025",
@@ -227,7 +218,7 @@ const certificates: Certificate[] = [
     link: "https://www.hackerrank.com/certificates/fdbc584fe558",
   },
   {
-    id: "cert22",
+    id: "cert23",
     title: "TOEFL",
     issuer: "Englishvit",
     date: "Maret 2025",
@@ -250,40 +241,43 @@ function useWindowWidth() {
 }
 
 // Fungsi untuk chunk array
-function chunkArray(array, size) {
-  const result = [];
+function chunkArray<T>(array: T[], size: number): T[][] {
+  const result: T[][] = [];
   for (let i = 0; i < array.length; i += size) {
     result.push(array.slice(i, i + size));
   }
   return result;
 }
 
-// CertificateBentoCard: MagicBento-style card for certificates
-const CertificateBentoCard = ({ certificate }: { certificate: Certificate }) => {
+// CertificateCard: Optimized for light/dark mode
+const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
   return (
     <div className="flex flex-col justify-between h-full w-full">
-      {/* Baris label/issuer */}
-      <div className="flex items-center gap-2 mb-2">
-        <div className="w-9 h-9 bg-gilded-parchment/20 rounded-full flex items-center justify-center text-gilded-parchment">
-          <Award className="w-5 h-5" />
+      {/* Header dengan issuer */}
+      <div className="flex items-center gap-2 mb-3">
+        <div className="w-8 h-8 bg-accent/20 rounded-full flex items-center justify-center text-accent">
+          <Award className="w-4 h-4" />
         </div>
-        <span className="text-sm font-semibold text-gilded-parchment tracking-wide uppercase break-words">
+        <span className="text-xs font-semibold text-accent tracking-wide uppercase break-words">
           {certificate.issuer}
         </span>
       </div>
-      {/* Judul */}
-      <h3 className="text-2xl font-bold text-static-white mb-2 leading-tight break-words whitespace-normal">
+      
+      {/* Title */}
+      <h3 className="text-lg font-bold text-foreground mb-3 leading-tight break-words">
         {certificate.title}
       </h3>
-      {/* Deskripsi */}
-      <div className="flex-grow flex items-center">
-        <p className="text-base text-void-black/90 dark:text-static-white/90 text-center break-words whitespace-normal overflow-wrap break-word w-full">
+      
+      {/* Description */}
+      <div className="flex-grow">
+        <p className="text-sm text-foreground/80 leading-relaxed break-words">
           {certificate.description}
         </p>
       </div>
-      {/* 2 baris bawah modern bento */}
-      <div className="flex flex-col gap-2 mt-6">
-        <div className="flex justify-between items-center text-xs text-gilded-parchment/80">
+      
+      {/* Footer */}
+      <div className="flex flex-col gap-2 mt-4">
+        <div className="flex justify-between items-center text-xs text-muted-foreground">
           <span>{certificate.date}</span>
         </div>
         <div className="flex justify-end">
@@ -292,13 +286,13 @@ const CertificateBentoCard = ({ certificate }: { certificate: Certificate }) => 
               href={certificate.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-1 rounded-full bg-gilded-parchment/20 text-gilded-parchment text-sm font-medium hover:bg-gilded-parchment/40 transition"
+              className="px-3 py-1 rounded-full bg-accent/20 text-accent text-xs font-medium hover:bg-accent/30 transition-colors"
             >
               {/\.(png|jpe?g|webp|gif)$/i.test(certificate.link) ? "View Image" : "View Certificate"}
             </a>
           ) : (
             <button
-              className="px-4 py-1 rounded-full bg-quantum-gray/20 text-quantum-gray text-sm font-medium cursor-not-allowed"
+              className="px-3 py-1 rounded-full bg-muted/20 text-muted-foreground text-xs font-medium cursor-not-allowed"
               disabled
             >
               No Link
@@ -310,127 +304,106 @@ const CertificateBentoCard = ({ certificate }: { certificate: Certificate }) => 
   );
 };
 
-const isBigCard = (cert, i) => cert.description.length > 120 || i % 5 === 0;
-
 const Certificates: React.FC = () => {
   const width = useWindowWidth();
-  const isMobile = width <= 700;
-  // Breakpoint untuk masonry responsif
-  const breakpointColumnsObj = {
-    default: 4,
-    1100: 3,
-    700: 2,
-    500: 1
-  };
-  // Untuk mobile: chunk 4 (2x2)
-  const certificateChunks = chunkArray(certificates, 4);
+  const isMobile = width <= 768;
+  
+  // Mobile: 4x4 grid chunks
+  const certificateChunks = chunkArray(certificates, 16);
+  
   // Slider state
   const [slide, setSlide] = useState(0);
-  useEffect(() => { setSlide(0); }, [isMobile]);
-
-  // Responsive card class
-  const cardClass = isMobile
-    ? "card flex flex-col justify-between relative w-full max-w-full p-1.5 text-[40%] rounded-md border border-solid font-light overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg card--border-glow shadow"
-    : "card flex flex-col justify-between relative w-full max-w-full p-6 md:p-6 text-lg md:text-lg rounded-2xl border border-solid font-light overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-2 hover:scale-[1.03] hover:shadow-2xl card--border-glow shadow-lg";
+  
+  useEffect(() => { 
+    setSlide(0); 
+  }, [isMobile]);
 
   return (
     <section
       id="certificates"
-      className="section bg-static-white dark:bg-void-black"
+      className="section bg-background text-foreground"
     >
       <div className="container">
         <div className="mb-12">
-          <span className="inline-block text-xs uppercase tracking-wider text-quantum-gray/70 dark:text-static-white/70 mb-2">
+          <span className="inline-block text-xs uppercase tracking-wider text-muted-foreground mb-2">
             Achievements
           </span>
           <GlitchText
             speed={0.3}
             enableShadows={true}
             enableOnHover={false}
-            className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
+            className="text-4xl md:text-5xl font-cormorant font-bold text-foreground"
           >
             Certificates
           </GlitchText>
-          <p className="mt-4 text-quantum-gray/80 dark:text-static-white/80 max-w-2xl mx-auto">
+          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
             Explore all my professional certificates in a modern interactive grid.
           </p>
         </div>
+        
         <div className="relative px-4 py-8">
-          {/* Floating decorative elements */}
-          <div className="absolute top-0 left-0 w-24 h-24 bg-gilded-parchment/10 rounded-full blur-3xl animate-float z-0"></div>
-          <div
-            className="absolute bottom-0 right-0 w-32 h-32 bg-gilded-parchment/10 rounded-full blur-3xl animate-float z-0"
-            style={{ animationDelay: "2s" }}
-          ></div>
-          {/* Desktop: Masonry + spotlight besar */}
+          {/* Desktop: Masonry grid */}
           {!isMobile && (
-            <>
-              <Masonry
-                breakpointCols={breakpointColumnsObj}
-                className="my-masonry-grid"
-                columnClassName="my-masonry-grid_column"
-              >
-                {certificates.map(cert => (
-                  <ParticleCard
-                    key={cert.id + cert.title}
-                    className={cardClass}
-                    style={{
-                      backgroundColor: "#060010",
-                      borderColor: "#e5c07b33",
-                      color: "#fff",
-                      '--glow-x': '50%',
-                      '--glow-y': '50%',
-                      '--glow-intensity': '0',
-                      '--glow-radius': isMobile ? '80px' : '520px',
-                    } as React.CSSProperties}
-                    disableAnimations={false}
-                    particleCount={isMobile ? 6 : 16}
-                    glowColor="200, 100, 255"
-                    enableTilt={true}
-                    clickEffect={true}
-                    enableMagnetism={true}
+            <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
+              {certificates.map((cert, index) => (
+                <div 
+                  key={cert.id + cert.title}
+                  className="break-inside-avoid mb-6"
+                  style={{
+                    animationDelay: `${index * 0.1}s`
+                  }}
+                >
+                  <SpotlightCard
+                    className="h-auto min-h-[280px] w-full animate-fade-in"
+                    spotlightColor="rgba(229, 192, 123, 0.25)"
                   >
-                    <CertificateBentoCard certificate={cert} />
-                  </ParticleCard>
-                ))}
-              </Masonry>
-            </>
+                    <CertificateCard certificate={cert} />
+                  </SpotlightCard>
+                </div>
+              ))}
+            </div>
           )}
-          {/* Mobile: Slider 2x2 grid, card kecil, spotlight nonaktif */}
+          
+          {/* Mobile: 4x4 grid slider */}
           {isMobile && (
             <div>
-              <div className="flex justify-between items-center mb-4">
-                <button onClick={() => setSlide(s => Math.max(0, s - 1))} disabled={slide === 0} className="px-3 py-1 rounded bg-gilded-parchment/20 text-gilded-parchment disabled:opacity-40">Prev</button>
-                <div className="flex gap-1">
+              <div className="flex justify-between items-center mb-6">
+                <button 
+                  onClick={() => setSlide(s => Math.max(0, s - 1))} 
+                  disabled={slide === 0}
+                  className="px-4 py-2 rounded-lg bg-accent/20 text-accent disabled:opacity-40 text-sm font-medium transition-colors"
+                >
+                  Previous
+                </button>
+                <div className="flex gap-2">
                   {certificateChunks.map((_, idx) => (
-                    <span key={idx} className={`w-2 h-2 rounded-full ${slide === idx ? 'bg-gilded-parchment' : 'bg-gilded-parchment/30'}`}></span>
+                    <span 
+                      key={idx} 
+                      className={`w-2 h-2 rounded-full transition-colors ${
+                        slide === idx ? 'bg-accent' : 'bg-accent/30'
+                      }`}
+                    />
                   ))}
                 </div>
-                <button onClick={() => setSlide(s => Math.min(certificateChunks.length - 1, s + 1))} disabled={slide === certificateChunks.length - 1} className="px-3 py-1 rounded bg-gilded-parchment/20 text-gilded-parchment disabled:opacity-40">Next</button>
+                <button 
+                  onClick={() => setSlide(s => Math.min(certificateChunks.length - 1, s + 1))} 
+                  disabled={slide === certificateChunks.length - 1}
+                  className="px-4 py-2 rounded-lg bg-accent/20 text-accent disabled:opacity-40 text-sm font-medium transition-colors"
+                >
+                  Next
+                </button>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                {certificateChunks[slide].map(cert => (
-                  <ParticleCard
-                    key={cert.id + cert.title}
-                    className={cardClass}
-                    style={{
-                      backgroundColor: "#060010",
-                      borderColor: "#e5c07b33",
-                      color: "#fff",
-                      '--glow-x': '50%',
-                      '--glow-y': '50%',
-                      '--glow-intensity': '0',
-                      '--glow-radius': '80px',
-                    } as React.CSSProperties}
-                    disableAnimations={false}
-                    particleCount={6}
-                    glowColor="200, 100, 255"
-                    enableTilt={true}
-                    clickEffect={true}
-                    enableMagnetism={true}
-                  >
-                    <CertificateBentoCard certificate={cert} />
-                  </ParticleCard>
+              
+              <div className="grid grid-cols-2 gap-3 max-h-[80vh] overflow-hidden">
+                {certificateChunks[slide]?.map((cert, index) => (
+                  <div key={cert.id + cert.title} className="h-full">
+                    <SpotlightCard
+                      className="h-full min-h-[200px] w-full text-xs"
+                      spotlightColor="rgba(229, 192, 123, 0.25)"
+                    >
+                      <CertificateCard certificate={cert} />
+                    </SpotlightCard>
+                  </div>
                 ))}
               </div>
             </div>
