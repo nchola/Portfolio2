@@ -1,15 +1,17 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
-import ProjectGrid from '@/components/ProjectGrid';
-import SkillsMatrix from '@/components/SkillsMatrix';
 import DarkModeToggle from '@/components/DarkModeToggle';
-import About from '@/components/About';
-import Certificates from '@/components/Certificates';
-import Experience from '@/components/Experience';
-import Footer from '@/components/Footer';
+
+// Lazy load components for better performance
+const About = lazy(() => import('@/components/About'));
+const Experience = lazy(() => import('@/components/Experience'));
+const Certificates = lazy(() => import('@/components/Certificates'));
+const ProjectGrid = lazy(() => import('@/components/ProjectGrid'));
+const SkillsMatrix = lazy(() => import('@/components/SkillsMatrix'));
+const Footer = lazy(() => import('@/components/Footer'));
 
 const sections = [
   { id: 'hero', label: 'Home' },
@@ -20,6 +22,19 @@ const sections = [
   { id: 'skills', label: 'Skills' },
   { id: 'footer', label: 'Contact' },
 ];
+
+// Loading component
+const SectionLoader = () => (
+  <div className="section flex items-center justify-center">
+    <div className="animate-pulse flex space-x-4">
+      <div className="rounded-full bg-quantum-gray/20 h-12 w-12"></div>
+      <div className="flex-1 space-y-2 py-1">
+        <div className="h-4 bg-quantum-gray/20 rounded w-3/4"></div>
+        <div className="h-4 bg-quantum-gray/20 rounded w-1/2"></div>
+      </div>
+    </div>
+  </div>
+);
 
 const Index: React.FC = () => {
   const location = useLocation();
@@ -32,14 +47,27 @@ const Index: React.FC = () => {
       
       if (element) {
         setTimeout(() => {
-          window.scrollTo({
-            top: element.offsetTop - 80, // Adjust for header height
-            behavior: 'smooth'
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
           });
         }, 100);
       }
     }
   }, [location]);
+
+  // Preload critical resources
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.href = '/hero.png';
+    link.as = 'image';
+    document.head.appendChild(link);
+
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, []);
 
   return (
     <>
@@ -52,12 +80,29 @@ const Index: React.FC = () => {
           typedItems={["Muhammad Nanda","a Full-Stack Developer", "a Computer Science Graduate", "a Technologies Enthusiast"]}
         />
         
-        <About />
-        <Experience />
-        <Certificates />
-        <ProjectGrid />
-        <SkillsMatrix />
-        <Footer />
+        <Suspense fallback={<SectionLoader />}>
+          <About />
+        </Suspense>
+        
+        <Suspense fallback={<SectionLoader />}>
+          <Experience />
+        </Suspense>
+        
+        <Suspense fallback={<SectionLoader />}>
+          <Certificates />
+        </Suspense>
+        
+        <Suspense fallback={<SectionLoader />}>
+          <ProjectGrid />
+        </Suspense>
+        
+        <Suspense fallback={<SectionLoader />}>
+          <SkillsMatrix />
+        </Suspense>
+        
+        <Suspense fallback={<SectionLoader />}>
+          <Footer />
+        </Suspense>
       </main>
       
       <DarkModeToggle />

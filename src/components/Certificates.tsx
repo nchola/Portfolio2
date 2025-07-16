@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Award, ChevronLeft, ChevronRight } from "lucide-react";
-import { ParticleCard, BentoCardGrid, GlobalSpotlight } from "@/Animations/MagicBento/MagicBento";
 import GlitchText from "@/Animations/GlitchText/GlitchText";
+import CertificateCard from "./CertificateCard";
 import Masonry from 'react-masonry-css';
 
 export interface Certificate {
@@ -250,7 +241,7 @@ function useWindowWidth() {
 }
 
 // Fungsi untuk chunk array
-function chunkArray(array, size) {
+function chunkArray(array: Certificate[], size: number): Certificate[][] {
   const result = [];
   for (let i = 0; i < array.length; i += size) {
     result.push(array.slice(i, i + size));
@@ -258,63 +249,10 @@ function chunkArray(array, size) {
   return result;
 }
 
-// CertificateBentoCard: MagicBento-style card for certificates
-const CertificateBentoCard = ({ certificate }: { certificate: Certificate }) => {
-  return (
-    <div className="flex flex-col justify-between h-full w-full">
-      {/* Baris label/issuer */}
-      <div className="flex items-center gap-2 mb-2">
-        <div className="w-9 h-9 bg-gilded-parchment/20 rounded-full flex items-center justify-center text-gilded-parchment">
-          <Award className="w-5 h-5" />
-        </div>
-        <span className="text-sm font-semibold text-gilded-parchment tracking-wide uppercase break-words">
-          {certificate.issuer}
-        </span>
-      </div>
-      {/* Judul */}
-      <h3 className="text-2xl font-bold text-static-white mb-2 leading-tight break-words whitespace-normal">
-        {certificate.title}
-      </h3>
-      {/* Deskripsi */}
-      <div className="flex-grow flex items-center">
-        <p className="text-base text-void-black/90 dark:text-static-white/90 text-center break-words whitespace-normal overflow-wrap break-word w-full">
-          {certificate.description}
-        </p>
-      </div>
-      {/* 2 baris bawah modern bento */}
-      <div className="flex flex-col gap-2 mt-6">
-        <div className="flex justify-between items-center text-xs text-gilded-parchment/80">
-          <span>{certificate.date}</span>
-        </div>
-        <div className="flex justify-end">
-          {certificate.link ? (
-            <a
-              href={certificate.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-1 rounded-full bg-gilded-parchment/20 text-gilded-parchment text-sm font-medium hover:bg-gilded-parchment/40 transition"
-            >
-              {/\.(png|jpe?g|webp|gif)$/i.test(certificate.link) ? "View Image" : "View Certificate"}
-            </a>
-          ) : (
-            <button
-              className="px-4 py-1 rounded-full bg-quantum-gray/20 text-quantum-gray text-sm font-medium cursor-not-allowed"
-              disabled
-            >
-              No Link
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const isBigCard = (cert, i) => cert.description.length > 120 || i % 5 === 0;
-
 const Certificates: React.FC = () => {
   const width = useWindowWidth();
-  const isMobile = width <= 700;
+  const isMobile = width <= 768;
+  
   // Breakpoint untuk masonry responsif
   const breakpointColumnsObj = {
     default: 4,
@@ -322,16 +260,13 @@ const Certificates: React.FC = () => {
     700: 2,
     500: 1
   };
+
   // Untuk mobile: chunk 4 (2x2)
   const certificateChunks = chunkArray(certificates, 4);
+  
   // Slider state
   const [slide, setSlide] = useState(0);
   useEffect(() => { setSlide(0); }, [isMobile]);
-
-  // Responsive card class
-  const cardClass = isMobile
-    ? "card flex flex-col justify-between relative w-full max-w-full p-1.5 text-[40%] rounded-md border border-solid font-light overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-1 hover:scale-[1.01] hover:shadow-lg card--border-glow shadow"
-    : "card flex flex-col justify-between relative w-full max-w-full p-6 md:p-6 text-lg md:text-lg rounded-2xl border border-solid font-light overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-2 hover:scale-[1.03] hover:shadow-2xl card--border-glow shadow-lg";
 
   return (
     <section
@@ -339,7 +274,7 @@ const Certificates: React.FC = () => {
       className="section bg-static-white dark:bg-void-black"
     >
       <div className="container">
-        <div className="mb-12">
+        <div className="mb-12 text-center">
           <span className="inline-block text-xs uppercase tracking-wider text-quantum-gray/70 dark:text-static-white/70 mb-2">
             Achievements
           </span>
@@ -355,82 +290,51 @@ const Certificates: React.FC = () => {
             Explore all my professional certificates in a modern interactive grid.
           </p>
         </div>
-        <div className="relative px-4 py-8">
-          {/* Floating decorative elements */}
-          <div className="absolute top-0 left-0 w-24 h-24 bg-gilded-parchment/10 rounded-full blur-3xl animate-float z-0"></div>
-          <div
-            className="absolute bottom-0 right-0 w-32 h-32 bg-gilded-parchment/10 rounded-full blur-3xl animate-float z-0"
-            style={{ animationDelay: "2s" }}
-          ></div>
-          {/* Desktop: Masonry + spotlight besar */}
+
+        <div className="relative">
+          {/* Desktop: Masonry Grid */}
           {!isMobile && (
-            <>
-              <Masonry
-                breakpointCols={breakpointColumnsObj}
-                className="my-masonry-grid"
-                columnClassName="my-masonry-grid_column"
-              >
-                {certificates.map(cert => (
-                  <ParticleCard
-                    key={cert.id + cert.title}
-                    className={cardClass}
-                    style={{
-                      backgroundColor: "#060010",
-                      borderColor: "#e5c07b33",
-                      color: "#fff",
-                      '--glow-x': '50%',
-                      '--glow-y': '50%',
-                      '--glow-intensity': '0',
-                      '--glow-radius': isMobile ? '80px' : '520px',
-                    } as React.CSSProperties}
-                    disableAnimations={false}
-                    particleCount={isMobile ? 6 : 16}
-                    glowColor="200, 100, 255"
-                    enableTilt={true}
-                    clickEffect={true}
-                    enableMagnetism={true}
-                  >
-                    <CertificateBentoCard certificate={cert} />
-                  </ParticleCard>
-                ))}
-              </Masonry>
-            </>
+            <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className="my-masonry-grid"
+              columnClassName="my-masonry-grid_column"
+            >
+              {certificates.map(cert => (
+                <CertificateCard key={cert.id + cert.title} certificate={cert} />
+              ))}
+            </Masonry>
           )}
-          {/* Mobile: Slider 2x2 grid, card kecil, spotlight nonaktif */}
+
+          {/* Mobile: Slider 2x2 grid */}
           {isMobile && (
             <div>
               <div className="flex justify-between items-center mb-4">
-                <button onClick={() => setSlide(s => Math.max(0, s - 1))} disabled={slide === 0} className="px-3 py-1 rounded bg-gilded-parchment/20 text-gilded-parchment disabled:opacity-40">Prev</button>
+                <button 
+                  onClick={() => setSlide(s => Math.max(0, s - 1))} 
+                  disabled={slide === 0} 
+                  className="px-3 py-1 rounded bg-gilded-parchment/20 text-gilded-parchment disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300"
+                >
+                  Prev
+                </button>
                 <div className="flex gap-1">
                   {certificateChunks.map((_, idx) => (
-                    <span key={idx} className={`w-2 h-2 rounded-full ${slide === idx ? 'bg-gilded-parchment' : 'bg-gilded-parchment/30'}`}></span>
+                    <span 
+                      key={idx} 
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${slide === idx ? 'bg-gilded-parchment' : 'bg-gilded-parchment/30'}`}
+                    />
                   ))}
                 </div>
-                <button onClick={() => setSlide(s => Math.min(certificateChunks.length - 1, s + 1))} disabled={slide === certificateChunks.length - 1} className="px-3 py-1 rounded bg-gilded-parchment/20 text-gilded-parchment disabled:opacity-40">Next</button>
+                <button 
+                  onClick={() => setSlide(s => Math.min(certificateChunks.length - 1, s + 1))} 
+                  disabled={slide === certificateChunks.length - 1} 
+                  className="px-3 py-1 rounded bg-gilded-parchment/20 text-gilded-parchment disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300"
+                >
+                  Next
+                </button>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                {certificateChunks[slide].map(cert => (
-                  <ParticleCard
-                    key={cert.id + cert.title}
-                    className={cardClass}
-                    style={{
-                      backgroundColor: "#060010",
-                      borderColor: "#e5c07b33",
-                      color: "#fff",
-                      '--glow-x': '50%',
-                      '--glow-y': '50%',
-                      '--glow-intensity': '0',
-                      '--glow-radius': '80px',
-                    } as React.CSSProperties}
-                    disableAnimations={false}
-                    particleCount={6}
-                    glowColor="200, 100, 255"
-                    enableTilt={true}
-                    clickEffect={true}
-                    enableMagnetism={true}
-                  >
-                    <CertificateBentoCard certificate={cert} />
-                  </ParticleCard>
+              <div className="grid grid-cols-2 gap-4">
+                {certificateChunks[slide]?.map(cert => (
+                  <CertificateCard key={cert.id + cert.title} certificate={cert} />
                 ))}
               </div>
             </div>

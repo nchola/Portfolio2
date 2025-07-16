@@ -1,9 +1,9 @@
-
 import React from 'react';
 import { Calendar, MapPin, ExternalLink } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import SpotlightCard from '@/Animations/SpotlightCard/SpotlightCard';
 import GlitchText from '@/Animations/GlitchText/GlitchText';
+import DecryptedText from '@/Animations/DecryptedText/DecryptedText';
 
 interface ExperienceItem {
   title: string;
@@ -156,13 +156,13 @@ const Experience: React.FC = () => {
               {experiences.map((item, index) => (
                 <SpotlightCard
                   key={item.id}
-                  className="relative pl-12 transition-all duration-300 hover:scale-[1.02]"
+                  className="relative pl-12 transition-all duration-300 hover:scale-[1.02] bg-static-white/80 dark:bg-void-black/80 border-quantum-gray/20 dark:border-static-white/20"
                   spotlightColor="rgba(193, 154, 107, 0.3)"
                 >
                   <div className="absolute left-0 top-6 w-12 h-12 bg-gilded-parchment/20 rounded-full flex items-center justify-center">
                     <div className="w-6 h-6 bg-gilded-parchment rounded-full"></div>
                   </div>
-                  <Card className="bg-static-white/80 dark:bg-void-black/80 border-quantum-gray/20 shadow-lg">
+                  <Card className="bg-transparent border-none shadow-none">
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between mb-3">
                         <h4 className="text-lg font-cormorant font-bold text-void-black dark:text-static-white">
@@ -192,11 +192,13 @@ const Experience: React.FC = () => {
                           {item.company}
                         </div>
                       </div>
-                      <ul className="list-disc pl-5 text-quantum-gray dark:text-static-white/90 text-sm leading-relaxed mb-4">
-                        {item.description.map((desc, descIndex) => (
-                          <li key={descIndex}>{desc}</li>
-                        ))}
-                      </ul>
+                      <DecryptedText
+                        text={item.description.join(' ')}
+                        speed={30}
+                        maxIterations={8}
+                        animateOn="view"
+                        className="text-quantum-gray dark:text-static-white/90 text-sm leading-relaxed mb-4"
+                      />
                       <div className="flex flex-wrap gap-2">
                         {item.technologies.map((tech, techIndex) => (
                           <span
@@ -224,13 +226,13 @@ const Experience: React.FC = () => {
               {education.map((item, index) => (
                 <SpotlightCard
                   key={item.id}
-                  className="relative pl-12 transition-all duration-300 hover:scale-[1.02]"
+                  className="relative pl-12 transition-all duration-300 hover:scale-[1.02] bg-static-white/80 dark:bg-void-black/80 border-quantum-gray/20 dark:border-static-white/20"
                   spotlightColor="rgba(193, 154, 107, 0.3)"
                 >
                   <div className="absolute left-0 top-6 w-12 h-12 bg-gilded-parchment/20 rounded-full flex items-center justify-center">
                     <div className="w-6 h-6 bg-gilded-parchment rounded-full"></div>
                   </div>
-                  <Card className="bg-static-white/80 dark:bg-void-black/80 border-quantum-gray/20 shadow-lg">
+                  <Card className="bg-transparent border-none shadow-none">
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between mb-3">
                         <h4 className="text-lg font-cormorant font-bold text-void-black dark:text-static-white">
@@ -263,14 +265,13 @@ const Experience: React.FC = () => {
                       {item.thesis && (
                         <div className="text-sm text-quantum-gray dark:text-static-white/90 mb-3">
                           <strong>Thesis:</strong>{" "}
-                          <a
-                            href={item.thesis.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-gilded-parchment hover:text-gilded-parchment/80 transition-colors"
-                          >
-                            {item.thesis.title}
-                          </a>
+                          <DecryptedText
+                            text={item.thesis.title}
+                            speed={30}
+                            maxIterations={8}
+                            animateOn="view"
+                            className="text-gilded-parchment hover:text-gilded-parchment/80 transition-colors inline"
+                          />
                         </div>
                       )}
                     </CardContent>

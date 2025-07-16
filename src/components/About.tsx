@@ -1,101 +1,134 @@
 
-import React from "react";
-import DecryptedText from "../Animations/DecryptedText/DecryptedText";
-import GlitchText from "../Animations/GlitchText/GlitchText";
-import Balatro from "../Animations/Balatro/Balatro";
+import React from 'react';
+import { User, Code, Globe, Coffee, Users, Target, Award, Lightbulb } from 'lucide-react';
+import SpotlightCard from '@/Animations/SpotlightCard/SpotlightCard';
+import GlitchText from '@/Animations/GlitchText/GlitchText';
+import DecryptedText from '@/Animations/DecryptedText/DecryptedText';
 
 const About: React.FC = () => {
   return (
-    <section
-      id="about"
-      className="section bg-static-white/5 dark:bg-quantum-gray/5"
-    >
+    <section id="about" className="section bg-static-white dark:bg-void-black">
       <div className="container">
-        <div className="mb-12">
-          <span className="inline-block text-xs uppercase tracking-wider text-quantum-gray dark:text-static-white/70 mb-2">
-            <DecryptedText text="Introduction" animateOn="view" className="inline-block" />
+        <div className="mb-12 text-center">
+          <span className="inline-block text-xs uppercase tracking-wider text-quantum-gray/70 dark:text-static-white/70 mb-2">
+            Introduction
           </span>
           <GlitchText
             speed={0.3}
             enableShadows={true}
             enableOnHover={false}
-            className="text-4xl md:text-5xl font-cormorant font-bold text-quantum-gray dark:text-static-white"
+            className="text-4xl md:text-5xl font-cormorant font-bold text-void-black dark:text-static-white"
           >
             About Me
           </GlitchText>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-4 flex justify-center relative overflow-hidden">
-            {/* Balatro as full background */}
-            <div className="absolute inset-0 w-full h-full z-0">
-              <Balatro color1="rgb(196,144,144)" color2="rgb(41,50,51)" color3="rgb(238,240,242)" contrast={3.5} lighting={0.7} />
-            </div>
-            {/* Profile image container */}
-            <div className="w-58 h-80 rounded-full  overflow-hidden relative flex items-center justify-center z-10">
-              <img
-                src="/hero.png"
-                alt="Muhammad Nanda"
-                className="w-48 h-64 object-cover object-center rounded-full"
-                style={{
-                  filter: "grayscale(20%) contrast(110%)",
-                  transform: "scale(1.05)",
-                  border: "4px solid transparent",
-                  background: "rgba(0,0,0,0.1)",
-                }}
-              />
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6">
+            <DecryptedText
+              text="Hello! I'm Muhammad Nanda, a passionate Computer Science graduate with a strong foundation in software development and innovative problem-solving. My journey in technology has been driven by curiosity and a commitment to creating meaningful digital experiences."
+              speed={20}
+              maxIterations={8}
+              animateOn="view"
+              className="text-lg text-quantum-gray/90 dark:text-static-white/90 leading-relaxed"
+            />
+            
+            <DecryptedText
+              text="I specialize in full-stack development, with expertise in modern frameworks like React, Flutter, and various backend technologies. My experience spans from mobile app development to decision support systems, always focusing on user-centric design and efficient solutions."
+              speed={20}
+              maxIterations={8}
+              animateOn="view"
+              className="text-lg text-quantum-gray/90 dark:text-static-white/90 leading-relaxed"
+            />
+
+            <div className="grid grid-cols-2 gap-4 mt-8">
+              <div className="flex items-center gap-2">
+                <Code className="w-5 h-5 text-gilded-parchment" />
+                <span className="text-sm text-quantum-gray dark:text-static-white/80">Full-Stack Developer</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Globe className="w-5 h-5 text-gilded-parchment" />
+                <span className="text-sm text-quantum-gray dark:text-static-white/80">Web & Mobile</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Users className="w-5 h-5 text-gilded-parchment" />
+                <span className="text-sm text-quantum-gray dark:text-static-white/80">Team Player</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Lightbulb className="w-5 h-5 text-gilded-parchment" />
+                <span className="text-sm text-quantum-gray dark:text-static-white/80">Problem Solver</span>
+              </div>
             </div>
           </div>
 
-          <div className="lg:col-span-8">
-            <h3 className="text-2xl font-cormorant font-bold mb-4 text-quantum-gray dark:text-static-white">
-              <DecryptedText text="Muhammad Nanda" animateOn="view" className="inline-block" />
-            </h3>
-            <p className="text-quantum-gray/90 dark:text-static-white/80 italic mb-6">
-              <DecryptedText text="I Have strong attention to detail, consept and structure." animateOn="view" className="inline-block" />
-              <br />
-              <DecryptedText text="Backend Developer who lives for untangling technical knots. Over the past three years, I've built a reputation for dissecting messy problems—whether it's a cryptic error buried in production logs or a performance bottleneck everyone else avoids. My coding isn't just about writing features; it's about asking 'why' until the system reveals its secrets." animateOn="view" speed={70} className="inline-block" />
-            </p>
+          <div className="grid grid-cols-2 gap-6">
+            <SpotlightCard 
+              className="p-6 h-full bg-static-white dark:bg-void-black border border-quantum-gray/20 dark:border-static-white/20 rounded-lg"
+              spotlightColor="rgba(193, 154, 107, 0.3)"
+            >
+              <User className="w-8 h-8 text-gilded-parchment mb-4" />
+              <h3 className="text-lg font-cormorant font-bold text-void-black dark:text-static-white mb-2">
+                Personal
+              </h3>
+              <DecryptedText
+                text="Based in Palembang, Indonesia. I enjoy exploring new technologies and contributing to open-source projects."
+                speed={25}
+                maxIterations={6}
+                animateOn="view"
+                className="text-sm text-quantum-gray/80 dark:text-static-white/80"
+              />
+            </SpotlightCard>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <ul className="space-y-2">
-                  <li className="flex items-center text-quantum-gray/90 dark:text-static-white/80">
-                    <span className="inline-block w-6 h-6 mr-2 text-gilded-parchment">
-                      →
-                    </span>
-                    <strong className="mr-2"><DecryptedText text="Email:" animateOn="view" className="inline-block" /></strong>
-                    <span><DecryptedText text="nchola@mhs.mdp.ac.id" animateOn="view" className="inline-block" /></span>
-                  </li>
-                  <li className="flex items-center text-quantum-gray/90 dark:text-static-white/80">
-                    <span className="inline-block w-6 h-6 mr-2 text-gilded-parchment">
-                      →
-                    </span>
-                    <strong className="mr-2"><DecryptedText text="City:" animateOn="view" className="inline-block" /></strong>
-                    <span><DecryptedText text="Palembang, Indonesia" animateOn="view" className="inline-block" /></span>
-                  </li>
-                  <li className="flex items-center text-quantum-gray/90 dark:text-static-white/80">
-                    <span className="inline-block w-6 h-6 mr-2 text-gilded-parchment">
-                      →
-                    </span>
-                    <strong className="mr-2"><DecryptedText text="Freelance:" animateOn="view" className="inline-block" /></strong>
-                    <span><DecryptedText text="Available" animateOn="view" className="inline-block" /></span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <SpotlightCard 
+              className="p-6 h-full bg-static-white dark:bg-void-black border border-quantum-gray/20 dark:border-static-white/20 rounded-lg"
+              spotlightColor="rgba(193, 154, 107, 0.3)"
+            >
+              <Target className="w-8 h-8 text-gilded-parchment mb-4" />
+              <h3 className="text-lg font-cormorant font-bold text-void-black dark:text-static-white mb-2">
+                Goals
+              </h3>
+              <DecryptedText
+                text="Focused on building scalable applications and contributing to innovative tech solutions."
+                speed={25}
+                maxIterations={6}
+                animateOn="view"
+                className="text-sm text-quantum-gray/80 dark:text-static-white/80"
+              />
+            </SpotlightCard>
 
-            <div className="mt-8">
-              <a
-                href="https://www.canva.com/design/DAGKGZpZdDY/iTF0vcbWF4rajEYJ4pQEFw/view"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 bg-gilded-parchment text-void-black rounded-md hover:bg-gilded-parchment/80 transition-colors duration-300"
-              >
-                <span className="mr-2">→</span>
-                <DecryptedText text="View My CV" animateOn="view" className="inline-block" />
-              </a>
-            </div>
+            <SpotlightCard 
+              className="p-6 h-full bg-static-white dark:bg-void-black border border-quantum-gray/20 dark:border-static-white/20 rounded-lg"
+              spotlightColor="rgba(193, 154, 107, 0.3)"
+            >
+              <Coffee className="w-8 h-8 text-gilded-parchment mb-4" />
+              <h3 className="text-lg font-cormorant font-bold text-void-black dark:text-static-white mb-2">
+                Interests
+              </h3>
+              <DecryptedText
+                text="UI/UX design, artificial intelligence, and creating seamless user experiences."
+                speed={25}
+                maxIterations={6}
+                animateOn="view"
+                className="text-sm text-quantum-gray/80 dark:text-static-white/80"
+              />
+            </SpotlightCard>
+
+            <SpotlightCard 
+              className="p-6 h-full bg-static-white dark:bg-void-black border border-quantum-gray/20 dark:border-static-white/20 rounded-lg"
+              spotlightColor="rgba(193, 154, 107, 0.3)"
+            >
+              <Award className="w-8 h-8 text-gilded-parchment mb-4" />
+              <h3 className="text-lg font-cormorant font-bold text-void-black dark:text-static-white mb-2">
+                Achievements
+              </h3>
+              <DecryptedText
+                text="Multiple certifications in web development, mobile programming, and problem-solving."
+                speed={25}
+                maxIterations={6}
+                animateOn="view"
+                className="text-sm text-quantum-gray/80 dark:text-static-white/80"
+              />
+            </SpotlightCard>
           </div>
         </div>
       </div>
